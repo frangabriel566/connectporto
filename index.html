@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Internet fibra óptica rápida e estável em Porto-PI e Região. Planos acessíveis, suporte humano e instalação rápida. Conecte-se com qualidade!">
+    <meta property="og:title" content="Connect Provedor - Internet Fibra Óptica em Porto-PI e Região">
+    <meta property="og:description" content="Internet fibra óptica rápida e estável em Porto-PI e Região. Planos acessíveis, suporte humano e instalação rápida.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630/1E5FDB/00D4FF?text=Connect+Provedor">
+    
+    <title>Connect Provedor - Internet Fibra Óptica em Porto-PI</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        connect: {
+                            navy: '#0F2D6D',
+                            blue: '#2B5FDB',
+                            royal: '#1E4BC9',
+                            cyan: '#00D4FF',
+                            lightcyan: '#4FE5FF',
+                            purple: '#7C3AED',
+                            white: '#F8FAFC',
+                            gray: '#E2E8F0',
+                            dark: '#0F172A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl lg:text-2xl font-bold text-connect-navy transition-colors">
+                        Connect
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#planos" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Planos</a>
+                    <a href="#cobertura" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Cobertura</a>
+                    <a href="#vantagens" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Vantagens</a>
+                    <a href="#depoimentos" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Depoimentos</a>
+                    <a href="#faq" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">FAQ</a>
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="#whatsapp" class="btn-primary hidden sm:inline-flex">
+                        Chamar no WhatsApp
+                    </a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-connect-dark hover:bg-connect-gray/30 transition-colors" aria-label="Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="#planos" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Planos</a>
+                    <a href="#cobertura" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Cobertura</a>
+                    <a href="#vantagens" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Vantagens</a>
+                    <a href="#depoimentos" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Depoimentos</a>
+                    <a href="#faq" class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">FAQ</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="relative pt-24 lg:pt-32 pb-16 lg:pb-24 overflow-hidden bg-gradient-to-br from-connect-navy via-connect-royal to-connect-blue">
+        <!-- Animated background elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <!-- Floating orbs -->
+            <div class="absolute top-20 left-10 w-96 h-96 bg-connect-cyan/20 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-20 right-10 w-[500px] h-[500px] bg-connect-lightcyan/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-connect-blue/10 rounded-full blur-3xl"></div>
+            
+            <!-- Grid pattern -->
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute inset-0" style="background-image: linear-gradient(#00D4FF 1px, transparent 1px), linear-gradient(90deg, #00D4FF 1px, transparent 1px); background-size: 50px 50px;"></div>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="fade-in text-white">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-connect-cyan opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-connect-cyan"></span>
+                        </span>
+                        <span class="text-sm font-medium">Fibra 100% em Porto-PI e Região</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                        Internet fibra óptica 
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-connect-cyan to-connect-lightcyan">
+                            rápida e estável
+                        </span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
+                        Conexão de alta velocidade com estabilidade garantida, suporte humano sempre disponível e confiança de quem está há anos conectando Porto e Região.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-start gap-4">
+                        <a href="#whatsapp" class="group btn-primary-hero w-full sm:w-auto">
+                            <svg class="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Assinar agora
+                        </a>
+                        <a href="#planos" class="btn-secondary-hero w-full sm:w-auto">
+                            Ver planos
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/20">
+                        <div>
+                            <div class="text-3xl font-bold text-connect-cyan mb-1">Fibra Óptica</div>
+                            <div class="text-sm text-white/70">Mais velocidade</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-connect-cyan mb-1">Conexão</div>
+                            <div class="text-sm text-white/70">Sem interrupções</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-connect-cyan mb-1">Atendimento</div>
+                            <div class="text-sm text-white/70">Via Whatsapp</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mascot Image -->
+                <div class="hidden lg:flex justify-center items-center fade-in relative" style="animation-delay: 0.2s">
+                    <!-- Glow rings -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-[450px] h-[450px] rounded-full border-2 border-connect-cyan/30 animate-ping" style="animation-duration: 3s;"></div>
+                        <div class="absolute w-[400px] h-[400px] rounded-full border-2 border-connect-lightcyan/40 animate-ping" style="animation-duration: 2s;"></div>
+                    </div>
+                    
+                    <div class="relative mascot-container">
+                        <!-- Glowing backdrop -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-connect-cyan/30 via-connect-blue/20 to-connect-lightcyan/30 rounded-full blur-3xl scale-110"></div>
+                        
+                        <!-- Mascot Image -->
+                        <img 
+                            src="img/masconte connect.png" 
+                            alt="Mascote Connect - Robô azul"
+                            class="relative w-[450px] h-[450px] object-contain drop-shadow-2xl mascot-float z-10"
+                            loading="eager"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wave divider -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+                <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="white"/>
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Social Proof -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto fade-in">
+                <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-gradient-to-br from-connect-blue/5 to-connect-cyan/5 hover:from-connect-blue/10 hover:to-connect-cyan/10 transition-all duration-300 hover:scale-105">
+                    <div class="w-14 h-14 bg-gradient-to-br from-connect-blue to-connect-cyan rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:shadow-connect-cyan/50 transition-shadow">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-connect-navy">Suporte humano</p>
+                </div>
+                
+                <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-gradient-to-br from-connect-blue/5 to-connect-cyan/5 hover:from-connect-blue/10 hover:to-connect-cyan/10 transition-all duration-300 hover:scale-105">
+                    <div class="w-14 h-14 bg-gradient-to-br from-connect-blue to-connect-cyan rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:shadow-connect-cyan/50 transition-shadow">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-connect-navy">Instalação rápida</p>
+                </div>
+                
+                <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-gradient-to-br from-connect-blue/5 to-connect-cyan/5 hover:from-connect-blue/10 hover:to-connect-cyan/10 transition-all duration-300 hover:scale-105">
+                    <div class="w-14 h-14 bg-gradient-to-br from-connect-blue to-connect-cyan rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:shadow-connect-cyan/50 transition-shadow">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-connect-navy">Baixa latência</p>
+                </div>
+                
+                <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-gradient-to-br from-connect-blue/5 to-connect-cyan/5 hover:from-connect-blue/10 hover:to-connect-cyan/10 transition-all duration-300 hover:scale-105">
+                    <div class="w-14 h-14 bg-gradient-to-br from-connect-blue to-connect-cyan rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:shadow-connect-cyan/50 transition-shadow">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-connect-navy">Wi-Fi otimizado</p>
+                </div>
+                
+                <div class="group flex flex-col items-center text-center p-6 rounded-2xl bg-gradient-to-br from-connect-blue/5 to-connect-cyan/5 hover:from-connect-blue/10 hover:to-connect-cyan/10 transition-all duration-300 hover:scale-105">
+                    <div class="w-14 h-14 bg-gradient-to-br from-connect-blue to-connect-cyan rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:shadow-connect-cyan/50 transition-shadow">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm font-semibold text-connect-navy">Planos acessíveis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Planos Section -->
+    <section id="planos" class="py-16 lg:py-24 relative overflow-hidden">
+        <!-- Background gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-white via-blue-50/30 to-white"></div>
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 2px 2px, rgba(30, 95, 219, 0.05) 1px, transparent 0); background-size: 40px 40px;"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12 lg:mb-16 fade-in">
+                <div class="inline-flex items-center gap-2 bg-connect-blue/10 rounded-full px-4 py-2 mb-4">
+                    <svg class="w-4 h-4 text-connect-blue" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                    </svg>
+                    <span class="text-sm font-medium text-connect-navy">Planos para todos</span>
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-bold text-connect-navy mb-4">Escolha seu plano ideal</h2>
+                <p class="text-lg text-connect-dark/80 max-w-2xl mx-auto">Planos flexíveis para atender suas necessidades de conexão</p>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pt-8">
+                <!-- Plano 70MB -->
+                <div class="group card-modern fade-in" style="animation-delay: 0.1s">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-connect-navy">70 Mega</h3>
+                                <p class="text-xs text-connect-dark/70">Para navegar e assistir</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">Consulte</p>
+                            </div>
+                            <p class="text-xs text-connect-dark/60 mt-1">valores via WhatsApp</p>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-6 flex-grow">
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">2-3 dispositivos</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Streaming HD</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Navegação estável</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#whatsapp" class="btn-plan w-full text-sm py-3">
+                            Assinar agora
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Plano 90MB - Destaque -->
+                <div class="group card-featured-modern fade-in relative" style="animation-delay: 0.2s">
+                    <div class="absolute -top-6 left-1/2 -translate-x-1/2 z-20">
+                        <span class="bg-gradient-to-r from-connect-cyan to-connect-lightcyan text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                            ⭐ Recomendado
+                        </span>
+                    </div>
+                    <div class="p-6 h-full flex flex-col pt-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-cyan to-connect-lightcyan flex items-center justify-center shadow-lg shadow-connect-cyan/50">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">90 Mega</h3>
+                                <p class="text-xs text-white/80">Para toda a família</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold text-white">Consulte</p>
+                            </div>
+                            <p class="text-xs text-white/70 mt-1">valores via WhatsApp</p>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-6 flex-grow">
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-lightcyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-white/95">4-6 dispositivos</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-lightcyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-white/95">Streaming Full HD</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-lightcyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-white/95">Games sem lag</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-lightcyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-white/95">Custo-benefício</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#whatsapp" class="btn-plan-featured w-full text-sm py-3">
+                            Assinar agora
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Plano 120MB -->
+                <div class="group card-modern fade-in" style="animation-delay: 0.3s">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-connect-navy">120 Mega</h3>
+                                <p class="text-xs text-connect-dark/70">Velocidade máxima</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">Consulte</p>
+                            </div>
+                            <p class="text-xs text-connect-dark/60 mt-1">valores via WhatsApp</p>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-6 flex-grow">
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">7+ dispositivos</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Streaming 4K</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Home office</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Download rápido</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#whatsapp" class="btn-plan w-full text-sm py-3">
+                            Assinar agora
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Plano 300MB -->
+                <div class="group card-modern fade-in" style="animation-delay: 0.4s">
+                    <div class="p-6 h-full flex flex-col">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-connect-navy">300 Mega</h3>
+                                <p class="text-xs text-connect-dark/70">Alta performance</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <div class="flex items-baseline gap-2">
+                                <p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">Consulte</p>
+                            </div>
+                            <p class="text-xs text-connect-dark/60 mt-1">valores via WhatsApp</p>
+                        </div>
+                        
+                        <ul class="space-y-3 mb-6 flex-grow">
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Casas conectadas</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">4K simultâneo</span>
+                            </li>
+                            <li class="flex items-start text-sm">
+                                <svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span class="text-connect-dark">Ultra-rápido</span>
+                            </li>
+                        </ul>
+                        
+                        <a href="#whatsapp" class="btn-plan w-full text-sm py-3">
+                            Assinar agora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Vantagens Section -->
+    <section id="vantagens" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 lg:mb-16 fade-in">
+                <h2 class="text-3xl lg:text-4xl font-bold text-connect-navy mb-4">Por que escolher a Connect?</h2>
+                <p class="text-lg text-connect-dark/80 max-w-2xl mx-auto">Qualidade e confiança em cada conexão</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Vantagem 1 -->
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.1s">
+                    <div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-connect-navy mb-3">Conexão estável</h3>
+                    <p class="text-connect-dark/80 leading-relaxed">Fibra óptica de ponta a ponta garante mais estabilidade na sua conexão, sem oscilações constantes.</p>
+                </div>
+                
+                <!-- Vantagem 2 -->
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.2s">
+                    <div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-connect-navy mb-3">Streaming sem travar</h3>
+                    <p class="text-connect-dark/80 leading-relaxed">Assista suas séries, filmes e vídeos favoritos sem interrupções, com qualidade HD e 4K.</p>
+                </div>
+                
+                <!-- Vantagem 3 -->
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.3s">
+                    <div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-connect-navy mb-3">Games com menor latência</h3>
+                    <p class="text-connect-dark/80 leading-relaxed">Jogue online sem lag e com ping baixo. Conexão ideal para gamers que levam a sério.</p>
+                </div>
+                
+                <!-- Vantagem 4 -->
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.4s">
+                    <div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-connect-navy mb-3">Suporte rápido</h3>
+                    <p class="text-connect-dark/80 leading-relaxed">Atendimento humano e ágil quando você precisar. Estamos aqui para resolver seu problema rapidamente.</p>
+                </div>
+                
+                <!-- Vantagem 5 -->
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.5s">
+                    <div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-connect-navy mb-3">Confiança local</h3>
+                    <p class="text-connect-dark/80 leading-relaxed">Anos conectando Porto-PI com qualidade. Somos parte da comunidade e conhecemos as necessidades da região.</p>
+                </div>
+                
+                <!-- Vantagem 6 -->
+                <div class="flex flex-col items-start fade-in" style="animation-delay: 0.6s">
+                    <div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-connect-navy mb-3">Tecnologia de ponta</h3>
+                    <p class="text-connect-dark/80 leading-relaxed">Equipamentos modernos e rede preparada para o futuro. Você merece o melhor em conectividade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Como Funciona Section -->
+    <section class="py-16 lg:py-24 bg-gradient-to-b from-white to-connect-gray/20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 lg:mb-16 fade-in">
+                <h2 class="text-3xl lg:text-4xl font-bold text-connect-navy mb-4">Como funciona</h2>
+                <p class="text-lg text-connect-dark/80 max-w-2xl mx-auto">Simples e rápido em 3 passos</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Passo 1 -->
+                    <div class="relative fade-in" style="animation-delay: 0.1s">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-connect-cyan rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
+                                1
+                            </div>
+                            <h3 class="text-lg font-bold text-connect-navy mb-2">Chama no WhatsApp</h3>
+                            <p class="text-sm text-connect-dark/80">Entre em contato e escolha seu plano ideal</p>
+                        </div>
+                        <!-- Conectando linha (desktop) -->
+                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-connect-cyan/30 -z-10"></div>
+                    </div>
+                    
+                    <!-- Passo 2 -->
+                    <div class="relative fade-in" style="animation-delay: 0.2s">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-connect-cyan rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
+                                2
+                            </div>
+                            <h3 class="text-lg font-bold text-connect-navy mb-2">Checamos cobertura</h3>
+                            <p class="text-sm text-connect-dark/80">Verificamos se atendemos seu endereço</p>
+                        </div>
+                        <!-- Conectando linha (desktop) -->
+                        <div class="hidden md:block absolute top-8 left-1/2 w-full h-0.5 bg-connect-cyan/30 -z-10"></div>
+                    </div>
+                    
+                    <!-- Passo 3 -->
+                    <div class="fade-in" style="animation-delay: 0.3s">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-connect-cyan rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
+                                3
+                            </div>
+                            <h3 class="text-lg font-bold text-connect-navy mb-2">Instalamos e ativamos</h3>
+                            <p class="text-sm text-connect-dark/80">Agendamos e você fica conectado rapidamente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cobertura Section -->
+    <section id="cobertura" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-8 fade-in">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-connect-navy mb-4">Verificar disponibilidade</h2>
+                    <p class="text-lg text-connect-dark/80">Informe seu bairro ou rua para verificar se atendemos sua região</p>
+                </div>
+                
+                <div class="card fade-in">
+                    <form id="coverage-form" class="p-8">
+                        <div class="mb-6">
+                            <label for="address" class="block text-sm font-medium text-connect-navy mb-2">
+                                Bairro ou endereço
+                            </label>
+                            <input 
+                                type="text" 
+                                id="address" 
+                                name="address"
+                                required
+                                placeholder="Ex: Centro, Rua Principal, etc."
+                                class="w-full px-4 py-3 border border-connect-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-connect-cyan focus:border-transparent transition-all"
+                            >
+                        </div>
+                        <button type="submit" class="btn-primary w-full">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Verificar no WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Depoimentos Section -->
+    <section id="depoimentos" class="py-16 lg:py-24 bg-gradient-to-b from-white to-connect-gray/20">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 lg:mb-16 fade-in">
+                <h2 class="text-3xl lg:text-4xl font-bold text-connect-navy mb-4">O que nossos clientes dizem</h2>
+                <p class="text-lg text-connect-dark/80 max-w-2xl mx-auto">Experiências reais de quem já usa Connect</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+                <!-- Depoimento 1 -->
+                <div class="card fade-in" style="animation-delay: 0.1s">
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-connect-dark/80 mb-4 leading-relaxed">"Internet rápida e não cai. Assistir Netflix aqui em casa ficou bem melhor. Recomendo!"</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-connect-cyan/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-connect-cyan font-bold text-sm">MR</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-connect-navy text-sm">Maria Rosa</p>
+                                <p class="text-xs text-connect-dark/60">Cliente há 2 anos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Depoimento 2 -->
+                <div class="card fade-in" style="animation-delay: 0.2s">
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-connect-dark/80 mb-4 leading-relaxed">"Jogo Free Fire sem lag nenhum. O ping ficou muito bom depois que mudei pra Connect. Vale a pena."</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-connect-cyan/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-connect-cyan font-bold text-sm">JS</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-connect-navy text-sm">João Silva</p>
+                                <p class="text-xs text-connect-dark/60">Cliente há 1 ano</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Depoimento 3 -->
+                <div class="card fade-in" style="animation-delay: 0.3s">
+                    <div class="p-8">
+                        <div class="flex items-center mb-4">
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                        <p class="text-connect-dark/80 mb-4 leading-relaxed">"Trabalho de casa com reuniões pelo Zoom. A internet nunca me deixou na mão. Suporte sempre atencioso também."</p>
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-connect-cyan/20 rounded-full flex items-center justify-center mr-3">
+                                <span class="text-connect-cyan font-bold text-sm">AC</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-connect-navy text-sm">Ana Costa</p>
+                                <p class="text-xs text-connect-dark/60">Cliente há 3 anos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 lg:py-24 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12 lg:mb-16 fade-in">
+                    <h2 class="text-3xl lg:text-4xl font-bold text-connect-navy mb-4">Perguntas frequentes</h2>
+                    <p class="text-lg text-connect-dark/80">Tire suas dúvidas sobre nossos serviços</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="card fade-in" style="animation-delay: 0.1s">
+                        <button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">
+                            <span class="font-semibold text-connect-navy pr-4">Como funciona a instalação?</span>
+                            <svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-content overflow-hidden transition-all duration-300" style="max-height: 0;">
+                            <div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">
+                                Após você entrar em contato e escolher o plano, nossa equipe agenda a visita técnica. Verificamos a viabilidade no seu endereço e, caso tudo esteja ok, fazemos a instalação no mesmo dia ou agendamos conforme sua disponibilidade. A instalação geralmente leva de 2 a 4 horas.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="card fade-in" style="animation-delay: 0.2s">
+                        <button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">
+                            <span class="font-semibold text-connect-navy pr-4">Tem fidelidade?</span>
+                            <svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-content overflow-hidden transition-all duration-300" style="max-height: 0;">
+                            <div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">
+                                Depende do plano escolhido. Alguns planos não possuem fidelidade, outros podem ter período de fidelidade com benefícios na instalação ou mensalidade. Entre em contato via WhatsApp para conhecer as condições de cada plano.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="card fade-in" style="animation-delay: 0.3s">
+                        <button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">
+                            <span class="font-semibold text-connect-navy pr-4">A velocidade é garantida?</span>
+                            <svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-content overflow-hidden transition-all duration-300" style="max-height: 0;">
+                            <div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">
+                                Sim! Como trabalhamos com fibra óptica de ponta a ponta, a velocidade contratada é entregue diretamente na sua casa. Você pode fazer testes de velocidade a qualquer momento para comprovar.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="card fade-in" style="animation-delay: 0.4s">
+                        <button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">
+                            <span class="font-semibold text-connect-navy pr-4">Como funciona o suporte técnico?</span>
+                            <svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-content overflow-hidden transition-all duration-300" style="max-height: 0;">
+                            <div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">
+                                Nosso suporte funciona via WhatsApp com atendimento humano. Estamos disponíveis para resolver qualquer problema ou dúvida rapidamente. Em casos que precisem de visita técnica, agendamos o mais rápido possível.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="card fade-in" style="animation-delay: 0.5s">
+                        <button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">
+                            <span class="font-semibold text-connect-navy pr-4">O roteador está incluso?</span>
+                            <svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-content overflow-hidden transition-all duration-300" style="max-height: 0;">
+                            <div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">
+                                Sim! Fornecemos o roteador Wi-Fi adequado para o plano contratado sem custo adicional. O equipamento fica em comodato durante a vigência do contrato.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 6 -->
+                    <div class="card fade-in" style="animation-delay: 0.6s">
+                        <button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">
+                            <span class="font-semibold text-connect-navy pr-4">Como faço para pagar a fatura?</span>
+                            <svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="faq-content overflow-hidden transition-all duration-300" style="max-height: 0;">
+                            <div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">
+                                Aceitamos pagamento via boleto bancário e Pix. A fatura é enviada mensalmente via WhatsApp ou e-mail. Você também pode solicitar a 2ª via a qualquer momento pelo nosso WhatsApp.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Final -->
+    <section class="py-16 lg:py-24 bg-connect-navy text-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-6">Pronto para ter internet de qualidade?</h2>
+                <p class="text-lg text-white/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Entre em contato agora e descubra o plano ideal para sua casa ou empresa
+                </p>
+                <a href="#whatsapp" class="btn-cta">
+                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Falar agora no WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-connect-dark text-white/70 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <!-- Coluna 1 -->
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Connect</h3>
+                    <p class="text-sm leading-relaxed">Internet fibra óptica de qualidade para Porto-PI. Conectando você com o que há de melhor em tecnologia.</p>
+                </div>
+                
+                <!-- Coluna 2 -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#planos" class="hover:text-white transition-colors">Planos</a></li>
+                        <li><a href="#cobertura" class="hover:text-white transition-colors">Cobertura</a></li>
+                        <li><a href="#vantagens" class="hover:text-white transition-colors">Vantagens</a></li>
+                        <li><a href="#depoimentos" class="hover:text-white transition-colors">Depoimentos</a></li>
+                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Coluna 3 -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white mb-4">Contato</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            <a href="#whatsapp" class="hover:text-white transition-colors">WhatsApp</a>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-4 h-4 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Porto-PI, Piauí</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 text-center text-sm">
+                <p>&copy; 2026 Connect Provedor. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Floating WhatsApp Button (Mobile) -->
+    <a href="#whatsapp" id="floating-whatsapp" class="fixed bottom-6 right-6 w-14 h-14 bg-connect-cyan rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-40 lg:hidden" aria-label="WhatsApp">
+        <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 w-12 h-12 bg-connect-primary rounded-full flex items-center justify-center shadow-lg hover:bg-connect-secondary transition-all opacity-0 pointer-events-none z-40 lg:opacity-100" aria-label="Voltar ao topo">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+    
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
