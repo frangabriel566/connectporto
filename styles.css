@@ -58,6 +58,10 @@ body {
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(43, 95, 219, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-primary:hover {
@@ -83,6 +87,10 @@ body {
     text-decoration: none;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-primary-hero:hover {
@@ -107,6 +115,10 @@ body {
     transition: all 0.3s ease;
     text-decoration: none;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-secondary:hover {
@@ -130,6 +142,10 @@ body {
     transition: all 0.3s ease;
     text-decoration: none;
     cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-secondary-hero:hover {
@@ -151,6 +167,10 @@ body {
     text-decoration: none;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(43, 95, 219, 0.1);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-plan:hover {
@@ -174,6 +194,10 @@ body {
     text-decoration: none;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-plan-featured:hover {
@@ -198,6 +222,10 @@ body {
     text-decoration: none;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .btn-cta:hover {
@@ -331,6 +359,53 @@ body {
 .mascot-container {
     position: relative;
     z-index: 10;
+}
+
+.mascot-container-hero {
+    position: relative;
+    z-index: 10;
+}
+
+/* Glass Box Effect */
+.glass-box {
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.glass-box-benefit {
+    padding: 2rem;
+    border-radius: 20px;
+    border: 2px solid rgba(43, 95, 219, 0.15);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px rgba(43, 95, 219, 0.1);
+    transition: all 0.3s ease;
+}
+
+.glass-box-benefit:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.glass-box-benefit-featured {
+    padding: 2.5rem;
+    border-radius: 24px;
+    border: 3px solid rgba(0, 212, 255, 0.3);
+    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(43, 95, 219, 0.05), rgba(0, 212, 255, 0.05));
+    box-shadow: 0 12px 40px rgba(43, 95, 219, 0.15);
+    transition: all 0.3s ease;
+}
+
+.glass-box-benefit-featured:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 212, 255, 0.2);
+    border-color: rgba(0, 212, 255, 0.5);
 }
 
 /* FAQ Styles */
