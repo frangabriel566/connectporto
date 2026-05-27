@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin — Connect Provedor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:  #0F2D6D;
+      --blue:  #2B5FDB;
+      --cyan:  #00D4FF;
+      --dark:  #0F172A;
+      --light: #F8FAFC;
+      --gray:  #E2E8F0;
+      --sidebar-w: 240px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Poppins',sans-serif;background:#F1F5F9;color:#1e293b;min-height:100vh;}
+
+    /* ── LOGIN ── */
+    #login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0F2D6D 0%,#1a3a7a 50%,#0a1e4a 100%);display:flex;align-items:center;justify-content:center;z-index:9999;}
+    .login-card{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(0,0,0,.35);}
+    .login-logo{text-align:center;margin-bottom:32px;}
+    .login-logo img{height:52px;object-fit:contain;}
+    .login-logo .logo-fallback{font-size:1.6rem;font-weight:700;color:var(--navy);}
+    .login-card h2{font-size:1.25rem;font-weight:600;color:var(--navy);text-align:center;margin-bottom:6px;}
+    .login-card p{font-size:.85rem;color:#64748b;text-align:center;margin-bottom:28px;}
+    .form-group{margin-bottom:18px;}
+    .form-group label{display:block;font-size:.8rem;font-weight:500;color:#475569;margin-bottom:6px;}
+    .form-group input{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;}
+    .form-group input:focus{border-color:var(--blue);}
+    .btn-login{width:100%;padding:13px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;border:none;border-radius:10px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .2s;}
+    .btn-login:hover{opacity:.9;}
+    .login-error{color:#ef4444;font-size:.82rem;text-align:center;margin-top:10px;display:none;}
+
+    /* ── LAYOUT ── */
+    #app{display:none;min-height:100vh;}
+
+    /* ── SIDEBAR ── */
+    .sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;z-index:100;overflow-y:auto;}
+    .sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid #f1f5f9;}
+    .sidebar-logo img{height:38px;object-fit:contain;}
+    .sidebar-logo .logo-text{font-size:1.1rem;font-weight:700;color:var(--navy);}
+    .sidebar-section{padding:18px 12px 4px;font-size:.68rem;font-weight:600;color:#94a3b8;letter-spacing:.08em;text-transform:uppercase;}
+    .nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:9px;margin:2px 8px;cursor:pointer;font-size:.85rem;color:#475569;font-weight:500;transition:all .15s;text-decoration:none;}
+    .nav-item:hover{background:#f1f5f9;color:var(--navy);}
+    .nav-item.active{background:linear-gradient(135deg,rgba(43,95,219,.12),rgba(0,212,255,.08));color:var(--blue);font-weight:600;}
+    .nav-item svg{width:17px;height:17px;flex-shrink:0;}
+    .sidebar-footer{margin-top:auto;padding:14px 12px;border-top:1px solid #f1f5f9;}
+    .btn-logout{display:flex;align-items:center;gap:8px;width:100%;padding:9px 14px;border-radius:9px;border:none;background:none;cursor:pointer;font-size:.85rem;color:#ef4444;font-weight:500;font-family:inherit;transition:background .15s;}
+    .btn-logout:hover{background:#fef2f2;}
+
+    /* ── MAIN ── */
+    .main{margin-left:var(--sidebar-w);min-height:100vh;display:flex;flex-direction:column;}
+    .topbar{background:#fff;border-bottom:1px solid #e2e8f0;padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+    .topbar-title{font-size:1rem;font-weight:600;color:var(--navy);}
+    .topbar-right{display:flex;align-items:center;gap:14px;font-size:.82rem;color:#64748b;}
+    .topbar-right strong{color:var(--navy);}
+    .content{padding:28px;}
+
+    /* ── CARDS ── */
+    .page{display:none;}
+    .page.active{display:block;}
+    .page-title{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:6px;}
+    .page-sub{font-size:.88rem;color:#64748b;margin-bottom:24px;}
+    .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px;}
+    .card-title{font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:4px;}
+    .card-desc{font-size:.8rem;color:#94a3b8;margin-bottom:18px;}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+    .field{margin-bottom:14px;}
+    .field label{display:block;font-size:.78rem;font-weight:500;color:#475569;margin-bottom:5px;}
+    .field input,.field textarea,.field select{width:100%;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.88rem;font-family:inherit;outline:none;transition:border-color .2s;background:#fff;}
+    .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--blue);}
+    .field textarea{resize:vertical;min-height:80px;}
+    .btn-save{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;background:linear-gradient(135deg,var(--blue),#1a4fc4);color:#fff;border:none;border-radius:9px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .2s;}
+    .btn-save:hover{opacity:.9;}
+    .btn-add{display:inline-flex;align-items:center;gap:7px;padding:8px 18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;border:none;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .2s;margin-bottom:14px;}
+    .btn-danger{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:#fef2f2;color:#ef4444;border:1px solid #fecaca;border-radius:7px;font-size:.78rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;}
+    .btn-danger:hover{background:#ef4444;color:#fff;}
+    .btn-secondary{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;background:#f1f5f9;color:#475569;border:1.5px solid #e2e8f0;border-radius:9px;font-size:.85rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;}
+    .btn-secondary:hover{background:#e2e8f0;}
+    .alert{padding:12px 16px;border-radius:9px;font-size:.84rem;font-weight:500;margin-bottom:16px;display:none;}
+    .alert-success{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;}
+    .alert-error{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;}
+
+    /* ── STATS ── */
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+    .stat-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px 22px;}
+    .stat-label{font-size:.75rem;color:#94a3b8;font-weight:500;margin-bottom:6px;}
+    .stat-value{font-size:1.9rem;font-weight:700;color:var(--navy);line-height:1;}
+    .stat-sub{font-size:.72rem;color:#64748b;margin-top:6px;}
+    .stat-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+    .stat-icon svg{width:20px;height:20px;}
+
+    /* ── TABLE ── */
+    .table-wrap{overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;}
+    th{text-align:left;font-size:.75rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;border-bottom:1px solid #f1f5f9;}
+    td{padding:11px 14px;font-size:.85rem;color:#334155;border-bottom:1px solid #f8fafc;}
+    tr:hover td{background:#f8fafc;}
+    .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:600;}
+    .badge-green{background:#f0fdf4;color:#16a34a;}
+    .badge-blue{background:#eff6ff;color:#2563eb;}
+    .badge-gray{background:#f1f5f9;color:#64748b;}
+    .badge-red{background:#fef2f2;color:#dc2626;}
+
+    /* ── PLANOS ── */
+    .plan-card{border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:14px;}
+    .plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+    .plan-name{font-weight:600;color:var(--navy);font-size:.95rem;}
+    .features-list{list-style:none;margin-bottom:10px;}
+    .feature-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+    .feature-item input{flex:1;padding:7px 10px;border:1px solid #e2e8f0;border-radius:7px;font-size:.82rem;font-family:inherit;outline:none;}
+    .feature-item input:focus{border-color:var(--blue);}
+    .btn-remove-feature{background:none;border:none;cursor:pointer;color:#94a3b8;font-size:1.1rem;line-height:1;padding:2px 4px;transition:color .15s;}
+    .btn-remove-feature:hover{color:#ef4444;}
+    .btn-add-feature{background:none;border:1px dashed #cbd5e1;border-radius:7px;padding:6px 12px;font-size:.78rem;color:#64748b;cursor:pointer;font-family:inherit;width:100%;transition:all .15s;margin-top:4px;}
+    .btn-add-feature:hover{border-color:var(--blue);color:var(--blue);}
+
+    /* ── CITIES ── */
+    .city-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border:1px solid #e2e8f0;border-radius:9px;margin-bottom:8px;}
+    .city-info{display:flex;align-items:center;gap:10px;}
+    .city-flag{font-size:1rem;}
+    .city-name{font-size:.88rem;font-weight:500;color:#334155;}
+    .city-uf{font-size:.75rem;color:#94a3b8;background:#f1f5f9;padding:2px 7px;border-radius:5px;}
+
+    /* ── DEPOIMENTOS ── */
+    .dep-card{border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:14px;}
+    .stars-select{display:flex;gap:4px;margin-bottom:10px;}
+    .star-btn{background:none;border:none;cursor:pointer;font-size:1.3rem;opacity:.3;transition:opacity .15s;}
+    .star-btn.active{opacity:1;}
+
+    /* ── FAQ ── */
+    .faq-item{border:1.5px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:12px;}
+    .faq-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+    .faq-num{font-size:.72rem;font-weight:600;color:#94a3b8;background:#f1f5f9;padding:2px 8px;border-radius:5px;}
+
+    /* ── API ── */
+    .api-key-box{display:flex;align-items:center;gap:10px;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:12px 16px;margin-bottom:14px;}
+    .api-key-value{flex:1;font-family:'Courier New',monospace;font-size:.82rem;color:#334155;word-break:break-all;}
+    .btn-copy{padding:7px 14px;background:var(--blue);color:#fff;border:none;border-radius:7px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit;transition:opacity .2s;white-space:nowrap;}
+    .btn-copy:hover{opacity:.85;}
+    .btn-regen{padding:7px 14px;background:#f1f5f9;color:#475569;border:1.5px solid #e2e8f0;border-radius:7px;font-size:.78rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap;}
+    .btn-regen:hover{background:#e2e8f0;}
+    .webhook-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .webhook-row input{flex:1;padding:9px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:.85rem;font-family:inherit;outline:none;}
+    .webhook-row input:focus{border-color:var(--blue);}
+    .integration-card{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border:1.5px solid #e2e8f0;border-radius:12px;margin-bottom:10px;transition:border-color .2s;}
+    .integration-card:hover{border-color:#cbd5e1;}
+    .integration-info{display:flex;align-items:center;gap:12px;}
+    .integration-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+    .integration-name{font-size:.9rem;font-weight:600;color:var(--navy);}
+    .integration-desc{font-size:.75rem;color:#94a3b8;}
+    .toggle{position:relative;display:inline-block;width:44px;height:24px;}
+    .toggle input{opacity:0;width:0;height:0;}
+    .toggle-slider{position:absolute;cursor:pointer;inset:0;background:#cbd5e1;border-radius:24px;transition:.3s;}
+    .toggle-slider:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+    .toggle input:checked + .toggle-slider{background:var(--blue);}
+    .toggle input:checked + .toggle-slider:before{transform:translateX(20px);}
+    .code-block{background:#1e293b;color:#e2e8f0;border-radius:10px;padding:16px;font-family:'Courier New',monospace;font-size:.8rem;line-height:1.6;overflow-x:auto;margin-top:10px;}
+    .code-block .kw{color:#7dd3fc;}
+    .code-block .str{color:#86efac;}
+    .code-block .cm{color:#64748b;}
+
+    /* ── MARKETING ── */
+    .tracking-status{display:flex;align-items:center;gap:6px;font-size:.78rem;}
+    .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+    .dot-green{background:#22c55e;}
+    .dot-gray{background:#94a3b8;}
+
+    /* ── USUARIOS ── */
+    .user-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;margin-bottom:8px;}
+    .user-info{display:flex;align-items:center;gap:12px;}
+    .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.82rem;}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .sidebar{transform:translateX(-100%);transition:transform .25s;}
+      .sidebar.open{transform:translateX(0);}
+      .main{margin-left:0;}
+      .stats-grid{grid-template-columns:1fr 1fr;}
+      .grid-2{grid-template-columns:1fr;}
+      .grid-3{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     LOGIN
+══════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="img/logo connect.png" alt="Connect" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div class="logo-fallback" style="display:none;">Connect</div>
+    </div>
+    <h2>Painel Administrativo</h2>
+    <p>Acesse para gerenciar seu site</p>
+    <div class="form-group">
+      <label>Usuário</label>
+      <input type="text" id="login-user" value="admin" readonly />
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="login-pass" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')doLogin()" />
+    </div>
+    <button class="btn-login" onclick="doLogin()">Entrar no painel</button>
+    <div class="login-error" id="login-error">Senha incorreta. Tente novamente.</div>
+    <div style="text-align:center;margin-top:16px;font-size:.75rem;color:#94a3b8;">Senha padrão: <strong>connect2025</strong></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     APP
+══════════════════════════════════ -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="img/logo connect.png" alt="Connect" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" />
+      <div class="logo-text" style="display:none;">Connect</div>
+    </div>
+
+    <div class="sidebar-section">Principal</div>
+    <a class="nav-item active" onclick="showPage('dashboard')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" onclick="showPage('leads')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Leads
+    </a>
+
+    <div class="sidebar-section">Conteúdo</div>
+    <a class="nav-item" onclick="showPage('planos')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      Planos
+    </a>
+    <a class="nav-item" onclick="showPage('cidades')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      Cidades
+    </a>
+    <a class="nav-item" onclick="showPage('depoimentos')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+      Depoimentos
+    </a>
+    <a class="nav-item" onclick="showPage('faq')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      FAQ
+    </a>
+
+    <div class="sidebar-section">Configurações</div>
+    <a class="nav-item" onclick="showPage('empresa')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      Dados da Empresa
+    </a>
+    <a class="nav-item" onclick="showPage('identidade')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+      Identidade Visual
+    </a>
+    <a class="nav-item" onclick="showPage('usuarios')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      Usuários
+    </a>
+    <a class="nav-item" onclick="showPage('api')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+      API & Integrações
+    </a>
+    <a class="nav-item" onclick="showPage('marketing')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+      Marketing & Tracking
+    </a>
+
+    <div class="sidebar-footer">
+      <button class="btn-logout" onclick="doLogout()">
+        <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Sair
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <span class="topbar-title" id="topbar-title">Dashboard</span>
+      <div class="topbar-right">
+        <span>Logado como <strong>Admin</strong></span>
+        <a href="index.html" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500;font-size:.82rem;">← Ver site</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-title">Dashboard</div>
+        <div class="page-sub">Visão geral do seu site</div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#eff6ff;"><svg fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+            <div class="stat-label">Total de Leads</div>
+            <div class="stat-value" id="stat-leads">0</div>
+            <div class="stat-sub">Cliques no WhatsApp</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#f0fdf4;"><svg fill="none" stroke="#16a34a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></div>
+            <div class="stat-label">Visitantes Hoje</div>
+            <div class="stat-value" id="stat-visits">0</div>
+            <div class="stat-sub">Sessões únicas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fefce8;"><svg fill="none" stroke="#ca8a04" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+            <div class="stat-label">Planos Ativos</div>
+            <div class="stat-value" id="stat-planos">4</div>
+            <div class="stat-sub">Configurados no site</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background:#fdf4ff;"><svg fill="none" stroke="#9333ea" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+            <div class="stat-label">Cidades Atendidas</div>
+            <div class="stat-value" id="stat-cidades">7</div>
+            <div class="stat-sub">Regiões cobertas</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Últimos Leads</div>
+          <div class="card-desc">Últimas 5 interações via WhatsApp</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nome/Ação</th><th>Cidade</th><th>Plano</th><th>Data</th><th>Status</th></tr></thead>
+              <tbody id="leads-preview"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Acesso Rápido</div>
+          <div class="card-desc">Atalhos para as principais configurações</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-secondary" onclick="showPage('planos')">✏️ Editar Planos</button>
+            <button class="btn-secondary" onclick="showPage('cidades')">📍 Gerenciar Cidades</button>
+            <button class="btn-secondary" onclick="showPage('empresa')">📋 Dados da Empresa</button>
+            <button class="btn-secondary" onclick="showPage('marketing')">📊 Marketing & Tracking</button>
+            <button class="btn-secondary" onclick="showPage('api')">🔌 API & Integrações</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ LEADS ══ -->
+      <div class="page" id="page-leads">
+        <div class="page-title">Leads</div>
+        <div class="page-sub">Pessoas que clicaram no WhatsApp pelo seu site</div>
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <div>
+              <div class="card-title">Lista de Leads</div>
+              <div class="card-desc" style="margin-bottom:0">Rastreados automaticamente pelo site</div>
+            </div>
+            <button class="btn-danger" onclick="clearLeads()">🗑 Limpar tudo</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Ação</th><th>Cidade</th><th>Plano de Interesse</th><th>Data & Hora</th></tr></thead>
+              <tbody id="leads-table"><tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:24px;">Nenhum lead registrado ainda. Os cliques no WhatsApp aparecerão aqui.</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ PLANOS ══ -->
+      <div class="page" id="page-planos">
+        <div class="page-title">Planos</div>
+        <div class="page-sub">Configure os planos exibidos no site</div>
+        <div class="alert alert-success" id="planos-alert">✅ Planos salvos com sucesso!</div>
+        <div id="planos-container"></div>
+        <button class="btn-save" onclick="savePlanos()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Salvar Planos
+        </button>
+      </div>
+
+      <!-- ══ CIDADES ══ -->
+      <div class="page" id="page-cidades">
+        <div class="page-title">Cidades Atendidas</div>
+        <div class="page-sub">Gerencie as cidades que aparecem no site</div>
+        <div class="alert alert-success" id="cidades-alert">✅ Cidades salvas!</div>
+        <div class="card">
+          <div class="card-title">Adicionar cidade</div>
+          <div class="grid-3" style="margin-bottom:12px;">
+            <div class="field" style="margin:0;"><label>Nome da cidade</label><input type="text" id="new-cidade-nome" placeholder="Ex: Teresina" /></div>
+            <div class="field" style="margin:0;"><label>Estado (UF)</label><input type="text" id="new-cidade-uf" placeholder="PI" maxlength="2" /></div>
+            <div class="field" style="margin:0;display:flex;align-items:flex-end;"><button class="btn-add" style="margin:0;width:100%;justify-content:center;" onclick="addCidade()">+ Adicionar</button></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Cidades cadastradas</div>
+          <div class="card-desc">Todas as cidades exibidas na tela de seleção e seção de cobertura</div>
+          <div id="cidades-list"></div>
+          <button class="btn-save" style="margin-top:6px;" onclick="saveCidades()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Salvar Alterações
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ DEPOIMENTOS ══ -->
+      <div class="page" id="page-depoimentos">
+        <div class="page-title">Depoimentos</div>
+        <div class="page-sub">Edite os depoimentos exibidos no site</div>
+        <div class="alert alert-success" id="dep-alert">✅ Depoimentos salvos!</div>
+        <div id="dep-container"></div>
+        <button class="btn-add" onclick="addDepoimento()">+ Novo depoimento</button>
+        <br/>
+        <button class="btn-save" onclick="saveDepoimentos()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Salvar Depoimentos
+        </button>
+      </div>
+
+      <!-- ══ FAQ ══ -->
+      <div class="page" id="page-faq">
+        <div class="page-title">FAQ — Perguntas Frequentes</div>
+        <div class="page-sub">Gerencie as perguntas e respostas do site</div>
+        <div class="alert alert-success" id="faq-alert">✅ FAQ salvo!</div>
+        <div id="faq-container"></div>
+        <button class="btn-add" onclick="addFaq()">+ Nova pergunta</button>
+        <br/>
+        <button class="btn-save" onclick="saveFaq()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Salvar FAQ
+        </button>
+      </div>
+
+      <!-- ══ EMPRESA ══ -->
+      <div class="page" id="page-empresa">
+        <div class="page-title">Dados da Empresa</div>
+        <div class="page-sub">Essas informações aparecem no site, header, footer e mensagens de WhatsApp</div>
+        <div class="alert alert-success" id="empresa-alert">✅ Dados salvos com sucesso!</div>
+        <div class="card">
+          <div class="card-title">📋 Informações Básicas</div>
+          <div class="card-desc">Dados principais da empresa</div>
+          <div class="grid-2">
+            <div class="field"><label>Nome da empresa</label><input type="text" id="e-nome" placeholder="Connect Provedor" /></div>
+            <div class="field"><label>Slogan / Tagline</label><input type="text" id="e-slogan" placeholder="Internet fibra para quem não aceita instabilidade" /></div>
+            <div class="field"><label>WhatsApp (com DDI+DDD)</label><input type="text" id="e-whatsapp" placeholder="5586988665182" /></div>
+            <div class="field"><label>Telefone principal</label><input type="text" id="e-telefone" placeholder="(86) 98866-5182" /></div>
+            <div class="field"><label>E-mail de contato</label><input type="email" id="e-email" placeholder="contato@connectprovedor.com.br" /></div>
+            <div class="field"><label>CNPJ</label><input type="text" id="e-cnpj" placeholder="00.000.000/0001-00" /></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📍 Endereço</div>
+          <div class="grid-2">
+            <div class="field"><label>Endereço completo</label><input type="text" id="e-endereco" placeholder="Rua Principal, 123 — Porto, PI" /></div>
+            <div class="field"><label>Cidade / Estado</label><input type="text" id="e-cidade" placeholder="Porto-PI" /></div>
+            <div class="field"><label>CEP</label><input type="text" id="e-cep" placeholder="64000-000" /></div>
+            <div class="field"><label>Link Google Maps</label><input type="text" id="e-maps" placeholder="https://maps.google.com/..." /></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">📱 Redes Sociais</div>
+          <div class="grid-2">
+            <div class="field"><label>Instagram</label><input type="text" id="e-instagram" placeholder="@connectprovedor" /></div>
+            <div class="field"><label>Facebook</label><input type="text" id="e-facebook" placeholder="https://facebook.com/connectprovedor" /></div>
+            <div class="field"><label>TikTok</label><input type="text" id="e-tiktok" placeholder="@connectprovedor" /></div>
+            <div class="field"><label>YouTube</label><input type="text" id="e-youtube" placeholder="https://youtube.com/@connect" /></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🕐 Horário de Atendimento</div>
+          <div class="grid-2">
+            <div class="field"><label>Dias de atendimento</label><input type="text" id="e-horario-dias" placeholder="Seg a Sex" /></div>
+            <div class="field"><label>Horário</label><input type="text" id="e-horario-hrs" placeholder="8h às 18h" /></div>
+            <div class="field"><label>Sábado</label><input type="text" id="e-horario-sab" placeholder="8h às 12h" /></div>
+            <div class="field"><label>Domingo</label><input type="text" id="e-horario-dom" placeholder="Fechado" /></div>
+          </div>
+        </div>
+        <button class="btn-save" onclick="saveEmpresa()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Salvar Dados
+        </button>
+      </div>
+
+      <!-- ══ IDENTIDADE VISUAL ══ -->
+      <div class="page" id="page-identidade">
+        <div class="page-title">Identidade Visual & Configurações</div>
+        <div class="page-sub">Personalize as cores e imagens do site</div>
+        <div class="alert alert-success" id="id-alert">✅ Identidade visual salva!</div>
+        <div class="card">
+          <div class="card-title">🎨 Cores do Site</div>
+          <div class="card-desc">Cores principais usadas em todo o site</div>
+          <div class="grid-3">
+            <div class="field"><label>Cor Principal (Azul Navy)</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" id="c-navy" value="#0F2D6D" style="width:48px;height:38px;border-radius:8px;border:none;cursor:pointer;padding:2px;" /><input type="text" id="c-navy-hex" value="#0F2D6D" style="flex:1;" /></div></div>
+            <div class="field"><label>Cor Secundária (Azul)</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" id="c-blue" value="#2B5FDB" style="width:48px;height:38px;border-radius:8px;border:none;cursor:pointer;padding:2px;" /><input type="text" id="c-blue-hex" value="#2B5FDB" style="flex:1;" /></div></div>
+            <div class="field"><label>Cor de Destaque (Ciano)</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" id="c-cyan" value="#00D4FF" style="width:48px;height:38px;border-radius:8px;border:none;cursor:pointer;padding:2px;" /><input type="text" id="c-cyan-hex" value="#00D4FF" style="flex:1;" /></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🖼️ Logo & Imagens</div>
+          <div class="grid-2">
+            <div class="field"><label>URL do Logo</label><input type="text" id="id-logo" placeholder="img/logo connect.png" /></div>
+            <div class="field"><label>URL do Mascote</label><input type="text" id="id-mascote" placeholder="img/masconte connect.png" /></div>
+            <div class="field"><label>Texto institucional curto</label><input type="text" id="id-desc-curta" placeholder="Internet fibra óptica de qualidade para Porto-PI" /></div>
+            <div class="field"><label>Texto do Hero (título)</label><input type="text" id="id-hero-titulo" placeholder="Internet fibra para quem não aceita instabilidade" /></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">💬 Mensagem padrão WhatsApp</div>
+          <div class="card-desc">Mensagem enviada quando o cliente clica em "Chamar no WhatsApp" sem escolher plano</div>
+          <div class="field"><label>Mensagem padrão</label><textarea id="id-msg-wa" rows="3" placeholder="Olá! Quero contratar internet da Connect!"></textarea></div>
+        </div>
+        <button class="btn-save" onclick="saveIdentidade()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Salvar Identidade Visual
+        </button>
+      </div>
+
+      <!-- ══ USUÁRIOS ══ -->
+      <div class="page" id="page-usuarios">
+        <div class="page-title">Usuários</div>
+        <div class="page-sub">Gerencie o acesso ao painel administrativo</div>
+        <div class="alert alert-success" id="user-alert">✅ Senha alterada com sucesso!</div>
+        <div class="card">
+          <div class="card-title">👤 Conta Administrador</div>
+          <div class="card-desc">O painel possui acesso único de administrador</div>
+          <div class="user-row">
+            <div class="user-info">
+              <div class="user-avatar">AD</div>
+              <div>
+                <div style="font-size:.88rem;font-weight:600;color:#1e293b;">Admin</div>
+                <div style="font-size:.75rem;color:#94a3b8;">Acesso total ao painel</div>
+              </div>
+            </div>
+            <span class="badge badge-green">Ativo</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">🔑 Alterar Senha</div>
+          <div class="card-desc">Altere a senha de acesso ao painel administrativo</div>
+          <div class="grid-2">
+            <div class="field"><label>Senha atual</label><input type="password" id="pass-atual" placeholder="Senha atual" /></div>
+            <div class="field"></div>
+            <div class="field"><label>Nova senha</label><input type="password" id="pass-nova" placeholder="Nova senha" /></div>
+            <div class="field"><label>Confirmar nova senha</label><input type="password" id="pass-confirm" placeholder="Confirme a nova senha" /></div>
+          </div>
+          <button class="btn-save" onclick="savePassword()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Alterar Senha
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ API & INTEGRAÇÕES ══ -->
+      <div class="page" id="page-api">
+        <div class="page-title">API & Integrações</div>
+        <div class="page-sub">Conecte seu site a ferramentas externas e configure webhooks</div>
+        <div class="alert alert-success" id="api-alert">✅ Configurações de API salvas!</div>
+
+        <!-- Chave de API -->
+        <div class="card">
+          <div class="card-title">🔑 Chave de API</div>
+          <div class="card-desc">Use esta chave para autenticar integrações externas com seu painel Connect</div>
+          <div class="api-key-box">
+            <span class="api-key-value" id="api-key-display">—</span>
+            <button class="btn-copy" onclick="copyApiKey()">Copiar</button>
+            <button class="btn-regen" onclick="regenApiKey()">🔄 Gerar nova</button>
+          </div>
+          <p style="font-size:.75rem;color:#94a3b8;">⚠️ Não compartilhe esta chave. Ela dá acesso às configurações do seu painel.</p>
+        </div>
+
+        <!-- Webhooks -->
+        <div class="card">
+          <div class="card-title">🔗 Webhooks</div>
+          <div class="card-desc">Receba notificações em tempo real quando um lead clicar no WhatsApp</div>
+          <div class="field">
+            <label>URL do Webhook (Lead capturado)</label>
+            <div class="webhook-row">
+              <input type="text" id="wh-lead" placeholder="https://n8n.seuservidor.com/webhook/connect-leads" />
+              <button class="btn-copy" onclick="testWebhook('lead')" style="background:#10b981;">▶ Testar</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>URL do Webhook (Cidade não atendida)</label>
+            <div class="webhook-row">
+              <input type="text" id="wh-naoatende" placeholder="https://n8n.seuservidor.com/webhook/connect-nao-atende" />
+              <button class="btn-copy" onclick="testWebhook('naoatende')" style="background:#10b981;">▶ Testar</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>URL do Webhook (Visita ao site)</label>
+            <div class="webhook-row">
+              <input type="text" id="wh-visita" placeholder="https://n8n.seuservidor.com/webhook/connect-visita" />
+              <button class="btn-copy" onclick="testWebhook('visita')" style="background:#10b981;">▶ Testar</button>
+            </div>
+          </div>
+          <button class="btn-save" onclick="saveWebhooks()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Salvar Webhooks
+          </button>
+        </div>
+
+        <!-- Integrações -->
+        <div class="card">
+          <div class="card-title">🔌 Integrações Disponíveis</div>
+          <div class="card-desc">Ative e configure ferramentas de automação e CRM</div>
+
+          <div class="integration-card">
+            <div class="integration-info">
+              <div class="integration-icon" style="background:#f0fdf4;">📱</div>
+              <div>
+                <div class="integration-name">WhatsApp Business API</div>
+                <div class="integration-desc">Envie mensagens automáticas para novos leads</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="badge badge-gray" id="badge-wa">Desativado</span>
+              <label class="toggle"><input type="checkbox" id="int-wa" onchange="toggleIntegration('wa')"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="integration-card">
+            <div class="integration-info">
+              <div class="integration-icon" style="background:#fef3c7;">⚡</div>
+              <div>
+                <div class="integration-name">n8n / Make / Zapier</div>
+                <div class="integration-desc">Automações via webhook — configure a URL acima</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="badge badge-gray" id="badge-n8n">Desativado</span>
+              <label class="toggle"><input type="checkbox" id="int-n8n" onchange="toggleIntegration('n8n')"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="integration-card">
+            <div class="integration-info">
+              <div class="integration-icon" style="background:#f0f9ff;">📊</div>
+              <div>
+                <div class="integration-name">Google Sheets</div>
+                <div class="integration-desc">Salve leads automaticamente numa planilha</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="badge badge-gray" id="badge-sheets">Desativado</span>
+              <label class="toggle"><input type="checkbox" id="int-sheets" onchange="toggleIntegration('sheets')"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+
+          <div class="integration-card">
+            <div class="integration-info">
+              <div class="integration-icon" style="background:#fdf4ff;">🤖</div>
+              <div>
+                <div class="integration-name">Agente IA (ChatGPT / Claude)</div>
+                <div class="integration-desc">Responda leads automaticamente com IA</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span class="badge badge-gray" id="badge-ia">Desativado</span>
+              <label class="toggle"><input type="checkbox" id="int-ia" onchange="toggleIntegration('ia')"><span class="toggle-slider"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payload de exemplo -->
+        <div class="card">
+          <div class="card-title">📄 Exemplo de Payload (Webhook Lead)</div>
+          <div class="card-desc">Esse JSON é enviado para o seu webhook quando um lead clica no WhatsApp</div>
+          <div class="code-block"><span class="cm">// POST → sua URL de webhook</span>
+{
+  <span class="kw">"evento"</span>: <span class="str">"lead_capturado"</span>,
+  <span class="kw">"timestamp"</span>: <span class="str">"2026-05-26T14:30:00Z"</span>,
+  <span class="kw">"origem"</span>: <span class="str">"site_connect"</span>,
+  <span class="kw">"lead"</span>: {
+    <span class="kw">"cidade"</span>: <span class="str">"Porto"</span>,
+    <span class="kw">"plano_interesse"</span>: <span class="str">"1 GIGA"</span>,
+    <span class="kw">"mensagem_wa"</span>: <span class="str">"Olá! Moro em Porto e tenho interesse no plano 1 GIGA..."</span>,
+    <span class="kw">"pagina"</span>: <span class="str">"https://seusite.com.br"</span>
+  }
+}</div>
+          <div style="margin-top:14px;">
+            <div class="field"><label>Chave da API do n8n / Zapier / Make (opcional)</label><input type="text" id="api-ext-key" placeholder="Bearer sk-xxxx..." /></div>
+            <div class="field"><label>Token do WhatsApp Business (opcional)</label><input type="text" id="api-wa-token" placeholder="EAAxxxxx..." /></div>
+            <div class="field"><label>ID do número WhatsApp Business</label><input type="text" id="api-wa-phone-id" placeholder="123456789012345" /></div>
+          </div>
+          <button class="btn-save" onclick="saveApiConfig()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Salvar Configurações de API
+          </button>
+        </div>
+      </div>
+
+      <!-- ══ MARKETING ══ -->
+      <div class="page" id="page-marketing">
+        <div class="page-title">Marketing & Tracking</div>
+        <div class="page-sub">Configure ferramentas de rastreamento e análise</div>
+        <div class="alert alert-success" id="mkt-alert">✅ Configurações de marketing salvas!</div>
+
+        <div class="card">
+          <div class="card-title">📊 Google Tag Manager</div>
+          <div class="card-desc">Gerencie todos os seus pixels e scripts de tracking em um só lugar</div>
+          <div class="grid-2">
+            <div class="field">
+              <label>ID do GTM</label>
+              <input type="text" id="mkt-gtm" placeholder="GTM-XXXXXXXX" />
+            </div>
+            <div class="field" style="display:flex;align-items:flex-end;">
+              <div class="tracking-status" id="gtm-status">
+                <div class="dot dot-gray"></div>
+                <span>Não configurado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📘 Meta Pixel (Facebook / Instagram Ads)</div>
+          <div class="card-desc">Rastreie conversões e crie públicos para campanhas</div>
+          <div class="grid-2">
+            <div class="field">
+              <label>ID do Pixel</label>
+              <input type="text" id="mkt-fbpixel" placeholder="1234567890123456" />
+            </div>
+            <div class="field">
+              <label>Token de Acesso (CAPI)</label>
+              <input type="text" id="mkt-fbtoken" placeholder="EAAxxxxxx (opcional)" />
+            </div>
+          </div>
+          <div class="field">
+            <label>Evento de conversão</label>
+            <select id="mkt-fb-event">
+              <option value="Lead">Lead (padrão)</option>
+              <option value="Contact">Contact</option>
+              <option value="InitiateCheckout">InitiateCheckout</option>
+              <option value="ViewContent">ViewContent</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📈 Google Analytics (GA4)</div>
+          <div class="grid-2">
+            <div class="field"><label>ID de Medição (G-XXXXXXXX)</label><input type="text" id="mkt-ga4" placeholder="G-XXXXXXXXXX" /></div>
+            <div class="field" style="display:flex;align-items:flex-end;">
+              <div class="tracking-status" id="ga4-status">
+                <div class="dot dot-gray"></div>
+                <span>Não configurado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔵 TikTok Pixel</div>
+          <div class="grid-2">
+            <div class="field"><label>ID do Pixel TikTok</label><input type="text" id="mkt-tiktok" placeholder="CXXXXXXXXXXXXXXXX" /></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🛡️ Outros Scripts</div>
+          <div class="card-desc">Adicione scripts personalizados no head ou body do site</div>
+          <div class="field"><label>Script personalizado (head)</label><textarea id="mkt-script-head" rows="4" placeholder="<!-- Cole aqui scripts para o <head> -->"></textarea></div>
+          <div class="field"><label>Script personalizado (body)</label><textarea id="mkt-script-body" rows="4" placeholder="<!-- Cole aqui scripts para o <body> -->"></textarea></div>
+        </div>
+
+        <button class="btn-save" onclick="saveMarketing()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Salvar Marketing & Tracking
+        </button>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// ══════════════════════════════════════════
+//  CONNECT ADMIN — Script Principal
+// ══════════════════════════════════════════
+
+// ── STORAGE HELPERS ──────────────────────
+function ls(key){ try{ return JSON.parse(localStorage.getItem('connect_admin_'+key)); }catch(e){ return null; } }
+function lsSet(key, val){ localStorage.setItem('connect_admin_'+key, JSON.stringify(val)); }
+
+// ── DEFAULTS ─────────────────────────────
+var DEFAULT_PLANOS = [
+  { nome:'700 Megas', velocidade:'700', preco:'Consulte', features:['Internet estável e rápida','Streaming em HD sem travamentos','Perfeito para uso diário'] },
+  { nome:'800 Megas', velocidade:'800', preco:'Consulte', features:['Conexão para vários dispositivos','Streaming Full HD sem interrupções','Jogos online sem lag','Excelente custo-benefício'] },
+  { nome:'900 Megas', velocidade:'900', preco:'Consulte', features:['Streaming 4K com qualidade total','Home office','Downloads rápidos e estáveis'] },
+  { nome:'1 GIGA',   velocidade:'1000', preco:'Consulte', features:['Ultra velocidade para toda a família ou empresa','4K simultâneo sem travar','Ultra-rápido'] }
+];
+var DEFAULT_CIDADES = [
+  {nome:'Porto e Região', uf:'PI'},
+  {nome:'Campo Largo do Piauí e Região', uf:'PI'},
+  {nome:'Nossa Senhora dos Remédios e Região', uf:'PI'},
+  {nome:'Miguel Alves e Região', uf:'PI'},
+  {nome:'Barras e Região', uf:'PI'},
+  {nome:'Zona Rural de União', uf:'PI'},
+  {nome:'Zona Rural de Buriti', uf:'MA'}
+];
+var DEFAULT_DEPOIMENTOS = [
+  { nome:'Maria Rosa', inicial:'MR', desde:'Cliente há 2 anos', texto:'"Internet rápida e não cai. Assistir Netflix aqui em casa ficou bem melhor. Recomendo!"', estrelas:5 },
+  { nome:'João Silva',  inicial:'JS', desde:'Cliente há 1 ano',  texto:'"Jogo Free Fire sem lag nenhum. O ping ficou muito bom depois que mudei pra Connect. Vale a pena."', estrelas:5 },
+  { nome:'Ana Costa',   inicial:'AC', desde:'Cliente há 3 anos', texto:'"Trabalho de casa com reuniões pelo Zoom. A internet nunca me deixou na mão. Suporte sempre atencioso."', estrelas:5 }
+];
+var DEFAULT_FAQ = [
+  { pergunta:'Como funciona a instalação?', resposta:'Após você entrar em contato e escolher o plano, nossa equipe agenda a visita técnica. A instalação geralmente leva de 2 a 4 horas.' },
+  { pergunta:'Tem fidelidade?', resposta:'Este plano possui fidelidade de 12 meses, garantindo benefícios exclusivos na instalação e mensalidade.' },
+  { pergunta:'A velocidade é garantida?', resposta:'Sim! Como trabalhamos com fibra óptica de ponta a ponta, a velocidade contratada é entregue diretamente na sua casa.' },
+  { pergunta:'Como funciona o suporte técnico?', resposta:'Nosso suporte funciona via WhatsApp com atendimento humano. Estamos disponíveis para resolver qualquer problema rapidamente.' },
+  { pergunta:'O roteador está incluso?', resposta:'Sim! Fornecemos o roteador Wi-Fi adequado para o plano contratado sem custo adicional.' },
+  { pergunta:'Como faço para pagar a fatura?', resposta:'A fatura é disponibilizada mensalmente para pagamento via boleto e Pix. Também oferecemos carnê com parcelas.' }
+];
+
+// ── LOGIN ─────────────────────────────────
+function doLogin(){
+  var pass = document.getElementById('login-pass').value;
+  var saved = ls('password') || 'connect2025';
+  if(pass === saved){
+    lsSet('session', true);
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initApp();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+function doLogout(){
+  lsSet('session', false);
+  location.reload();
+}
+function checkSession(){
+  if(ls('session') === true){
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    initApp();
+  }
+}
+
+// ── NAVIGATION ───────────────────────────
+var pages = {
+  'dashboard':'Dashboard','leads':'Leads','planos':'Planos','cidades':'Cidades Atendidas',
+  'depoimentos':'Depoimentos','faq':'FAQ','empresa':'Dados da Empresa',
+  'identidade':'Identidade Visual','usuarios':'Usuários','api':'API & Integrações','marketing':'Marketing & Tracking'
+};
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  var pg = document.getElementById('page-'+id);
+  if(pg) pg.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(function(n){
+    if(n.getAttribute('onclick') && n.getAttribute('onclick').indexOf("'"+id+"'") !== -1) n.classList.add('active');
+  });
+  document.getElementById('topbar-title').textContent = pages[id] || id;
+  if(id==='leads') renderLeads();
+  if(id==='planos') renderPlanos();
+  if(id==='cidades') renderCidades();
+  if(id==='depoimentos') renderDepoimentos();
+  if(id==='faq') renderFaq();
+  if(id==='empresa') loadEmpresa();
+  if(id==='identidade') loadIdentidade();
+  if(id==='marketing') loadMarketing();
+  if(id==='api') loadApi();
+  if(id==='usuarios') {};
+  window.scrollTo(0,0);
+}
+
+// ── INIT ─────────────────────────────────
+function initApp(){
+  updateStats();
+  renderLeadsPreview();
+  loadMarketing(); // verifica GTM
+}
+
+// ── STATS ─────────────────────────────────
+function updateStats(){
+  var leads = ls('leads') || [];
+  var cidades = ls('cidades') || DEFAULT_CIDADES;
+  document.getElementById('stat-leads').textContent = leads.length;
+  document.getElementById('stat-cidades').textContent = cidades.length;
+  document.getElementById('stat-planos').textContent = (ls('planos') || DEFAULT_PLANOS).length;
+  // visitas simuladas
+  var v = ls('visitas') || Math.floor(Math.random()*80)+20;
+  lsSet('visitas', v);
+  document.getElementById('stat-visits').textContent = v;
+}
+
+// ── LEADS ─────────────────────────────────
+function renderLeads(){
+  var leads = ls('leads') || [];
+  var tb = document.getElementById('leads-table');
+  if(!leads.length){
+    tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:24px;">Nenhum lead registrado ainda.</td></tr>';
+    return;
+  }
+  tb.innerHTML = leads.map(function(l,i){
+    return '<tr><td style="color:#94a3b8;">'+(leads.length-i)+'</td><td>'+l.acao+'</td><td><span class="badge badge-blue">'+l.cidade+'</span></td><td>'+l.plano+'</td><td style="color:#94a3b8;font-size:.78rem;">'+l.data+'</td></tr>';
+  }).reverse().join('');
+}
+function renderLeadsPreview(){
+  var leads = ls('leads') || [];
+  var tb = document.getElementById('leads-preview');
+  var slice = leads.slice(-5).reverse();
+  if(!slice.length){
+    tb.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#94a3b8;padding:18px;">Nenhum lead ainda.</td></tr>';
+    return;
+  }
+  tb.innerHTML = slice.map(function(l){
+    return '<tr><td>'+l.acao+'</td><td><span class="badge badge-blue">'+l.cidade+'</span></td><td>'+l.plano+'</td><td style="color:#94a3b8;font-size:.78rem;">'+l.data+'</td><td><span class="badge badge-green">WhatsApp</span></td></tr>';
+  }).join('');
+}
+function clearLeads(){
+  if(confirm('Apagar todos os leads?')){ lsSet('leads',[]); renderLeads(); updateStats(); }
+}
+
+// ── PLANOS ───────────────────────────────
+function renderPlanos(){
+  var planos = ls('planos') || DEFAULT_PLANOS;
+  var c = document.getElementById('planos-container');
+  c.innerHTML = planos.map(function(p,i){
+    return '<div class="plan-card"><div class="plan-header"><span class="plan-name">⚡ '+p.nome+'</span><button class="btn-danger" onclick="deletePlano('+i+')">🗑 Remover</button></div><div class="grid-3" style="margin-bottom:12px;"><div class="field" style="margin:0;"><label>Nome do plano</label><input type="text" id="p-nome-'+i+'" value="'+p.nome+'" /></div><div class="field" style="margin:0;"><label>Preço / Label</label><input type="text" id="p-preco-'+i+'" value="'+p.preco+'" placeholder="Consulte / R$ 89,90" /></div><div class="field" style="margin:0;"><label>Velocidade (Mbps)</label><input type="text" id="p-vel-'+i+'" value="'+p.velocidade+'" /></div></div><div><div style="font-size:.78rem;font-weight:500;color:#475569;margin-bottom:8px;">Benefícios / Features</div><ul class="features-list" id="feat-'+i+'">'+p.features.map(function(f,fi){ return '<li class="feature-item"><input type="text" value="'+f+'" id="pf-'+i+'-'+fi+'" /><button class="btn-remove-feature" onclick="removeFeature('+i+','+fi+')">×</button></li>'; }).join('')+'</ul><button class="btn-add-feature" onclick="addFeature('+i+')">+ Adicionar benefício</button></div></div>';
+  }).join('');
+}
+function addFeature(pi){
+  var planos = ls('planos') || DEFAULT_PLANOS;
+  planos[pi].features.push('Novo benefício');
+  lsSet('planos', planos); renderPlanos();
+}
+function removeFeature(pi,fi){
+  var planos = ls('planos') || DEFAULT_PLANOS;
+  planos[pi].features.splice(fi,1);
+  lsSet('planos', planos); renderPlanos();
+}
+function deletePlano(i){
+  if(!confirm('Remover este plano?')) return;
+  var planos = ls('planos') || DEFAULT_PLANOS;
+  planos.splice(i,1); lsSet('planos', planos); renderPlanos();
+}
+function savePlanos(){
+  var planos = ls('planos') || DEFAULT_PLANOS;
+  planos.forEach(function(p,i){
+    p.nome   = document.getElementById('p-nome-'+i)?.value || p.nome;
+    p.preco  = document.getElementById('p-preco-'+i)?.value || p.preco;
+    p.velocidade = document.getElementById('p-vel-'+i)?.value || p.velocidade;
+    p.features = p.features.map(function(f,fi){ return document.getElementById('pf-'+i+'-'+fi)?.value || f; });
+  });
+  lsSet('planos', planos);
+  showAlert('planos-alert');
+  updateStats();
+}
+
+// ── CIDADES ──────────────────────────────
+function renderCidades(){
+  var cidades = ls('cidades') || DEFAULT_CIDADES;
+  var c = document.getElementById('cidades-list');
+  if(!cidades.length){ c.innerHTML='<p style="color:#94a3b8;font-size:.85rem;">Nenhuma cidade cadastrada.</p>'; return; }
+  c.innerHTML = cidades.map(function(ci,i){
+    return '<div class="city-item"><div class="city-info"><span class="city-flag">📍</span><input type="text" value="'+ci.nome+'" id="ci-nome-'+i+'" style="border:none;font-size:.88rem;font-weight:500;color:#334155;background:transparent;outline:none;width:280px;" /><input type="text" value="'+ci.uf+'" id="ci-uf-'+i+'" style="border:none;font-size:.75rem;color:#94a3b8;background:#f1f5f9;padding:2px 7px;border-radius:5px;width:40px;text-align:center;outline:none;" /></div><button class="btn-danger" onclick="deleteCidade('+i+')">🗑</button></div>';
+  }).join('');
+}
+function addCidade(){
+  var nome = document.getElementById('new-cidade-nome').value.trim();
+  var uf   = document.getElementById('new-cidade-uf').value.trim().toUpperCase();
+  if(!nome) return alert('Digite o nome da cidade.');
+  var cidades = ls('cidades') || DEFAULT_CIDADES;
+  cidades.push({nome:nome, uf:uf||'PI'});
+  lsSet('cidades', cidades);
+  document.getElementById('new-cidade-nome').value='';
+  document.getElementById('new-cidade-uf').value='';
+  renderCidades(); updateStats();
+}
+function deleteCidade(i){
+  if(!confirm('Remover esta cidade?')) return;
+  var cidades = ls('cidades') || DEFAULT_CIDADES;
+  cidades.splice(i,1); lsSet('cidades', cidades); renderCidades(); updateStats();
+}
+function saveCidades(){
+  var cidades = ls('cidades') || DEFAULT_CIDADES;
+  cidades.forEach(function(ci,i){
+    ci.nome = document.getElementById('ci-nome-'+i)?.value || ci.nome;
+    ci.uf   = document.getElementById('ci-uf-'+i)?.value || ci.uf;
+  });
+  lsSet('cidades', cidades);
+  showAlert('cidades-alert');
+  updateStats();
+}
+
+// ── DEPOIMENTOS ──────────────────────────
+function renderDepoimentos(){
+  var deps = ls('depoimentos') || DEFAULT_DEPOIMENTOS;
+  var c = document.getElementById('dep-container');
+  c.innerHTML = deps.map(function(d,i){
+    var stars = '';
+    for(var s=1;s<=5;s++) stars += '<button class="star-btn '+(s<=d.estrelas?'active':'')+'" onclick="setStars('+i+','+s+')">★</button>';
+    return '<div class="dep-card"><div class="plan-header"><span class="plan-name">💬 Depoimento '+(i+1)+'</span><button class="btn-danger" onclick="deleteDepoimento('+i+')">🗑 Remover</button></div><div class="grid-2"><div class="field" style="margin:0;"><label>Nome</label><input type="text" id="d-nome-'+i+'" value="'+d.nome+'" /></div><div class="field" style="margin:0;"><label>Iniciais (avatar)</label><input type="text" id="d-ini-'+i+'" value="'+d.inicial+'" maxlength="2" /></div></div><div class="field" style="margin-top:10px;"><label>Subtítulo (ex: Cliente há 2 anos)</label><input type="text" id="d-desde-'+i+'" value="'+d.desde+'" /></div><div class="field"><label>Texto do depoimento</label><textarea id="d-texto-'+i+'" rows="3">'+d.texto+'</textarea></div><div><label style="font-size:.78rem;font-weight:500;color:#475569;display:block;margin-bottom:6px;">Estrelas</label><div class="stars-select" id="stars-'+i+'">'+stars+'</div></div></div>';
+  }).join('');
+}
+function setStars(di,val){
+  var deps = ls('depoimentos') || DEFAULT_DEPOIMENTOS;
+  deps[di].estrelas = val;
+  lsSet('depoimentos', deps); renderDepoimentos();
+}
+function addDepoimento(){
+  var deps = ls('depoimentos') || DEFAULT_DEPOIMENTOS;
+  deps.push({nome:'Novo Cliente', inicial:'NC', desde:'Cliente recente', texto:'"Ótimo serviço!"', estrelas:5});
+  lsSet('depoimentos', deps); renderDepoimentos();
+}
+function deleteDepoimento(i){
+  if(!confirm('Remover este depoimento?')) return;
+  var deps = ls('depoimentos') || DEFAULT_DEPOIMENTOS;
+  deps.splice(i,1); lsSet('depoimentos', deps); renderDepoimentos();
+}
+function saveDepoimentos(){
+  var deps = ls('depoimentos') || DEFAULT_DEPOIMENTOS;
+  deps.forEach(function(d,i){
+    d.nome   = document.getElementById('d-nome-'+i)?.value || d.nome;
+    d.inicial= document.getElementById('d-ini-'+i)?.value || d.inicial;
+    d.desde  = document.getElementById('d-desde-'+i)?.value || d.desde;
+    d.texto  = document.getElementById('d-texto-'+i)?.value || d.texto;
+  });
+  lsSet('depoimentos', deps);
+  showAlert('dep-alert');
+}
+
+// ── FAQ ───────────────────────────────────
+function renderFaq(){
+  var faqs = ls('faq') || DEFAULT_FAQ;
+  var c = document.getElementById('faq-container');
+  c.innerHTML = faqs.map(function(f,i){
+    return '<div class="faq-item"><div class="faq-item-header"><span class="faq-num">Pergunta '+(i+1)+'</span><button class="btn-danger" onclick="deleteFaq('+i+')">🗑 Remover</button></div><div class="field"><label>Pergunta</label><input type="text" id="fq-p-'+i+'" value="'+f.pergunta.replace(/"/g,'&quot;')+'" /></div><div class="field"><label>Resposta</label><textarea id="fq-r-'+i+'" rows="3">'+f.resposta+'</textarea></div></div>';
+  }).join('');
+}
+function addFaq(){
+  var faqs = ls('faq') || DEFAULT_FAQ;
+  faqs.push({pergunta:'Nova pergunta?', resposta:'Resposta aqui.'});
+  lsSet('faq', faqs); renderFaq();
+}
+function deleteFaq(i){
+  if(!confirm('Remover esta pergunta?')) return;
+  var faqs = ls('faq') || DEFAULT_FAQ;
+  faqs.splice(i,1); lsSet('faq', faqs); renderFaq();
+}
+function saveFaq(){
+  var faqs = ls('faq') || DEFAULT_FAQ;
+  faqs.forEach(function(f,i){
+    f.pergunta = document.getElementById('fq-p-'+i)?.value || f.pergunta;
+    f.resposta = document.getElementById('fq-r-'+i)?.value || f.resposta;
+  });
+  lsSet('faq', faqs);
+  showAlert('faq-alert');
+}
+
+// ── EMPRESA ───────────────────────────────
+function loadEmpresa(){
+  var e = ls('empresa') || {};
+  var fields = ['nome','slogan','whatsapp','telefone','email','cnpj','endereco','cidade','cep','maps','instagram','facebook','tiktok','youtube','horario-dias','horario-hrs','horario-sab','horario-dom'];
+  fields.forEach(function(f){ var el = document.getElementById('e-'+f); if(el && e[f]) el.value = e[f]; });
+}
+function saveEmpresa(){
+  var e = {};
+  var fields = ['nome','slogan','whatsapp','telefone','email','cnpj','endereco','cidade','cep','maps','instagram','facebook','tiktok','youtube','horario-dias','horario-hrs','horario-sab','horario-dom'];
+  fields.forEach(function(f){ var el = document.getElementById('e-'+f); if(el) e[f] = el.value; });
+  lsSet('empresa', e);
+  showAlert('empresa-alert');
+}
+
+// ── IDENTIDADE VISUAL ────────────────────
+function loadIdentidade(){
+  var id = ls('identidade') || {};
+  if(id['c-navy']){ document.getElementById('c-navy').value=id['c-navy']; document.getElementById('c-navy-hex').value=id['c-navy']; }
+  if(id['c-blue']){ document.getElementById('c-blue').value=id['c-blue']; document.getElementById('c-blue-hex').value=id['c-blue']; }
+  if(id['c-cyan']){ document.getElementById('c-cyan').value=id['c-cyan']; document.getElementById('c-cyan-hex').value=id['c-cyan']; }
+  ['logo','mascote','desc-curta','hero-titulo','msg-wa'].forEach(function(k){ var el=document.getElementById('id-'+k); if(el&&id[k]) el.value=id[k]; });
+  // sincronizar cor ↔ hex
+  ['navy','blue','cyan'].forEach(function(c){
+    document.getElementById('c-'+c).addEventListener('input',function(){ document.getElementById('c-'+c+'-hex').value=this.value; });
+    document.getElementById('c-'+c+'-hex').addEventListener('input',function(){ var v=this.value; if(/^#[0-9A-Fa-f]{6}$/.test(v)) document.getElementById('c-'+c).value=v; });
+  });
+}
+function saveIdentidade(){
+  var id = {};
+  ['navy','blue','cyan'].forEach(function(c){ id['c-'+c]=document.getElementById('c-'+c).value; });
+  ['logo','mascote','desc-curta','hero-titulo','msg-wa'].forEach(function(k){ var el=document.getElementById('id-'+k); if(el) id[k]=el.value; });
+  lsSet('identidade',id);
+  showAlert('id-alert');
+}
+
+// ── USUÁRIOS ─────────────────────────────
+function savePassword(){
+  var atual   = document.getElementById('pass-atual').value;
+  var nova    = document.getElementById('pass-nova').value;
+  var confirm = document.getElementById('pass-confirm').value;
+  var saved   = ls('password') || 'connect2025';
+  if(atual !== saved){ alert('Senha atual incorreta.'); return; }
+  if(nova !== confirm){ alert('As senhas não coincidem.'); return; }
+  if(nova.length < 6){ alert('A nova senha deve ter pelo menos 6 caracteres.'); return; }
+  lsSet('password', nova);
+  document.getElementById('pass-atual').value='';
+  document.getElementById('pass-nova').value='';
+  document.getElementById('pass-confirm').value='';
+  showAlert('user-alert');
+}
+
+// ── API & INTEGRAÇÕES ────────────────────
+function loadApi(){
+  var apiData = ls('api') || {};
+  // Gera chave se não existir
+  if(!apiData.key) { apiData.key = 'ck_' + genKey(32); lsSet('api', apiData); }
+  document.getElementById('api-key-display').textContent = apiData.key;
+  if(apiData.wh_lead) document.getElementById('wh-lead').value = apiData.wh_lead;
+  if(apiData.wh_naoatende) document.getElementById('wh-naoatende').value = apiData.wh_naoatende;
+  if(apiData.wh_visita) document.getElementById('wh-visita').value = apiData.wh_visita;
+  if(apiData.ext_key) document.getElementById('api-ext-key').value = apiData.ext_key;
+  if(apiData.wa_token) document.getElementById('api-wa-token').value = apiData.wa_token;
+  if(apiData.wa_phone_id) document.getElementById('api-wa-phone-id').value = apiData.wa_phone_id;
+  // integrações
+  ['wa','n8n','sheets','ia'].forEach(function(k){
+    var el = document.getElementById('int-'+k);
+    var badge = document.getElementById('badge-'+k);
+    if(apiData['int_'+k]){
+      el.checked = true;
+      badge.className = 'badge badge-green';
+      badge.textContent = 'Ativado';
+    }
+  });
+}
+function regenApiKey(){
+  if(!confirm('Gerar uma nova chave? A chave atual será invalidada.')) return;
+  var apiData = ls('api') || {};
+  apiData.key = 'ck_' + genKey(32);
+  lsSet('api', apiData);
+  document.getElementById('api-key-display').textContent = apiData.key;
+}
+function copyApiKey(){
+  var key = document.getElementById('api-key-display').textContent;
+  navigator.clipboard.writeText(key).then(function(){ alert('Chave copiada!'); });
+}
+function toggleIntegration(k){
+  var el = document.getElementById('int-'+k);
+  var badge = document.getElementById('badge-'+k);
+  var apiData = ls('api') || {};
+  apiData['int_'+k] = el.checked;
+  lsSet('api', apiData);
+  badge.className = el.checked ? 'badge badge-green' : 'badge badge-gray';
+  badge.textContent = el.checked ? 'Ativado' : 'Desativado';
+}
+function saveWebhooks(){
+  var apiData = ls('api') || {};
+  apiData.wh_lead = document.getElementById('wh-lead').value;
+  apiData.wh_naoatende = document.getElementById('wh-naoatende').value;
+  apiData.wh_visita = document.getElementById('wh-visita').value;
+  lsSet('api', apiData);
+  showAlert('api-alert');
+}
+function saveApiConfig(){
+  var apiData = ls('api') || {};
+  apiData.ext_key = document.getElementById('api-ext-key').value;
+  apiData.wa_token = document.getElementById('api-wa-token').value;
+  apiData.wa_phone_id = document.getElementById('api-wa-phone-id').value;
+  lsSet('api', apiData);
+  showAlert('api-alert');
+}
+function testWebhook(type){
+  var urls = { lead: document.getElementById('wh-lead').value, naoatende: document.getElementById('wh-naoatende').value, visita: document.getElementById('wh-visita').value };
+  var url = urls[type];
+  if(!url){ alert('Configure a URL do webhook primeiro.'); return; }
+  var payload = { evento: 'teste_'+type, timestamp: new Date().toISOString(), origem: 'painel_connect', teste: true };
+  fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+    .then(function(r){ alert('✅ Webhook testado! Status: '+r.status); })
+    .catch(function(){ alert('⚠️ Não foi possível conectar. Verifique a URL e o servidor.'); });
+}
+function genKey(len){
+  var chars = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var key = '';
+  for(var i=0;i<len;i++) key += chars[Math.floor(Math.random()*chars.length)];
+  return key;
+}
+
+// ── MARKETING ────────────────────────────
+function loadMarketing(){
+  var mkt = ls('marketing') || {};
+  var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','tiktok','script-head','script-body'];
+  fields.forEach(function(f){ var el=document.getElementById('mkt-'+f); if(el && mkt[f]) el.value=mkt[f]; });
+  // Status GTM
+  var gtmEl = document.getElementById('gtm-status');
+  var ga4El = document.getElementById('ga4-status');
+  if(gtmEl) {
+    var gtmVal = mkt.gtm || '';
+    gtmEl.innerHTML = gtmVal
+      ? '<div class="dot dot-green"></div><span style="color:#16a34a;">Configurado: <strong>'+gtmVal+'</strong></span>'
+      : '<div class="dot dot-gray"></div><span>Não configurado</span>';
+  }
+  if(ga4El) {
+    var ga4Val = mkt.ga4 || '';
+    ga4El.innerHTML = ga4Val
+      ? '<div class="dot dot-green"></div><span style="color:#16a34a;">Configurado: <strong>'+ga4Val+'</strong></span>'
+      : '<div class="dot dot-gray"></div><span>Não configurado</span>';
+  }
+}
+function saveMarketing(){
+  var mkt = {};
+  var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','tiktok','script-head','script-body'];
+  fields.forEach(function(f){ var el=document.getElementById('mkt-'+f); if(el) mkt[f]=el.value; });
+  lsSet('marketing', mkt);
+  showAlert('mkt-alert');
+  loadMarketing(); // atualiza status
+}
+
+// ── HELPERS ───────────────────────────────
+function showAlert(id){
+  var el = document.getElementById(id);
+  if(!el) return;
+  el.style.display = 'block';
+  setTimeout(function(){ el.style.display='none'; }, 3000);
+}
+
+// ── INIT ─────────────────────────────────
+checkSession();
+</script>
+</body>
+</html>
