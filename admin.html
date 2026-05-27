@@ -511,11 +511,81 @@
         <div class="alert alert-success" id="id-alert">✅ Identidade visual salva!</div>
         <div class="card">
           <div class="card-title">🎨 Cores do Site</div>
-          <div class="card-desc">Cores principais usadas em todo o site</div>
-          <div class="grid-3">
-            <div class="field"><label>Cor Principal (Azul Navy)</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" id="c-navy" value="#0F2D6D" style="width:48px;height:38px;border-radius:8px;border:none;cursor:pointer;padding:2px;" /><input type="text" id="c-navy-hex" value="#0F2D6D" style="flex:1;" /></div></div>
-            <div class="field"><label>Cor Secundária (Azul)</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" id="c-blue" value="#2B5FDB" style="width:48px;height:38px;border-radius:8px;border:none;cursor:pointer;padding:2px;" /><input type="text" id="c-blue-hex" value="#2B5FDB" style="flex:1;" /></div></div>
-            <div class="field"><label>Cor de Destaque (Ciano)</label><div style="display:flex;gap:8px;align-items:center;"><input type="color" id="c-cyan" value="#00D4FF" style="width:48px;height:38px;border-radius:8px;border:none;cursor:pointer;padding:2px;" /><input type="text" id="c-cyan-hex" value="#00D4FF" style="flex:1;" /></div></div>
+          <div class="card-desc">Clique em uma bolinha para escolher a cor</div>
+
+          <!-- Bolinhas -->
+          <div style="display:flex;gap:36px;flex-wrap:wrap;margin-bottom:24px;align-items:flex-end;">
+
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+              <div style="position:relative;cursor:pointer;" onclick="document.getElementById('c-navy').click()" onmouseenter="this.firstElementChild.style.transform='scale(1.1)'" onmouseleave="this.firstElementChild.style.transform='scale(1)'">
+                <div id="c-navy-preview" style="width:68px;height:68px;border-radius:50%;background:#0F2D6D;box-shadow:0 6px 20px rgba(15,45,109,.4);border:4px solid #fff;outline:3px solid #e2e8f0;transition:transform .2s,box-shadow .2s;"></div>
+                <div style="position:absolute;bottom:0;right:0;width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);">✏️</div>
+                <input type="color" id="c-navy" value="#0F2D6D" style="position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;" oninput="syncCor('navy',this.value)"/>
+              </div>
+              <div style="text-align:center;line-height:1.4;">
+                <div style="font-size:.8rem;font-weight:600;color:#334155;">Principal</div>
+                <div id="c-navy-label" style="font-size:.7rem;color:#94a3b8;font-family:monospace;">#0F2D6D</div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+              <div style="position:relative;cursor:pointer;" onclick="document.getElementById('c-blue').click()" onmouseenter="this.firstElementChild.style.transform='scale(1.1)'" onmouseleave="this.firstElementChild.style.transform='scale(1)'">
+                <div id="c-blue-preview" style="width:68px;height:68px;border-radius:50%;background:#2B5FDB;box-shadow:0 6px 20px rgba(43,95,219,.4);border:4px solid #fff;outline:3px solid #e2e8f0;transition:transform .2s,box-shadow .2s;"></div>
+                <div style="position:absolute;bottom:0;right:0;width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);">✏️</div>
+                <input type="color" id="c-blue" value="#2B5FDB" style="position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;" oninput="syncCor('blue',this.value)"/>
+              </div>
+              <div style="text-align:center;line-height:1.4;">
+                <div style="font-size:.8rem;font-weight:600;color:#334155;">Secundária</div>
+                <div id="c-blue-label" style="font-size:.7rem;color:#94a3b8;font-family:monospace;">#2B5FDB</div>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+              <div style="position:relative;cursor:pointer;" onclick="document.getElementById('c-cyan').click()" onmouseenter="this.firstElementChild.style.transform='scale(1.1)'" onmouseleave="this.firstElementChild.style.transform='scale(1)'">
+                <div id="c-cyan-preview" style="width:68px;height:68px;border-radius:50%;background:#00D4FF;box-shadow:0 6px 20px rgba(0,212,255,.4);border:4px solid #fff;outline:3px solid #e2e8f0;transition:transform .2s,box-shadow .2s;"></div>
+                <div style="position:absolute;bottom:0;right:0;width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.15);">✏️</div>
+                <input type="color" id="c-cyan" value="#00D4FF" style="position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;" oninput="syncCor('cyan',this.value)"/>
+              </div>
+              <div style="text-align:center;line-height:1.4;">
+                <div style="font-size:.8rem;font-weight:600;color:#334155;">Destaque</div>
+                <div id="c-cyan-label" style="font-size:.7rem;color:#94a3b8;font-family:monospace;">#00D4FF</div>
+              </div>
+            </div>
+
+            <!-- Prévia inline -->
+            <div style="margin-left:auto;background:#f8fafc;border-radius:14px;padding:16px 20px;min-width:200px;">
+              <div style="font-size:.7rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Prévia</div>
+              <div id="prev-btn" style="padding:9px 20px;border-radius:9px;color:#fff;font-size:.82rem;font-weight:600;margin-bottom:8px;display:inline-block;">Assinar agora</div><br/>
+              <span id="prev-badge" style="padding:4px 12px;border-radius:20px;color:#fff;font-size:.75rem;font-weight:600;margin-right:8px;">100% Fibra</span>
+              <span id="prev-link" style="font-size:.82rem;font-weight:600;">Ver planos →</span>
+            </div>
+          </div>
+
+          <!-- Paletas prontas -->
+          <div>
+            <div style="font-size:.73rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Paletas prontas — clique para aplicar</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn-secondary" style="padding:8px 14px;font-size:.78rem;gap:7px;" onclick="aplicarPaleta('#0F2D6D','#2B5FDB','#00D4FF')">
+                <span style="display:inline-flex;gap:3px;align-items:center;"><span style="width:13px;height:13px;border-radius:50%;background:#0F2D6D;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#2B5FDB;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#00D4FF;display:inline-block;border:1px solid #ddd;"></span></span>
+                Connect (padrão)
+              </button>
+              <button class="btn-secondary" style="padding:8px 14px;font-size:.78rem;gap:7px;" onclick="aplicarPaleta('#1a1a2e','#e94560','#f5a623')">
+                <span style="display:inline-flex;gap:3px;align-items:center;"><span style="width:13px;height:13px;border-radius:50%;background:#1a1a2e;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#e94560;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#f5a623;display:inline-block;border:1px solid #ddd;"></span></span>
+                Dark Red
+              </button>
+              <button class="btn-secondary" style="padding:8px 14px;font-size:.78rem;gap:7px;" onclick="aplicarPaleta('#064e3b','#059669','#34d399')">
+                <span style="display:inline-flex;gap:3px;align-items:center;"><span style="width:13px;height:13px;border-radius:50%;background:#064e3b;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#059669;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#34d399;display:inline-block;border:1px solid #ddd;"></span></span>
+                Verde
+              </button>
+              <button class="btn-secondary" style="padding:8px 14px;font-size:.78rem;gap:7px;" onclick="aplicarPaleta('#4c1d95','#7c3aed','#a78bfa')">
+                <span style="display:inline-flex;gap:3px;align-items:center;"><span style="width:13px;height:13px;border-radius:50%;background:#4c1d95;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#7c3aed;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#a78bfa;display:inline-block;border:1px solid #ddd;"></span></span>
+                Roxo
+              </button>
+              <button class="btn-secondary" style="padding:8px 14px;font-size:.78rem;gap:7px;" onclick="aplicarPaleta('#7c2d12','#ea580c','#fb923c')">
+                <span style="display:inline-flex;gap:3px;align-items:center;"><span style="width:13px;height:13px;border-radius:50%;background:#7c2d12;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#ea580c;display:inline-block;border:1px solid #ddd;"></span><span style="width:13px;height:13px;border-radius:50%;background:#fb923c;display:inline-block;border:1px solid #ddd;"></span></span>
+                Laranja
+              </button>
+            </div>
           </div>
         </div>
         <div class="card">
@@ -1136,18 +1206,51 @@ function saveEmpresa(){
 }
 
 // ── IDENTIDADE VISUAL ────────────────────
+function syncCor(nome, val){
+  var prev  = document.getElementById('c-'+nome+'-preview');
+  var label = document.getElementById('c-'+nome+'-label');
+  if(prev)  prev.style.background = val;
+  if(label) label.textContent = val.toUpperCase();
+  // Atualiza sombra da bolinha
+  var shadows = { navy:'rgba(15,45,109,.4)', blue:'rgba(43,95,219,.4)', cyan:'rgba(0,212,255,.4)' };
+  if(prev) prev.style.boxShadow = '0 6px 20px ' + (shadows[nome]||'rgba(0,0,0,.2)');
+  atualizarPrevia();
+}
+
+function atualizarPrevia(){
+  var navy = (document.getElementById('c-navy')||{}).value || '#0F2D6D';
+  var blue = (document.getElementById('c-blue')||{}).value || '#2B5FDB';
+  var cyan = (document.getElementById('c-cyan')||{}).value || '#00D4FF';
+  var btn   = document.getElementById('prev-btn');
+  var badge = document.getElementById('prev-badge');
+  var link  = document.getElementById('prev-link');
+  if(btn)   btn.style.background   = 'linear-gradient(135deg,'+blue+','+cyan+')';
+  if(badge) badge.style.background = cyan; badge && (badge.style.color = '#000');
+  if(link)  link.style.color       = blue;
+}
+
+function aplicarPaleta(navy, blue, cyan){
+  document.getElementById('c-navy').value = navy;
+  document.getElementById('c-blue').value = blue;
+  document.getElementById('c-cyan').value = cyan;
+  syncCor('navy', navy);
+  syncCor('blue', blue);
+  syncCor('cyan', cyan);
+}
+
 function loadIdentidade(){
   var id = ls('identidade') || {};
-  if(id['c-navy']){ document.getElementById('c-navy').value=id['c-navy']; document.getElementById('c-navy-hex').value=id['c-navy']; }
-  if(id['c-blue']){ document.getElementById('c-blue').value=id['c-blue']; document.getElementById('c-blue-hex').value=id['c-blue']; }
-  if(id['c-cyan']){ document.getElementById('c-cyan').value=id['c-cyan']; document.getElementById('c-cyan-hex').value=id['c-cyan']; }
-  ['logo','mascote','desc-curta','hero-titulo','msg-wa'].forEach(function(k){ var el=document.getElementById('id-'+k); if(el&&id[k]) el.value=id[k]; });
-  // sincronizar cor ↔ hex
-  ['navy','blue','cyan'].forEach(function(c){
-    document.getElementById('c-'+c).addEventListener('input',function(){ document.getElementById('c-'+c+'-hex').value=this.value; });
-    document.getElementById('c-'+c+'-hex').addEventListener('input',function(){ var v=this.value; if(/^#[0-9A-Fa-f]{6}$/.test(v)) document.getElementById('c-'+c).value=v; });
+  var navy = id['c-navy'] || '#0F2D6D';
+  var blue = id['c-blue'] || '#2B5FDB';
+  var cyan = id['c-cyan'] || '#00D4FF';
+  aplicarPaleta(navy, blue, cyan);
+  ['logo','mascote','desc-curta','hero-titulo','msg-wa'].forEach(function(k){
+    var el = document.getElementById('id-'+k);
+    if(el && id[k]) el.value = id[k];
   });
+  atualizarPrevia();
 }
+
 function saveIdentidade(){
   var id = {};
   ['navy','blue','cyan'].forEach(function(c){ id['c-'+c]=document.getElementById('c-'+c).value; });
