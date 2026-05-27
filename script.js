@@ -39,11 +39,39 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('cidade-bloqueada');
         setTimeout(function() {
             overlay.style.display = 'none';
-            // rolar para a seção de planos
             var planos = document.getElementById('planos');
             if (planos) planos.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 420);
+        }, 380);
     }
+
+    // ── BUSCA DE CIDADES ──────────────────
+    window.filtrarCidades = function(termo) {
+        var itens = document.querySelectorAll('.cs-item');
+        var semResultado = document.getElementById('cs-sem-resultado');
+        var lista = document.getElementById('cidade-lista');
+        var t = termo.trim().toLowerCase();
+        var algumVisivel = false;
+
+        itens.forEach(function(item) {
+            var nome = (item.querySelector('.cs-item-nome') || {}).textContent || '';
+            var visivel = !t || nome.toLowerCase().includes(t);
+            item.style.display = visivel ? '' : 'none';
+            if (visivel) algumVisivel = true;
+        });
+
+        if (semResultado) semResultado.style.display = (!algumVisivel && t) ? 'flex' : 'none';
+    };
+
+    window.mostrarNaoAtende = function() {
+        var lista = document.getElementById('cidade-lista');
+        var header = document.getElementById('cidade-header');
+        var naoAtende = document.getElementById('cidade-nao-atende');
+        var busca = document.getElementById('cs-sem-resultado');
+        if (lista)     lista.style.display     = 'none';
+        if (header)    header.style.display    = 'none';
+        if (busca)     busca.style.display     = 'none';
+        if (naoAtende) naoAtende.style.display = 'flex';
+    };
 
     if (overlay) {
         document.body.classList.add('cidade-bloqueada');
@@ -62,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Mostrar tela "não atendemos"
                     if (cidadeLista)  cidadeLista.style.display  = 'none';
                     if (cidadeHeader) cidadeHeader.style.display = 'none';
-                    if (naoAtendeDiv) naoAtendeDiv.style.display = 'block';
+                    if (naoAtendeDiv) naoAtendeDiv.style.display = 'flex';
 
                     if (btnAvise) {
                         btnAvise.onclick = function(e) {
@@ -77,8 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (btnVoltar) {
             btnVoltar.addEventListener('click', function() {
                 if (naoAtendeDiv) naoAtendeDiv.style.display = 'none';
-                if (cidadeLista)  cidadeLista.style.display  = 'flex';
-                if (cidadeHeader) cidadeHeader.style.display = 'block';
+                if (cidadeLista)  cidadeLista.style.display  = '';
+                if (cidadeHeader) cidadeHeader.style.display = '';
+                var busca = document.getElementById('cs-busca');
+                if (busca) { busca.value = ''; window.filtrarCidades(''); }
             });
         }
     }

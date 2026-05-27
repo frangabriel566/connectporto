@@ -69,97 +69,115 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <!-- ════════════════════════════════════
-         TELA INICIAL — Boas-vindas
+         TELA INICIAL — Seleção de cidade (novo layout split)
     ═════════════════════════════════════ -->
-    <!-- ════════════════════════════════════
-         TELA INICIAL — Boas-vindas
-    ═════════════════════════════════════ -->
-    <div id="cidade-overlay" class="tela-inicial">
-        <div class="ti-particles">
-            <span></span><span></span><span></span><span></span>
-            <span></span><span></span><span></span><span></span>
-        </div>
-        <div class="ti-card">
-            <div class="ti-logo">
-                <img src="img/logo connect.png" alt=" logo coonnect" />
-            </div>
-            <div class="ti-grid">
-                <div class="ti-mascote">
-                    <div class="ti-masc-rings">
-                        <div class="ti-ring ti-ring1"></div>
-                        <div class="ti-ring ti-ring2"></div>
-                        <div class="ti-ring ti-ring3"></div>
-                    </div>
-                    <div class="ti-masc-glow"></div>
-                    <img src="img/masconte connect.png" alt="Mascote Connect" class="ti-masc-img" />
-                    <div class="ti-balao"><span>Olá! sou connectinho👋</span><span>Seja bem-vindo!</span></div>
-                    <div class="ti-badge ti-b1">🚀 Ultra Velocidade</div>
-                    <div class="ti-badge ti-b2">✅ 100% Fibra</div>
-                </div>
-                <div class="ti-form">
-                    <div class="ti-header" id="cidade-header">
-                        <div class="ti-pin">
-                            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2"
-                                viewBox="0 0 24 24">
-                                <path
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <h2>Qual é a sua cidade?</h2>
-                        <p>Selecione para ver se a Connect já chegou até você</p>
-                    </div>
-                    <div class="ti-cidades" id="cidade-lista">
-                        <button class="ti-cidade" data-cidade="Porto" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Porto e Região</span><span
-                                class="tic-uf">PI</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade" data-cidade="Campo Largo do Piauí" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Campo Largo do Piauí e Região</span><span
-                                class="tic-uf">PI</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade" data-cidade="Nossa Senhora dos Remédios" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Nossa Senhora dos
-                                Remédios e Região</span><span class="tic-uf">PI</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade" data-cidade="Miguel Alves" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Miguel Alves e Região</span><span
-                                class="tic-uf">PI</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade" data-cidade="Barras" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Barras e Região</span><span
-                                class="tic-uf">PI</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade" data-cidade="Barras" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Zona Rural de União</span><span
-                                class="tic-uf">PI</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade" data-cidade="Barras" data-atende="true">
-                            <span class="tic-icon">📍</span><span class="tic-nome">Zona Rural de Buriti</span><span
-                                class="tic-uf">MA</span><span class="tic-arrow">→</span>
-                        </button>
-                        <button class="ti-cidade ti-cidade-outra" data-cidade="outra" data-atende="false">
-                            <span class="tic-icon">🔍</span><span class="tic-nome">Minha cidade não está
-                                aqui</span><span class="tic-uf"></span><span class="tic-arrow">→</span>
-                        </button>
-                    </div>
-                    <div id="cidade-nao-atende" class="ti-nao-atende" style="display:none;">
-                        <div class="ti-nao-icon">📡</div>
-                        <h3>Ainda não chegamos até você...</h3>
-                        <p>Mas estamos em expansão! Te avisamos assim que chegar na sua cidade.</p>
-                        <a href="#" id="cidade-btn-avise" class="ti-nao-btn">
-                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                            </svg>
-                            Me avise quando chegar!
-                        </a>
-                        <button class="ti-nao-voltar" id="cidade-voltar">← Escolher outra cidade</button>
+    <div id="cidade-overlay" class="cs-overlay">
+
+        <!-- MODAL SPLIT -->
+        <div class="cs-modal">
+
+            <!-- ESQUERDA — Mascote Connect -->
+            <div class="cs-left">
+                <img src="img/logo connect.png" alt="Connect" class="cs-logo"
+                     onerror="this.style.display='none'" />
+                <div class="cs-mascote-wrap">
+                    <img src="img/masconte connect.png" alt="Connectinho" class="cs-mascote-img" />
+                    <div class="cs-balao">
+                        <span>Olá! 👋 Sou o Connectinho</span>
+                        <span>Bem-vindo!</span>
                     </div>
                 </div>
+                <div class="cs-badges">
+                    <span class="cs-badge">🚀 Ultra Velocidade</span>
+                    <span class="cs-badge">✅ 100% Fibra Óptica</span>
+                    <span class="cs-badge">📞 Suporte Humano</span>
+                </div>
             </div>
-        </div>
-    </div>
+
+            <!-- DIREITA — Seleção de cidade -->
+            <div class="cs-right">
+
+                <!-- Estado normal: busca + lista -->
+                <div id="cidade-header">
+                    <div class="cs-pin-icon">
+                        <svg width="22" height="22" fill="#2B5FDB" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <h2 class="cs-titulo">Escolha sua cidade</h2>
+                    <p class="cs-sub">Selecione sua cidade para ver nossos planos e serviços disponíveis</p>
+
+                    <!-- Campo de busca -->
+                    <div class="cs-search-wrap">
+                        <input type="text" id="cs-busca" class="cs-search-input"
+                               placeholder="Digite sua cidade..."
+                               oninput="filtrarCidades(this.value)" autocomplete="off" />
+                        <svg class="cs-search-icon" width="20" height="20" fill="none" stroke="#94a3b8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Lista de cidades -->
+                <div class="cs-lista" id="cidade-lista">
+                    <button class="ti-cidade cs-item" data-cidade="Porto" data-atende="true">
+                        <span class="cs-item-nome">Porto e Região</span>
+                        <span class="cs-item-uf">PI</span>
+                    </button>
+                    <button class="ti-cidade cs-item" data-cidade="Campo Largo do Piauí" data-atende="true">
+                        <span class="cs-item-nome">Campo Largo do Piauí e Região</span>
+                        <span class="cs-item-uf">PI</span>
+                    </button>
+                    <button class="ti-cidade cs-item" data-cidade="Nossa Senhora dos Remédios" data-atende="true">
+                        <span class="cs-item-nome">Nossa Senhora dos Remédios e Região</span>
+                        <span class="cs-item-uf">PI</span>
+                    </button>
+                    <button class="ti-cidade cs-item" data-cidade="Miguel Alves" data-atende="true">
+                        <span class="cs-item-nome">Miguel Alves e Região</span>
+                        <span class="cs-item-uf">PI</span>
+                    </button>
+                    <button class="ti-cidade cs-item" data-cidade="Barras" data-atende="true">
+                        <span class="cs-item-nome">Barras e Região</span>
+                        <span class="cs-item-uf">PI</span>
+                    </button>
+                    <button class="ti-cidade cs-item" data-cidade="União" data-atende="true">
+                        <span class="cs-item-nome">Zona Rural de União</span>
+                        <span class="cs-item-uf">PI</span>
+                    </button>
+                    <button class="ti-cidade cs-item" data-cidade="Buriti" data-atende="true">
+                        <span class="cs-item-nome">Zona Rural de Buriti</span>
+                        <span class="cs-item-uf">MA</span>
+                    </button>
+                    <button class="ti-cidade cs-item cs-item-outra" data-cidade="outra" data-atende="false">
+                        <span class="cs-item-nome">🔍 Minha cidade não está aqui</span>
+                        <span class="cs-item-uf"></span>
+                    </button>
+                </div>
+
+                <!-- Sem resultados na busca -->
+                <div id="cs-sem-resultado" style="display:none;" class="cs-sem-resultado">
+                    <span>😕 Nenhuma cidade encontrada</span>
+                    <button class="cs-nao-btn" onclick="mostrarNaoAtende()">Me avise quando chegar!</button>
+                </div>
+
+                <!-- Estado: não atendemos -->
+                <div id="cidade-nao-atende" style="display:none;" class="cs-nao-atende">
+                    <div class="cs-nao-icon">📡</div>
+                    <h3>Ainda não chegamos até você...</h3>
+                    <p>Mas estamos em expansão! Deixe seu contato e avisamos quando chegar na sua cidade.</p>
+                    <a href="#" id="cidade-btn-avise" class="cs-nao-btn cs-nao-btn-wa">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Me avise quando chegar!
+                    </a>
+                    <button class="cs-voltar-btn" id="cidade-voltar">← Voltar</button>
+                </div>
+
+            </div><!-- /cs-right -->
+        </div><!-- /cs-modal -->
+    </div><!-- /cs-overlay -->
 
 
     <!-- Header -->
