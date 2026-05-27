@@ -130,22 +130,18 @@
   function renderizarCidades() {
     var cidades = ls('cidades') || DEFAULT_CIDADES;
 
-    // — Overlay de boas-vindas (#cidade-lista) —
+    // — Overlay novo layout split (#cidade-lista com .cs-item) —
     var listaOverlay = document.getElementById('cidade-lista');
     if (listaOverlay) {
       var botoesOverlay = cidades.map(function (c) {
-        return '<button class="ti-cidade" data-cidade="' + escAttr(c.nome) + '" data-atende="true">' +
-          '<span class="tic-icon">📍</span>' +
-          '<span class="tic-nome">' + escHtml(c.nome) + '</span>' +
-          '<span class="tic-uf">' + escHtml(c.uf) + '</span>' +
-          '<span class="tic-arrow">→</span>' +
+        return '<button class="ti-cidade cs-item" data-cidade="' + escAttr(c.nome) + '" data-atende="true">' +
+          '<span class="cs-item-nome">' + escHtml(c.nome) + '</span>' +
+          '<span class="cs-item-uf">' + escHtml(c.uf) + '</span>' +
           '</button>';
       }).join('');
-      botoesOverlay += '<button class="ti-cidade ti-cidade-outra" data-cidade="outra" data-atende="false">' +
-        '<span class="tic-icon">🔍</span>' +
-        '<span class="tic-nome">Minha cidade não está aqui</span>' +
-        '<span class="tic-uf"></span>' +
-        '<span class="tic-arrow">→</span>' +
+      botoesOverlay += '<button class="ti-cidade cs-item cs-item-outra" data-cidade="outra" data-atende="false">' +
+        '<span class="cs-item-nome">🔍 Minha cidade não está aqui</span>' +
+        '<span class="cs-item-uf"></span>' +
         '</button>';
       listaOverlay.innerHTML = botoesOverlay;
     }
