@@ -561,6 +561,54 @@
         <div class="page-sub">Conecte seu site a ferramentas externas e configure webhooks</div>
         <div class="alert alert-success" id="api-alert">✅ Configurações de API salvas!</div>
 
+        <!-- ☁️ SINCRONIZAÇÃO EM NUVEM -->
+        <div class="card" style="border:2px solid #2B5FDB;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+            <span style="font-size:1.3rem;">☁️</span>
+            <div class="card-title" style="margin:0;">Sincronização em Nuvem</div>
+            <span class="badge badge-gray" id="cloud-badge" style="margin-left:auto;">Desconectado</span>
+          </div>
+          <div class="card-desc">Todas as alterações do painel são publicadas na nuvem e aplicadas para <strong>todos os visitantes</strong> do site automaticamente.</div>
+
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:.82rem;color:#1e40af;line-height:1.7;">
+            <strong>Como configurar (100% grátis):</strong><br/>
+            1. Acesse <a href="https://jsonbin.io" target="_blank" style="color:#2563eb;font-weight:600;">jsonbin.io</a> → crie uma conta gratuita<br/>
+            2. Vá em <strong>API Keys</strong> e copie sua <strong>Master Key</strong><br/>
+            3. Cole abaixo e clique em <strong>"Criar Bin"</strong> — pronto! ✅
+          </div>
+
+          <div class="grid-2" style="margin-bottom:14px;">
+            <div class="field" style="margin:0;">
+              <label>Master Key (JSONBin.io)</label>
+              <input type="password" id="cloud-key" placeholder="$2a$10$xxxxxxxxxxxxxxxxxxxxxx" oninput="salvarCloudKey()" />
+            </div>
+            <div class="field" style="margin:0;">
+              <label>Bin ID <span style="font-weight:400;color:#94a3b8;">(preenchido automaticamente)</span></label>
+              <input type="text" id="cloud-bin-id" placeholder="Gerado após criar o Bin" readonly style="background:#f8fafc;color:#64748b;" />
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+            <button class="btn-save" id="btn-criar-bin" onclick="criarBin()">
+              <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              Criar Bin (1ª vez)
+            </button>
+            <button class="btn-secondary" onclick="sincronizarNuvem(true)">
+              <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              Sincronizar Agora
+            </button>
+            <button class="btn-secondary" onclick="testarConexaoCloud()">
+              <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Testar Conexão
+            </button>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;color:#64748b;">
+            <span id="cloud-dot" style="width:8px;height:8px;border-radius:50%;background:#94a3b8;flex-shrink:0;display:inline-block;"></span>
+            <span id="cloud-status-txt">Nenhum Bin configurado ainda.</span>
+          </div>
+        </div>
+
         <!-- Chave de API -->
         <div class="card">
           <div class="card-title">🔑 Chave de API</div>
@@ -1218,6 +1266,172 @@ function showAlert(id){
   el.style.display = 'block';
   setTimeout(function(){ el.style.display='none'; }, 3000);
 }
+
+// ══════════════════════════════════════════
+//  SINCRONIZAÇÃO EM NUVEM (JSONBin.io)
+// ══════════════════════════════════════════
+
+function getCloudConfig(){
+  return {
+    key:   ls('cloud_key')   || '',
+    binId: ls('cloud_bin_id') || ''
+  };
+}
+
+function salvarCloudKey(){
+  var k = document.getElementById('cloud-key');
+  if(k) lsSet('cloud_key', k.value);
+}
+
+function loadCloudUI(){
+  var cfg = getCloudConfig();
+  var keyEl   = document.getElementById('cloud-key');
+  var binEl   = document.getElementById('cloud-bin-id');
+  if(keyEl && cfg.key)   keyEl.value   = cfg.key;
+  if(binEl && cfg.binId) binEl.value   = cfg.binId;
+  atualizarStatusCloud(!!cfg.binId);
+}
+
+function atualizarStatusCloud(conectado, msg){
+  var dot   = document.getElementById('cloud-dot');
+  var txt   = document.getElementById('cloud-status-txt');
+  var badge = document.getElementById('cloud-badge');
+  if(!dot) return;
+  if(conectado){
+    dot.style.background   = '#22c55e';
+    if(badge){ badge.className='badge badge-green'; badge.textContent='Conectado'; }
+    if(txt) txt.textContent = msg || '✅ Bin conectado — alterações sincronizadas automaticamente.';
+  } else {
+    dot.style.background   = '#94a3b8';
+    if(badge){ badge.className='badge badge-gray'; badge.textContent='Desconectado'; }
+    if(txt) txt.textContent = msg || 'Nenhum Bin configurado ainda.';
+  }
+}
+
+function coletarTodosOsDados(){
+  return {
+    _v: Date.now(),
+    planos:      ls('planos')      || DEFAULT_PLANOS,
+    cidades:     ls('cidades')     || DEFAULT_CIDADES,
+    depoimentos: ls('depoimentos') || DEFAULT_DEPOIMENTOS,
+    faq:         ls('faq')         || DEFAULT_FAQ,
+    empresa:     ls('empresa')     || {},
+    identidade:  ls('identidade')  || {},
+    marketing:   ls('marketing')   || {},
+    api:         (function(){ var a=ls('api')||{}; delete a.key; return a; })() // não envia a chave privada
+  };
+}
+
+function criarBin(){
+  var key = (document.getElementById('cloud-key')||{}).value || ls('cloud_key') || '';
+  if(!key){ alert('Cole sua Master Key do JSONBin.io primeiro.'); return; }
+  lsSet('cloud_key', key);
+
+  var btn = document.getElementById('btn-criar-bin');
+  if(btn){ btn.textContent = '⏳ Criando...'; btn.disabled = true; }
+  atualizarStatusCloud(false,'⏳ Criando Bin na nuvem...');
+
+  fetch('https://api.jsonbin.io/v3/b', {
+    method:  'POST',
+    headers: { 'Content-Type':'application/json', 'X-Master-Key': key, 'X-Bin-Name':'connect-site-config', 'X-Bin-Private':'false' },
+    body:    JSON.stringify(coletarTodosOsDados())
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data.metadata && data.metadata.id){
+      var binId = data.metadata.id;
+      lsSet('cloud_bin_id', binId);
+      var binEl = document.getElementById('cloud-bin-id');
+      if(binEl) binEl.value = binId;
+      atualizarStatusCloud(true,'✅ Bin criado! ID: ' + binId + ' — Site sincronizado!');
+      lsSet('cloud_last_sync', new Date().toLocaleString('pt-BR'));
+      if(btn){ btn.textContent='✅ Bin Criado!'; btn.disabled=false; }
+    } else {
+      atualizarStatusCloud(false,'❌ Erro: ' + (data.message||'Verifique sua Master Key.'));
+      if(btn){ btn.textContent='Criar Bin (1ª vez)'; btn.disabled=false; }
+    }
+  })
+  .catch(function(err){
+    atualizarStatusCloud(false,'❌ Erro de conexão. Tente novamente.');
+    if(btn){ btn.textContent='Criar Bin (1ª vez)'; btn.disabled=false; }
+  });
+}
+
+function sincronizarNuvem(manual){
+  var cfg = getCloudConfig();
+  // Tenta pegar key do campo também
+  var keyEl = document.getElementById('cloud-key');
+  var key   = (keyEl && keyEl.value) || cfg.key;
+  if(!key || !cfg.binId){
+    if(manual) alert('Configure e crie um Bin primeiro (aba API & Integrações).');
+    return;
+  }
+
+  if(manual) atualizarStatusCloud(true,'⏳ Sincronizando...');
+
+  fetch('https://api.jsonbin.io/v3/b/' + cfg.binId, {
+    method:  'PUT',
+    headers: { 'Content-Type':'application/json', 'X-Master-Key': key },
+    body:    JSON.stringify(coletarTodosOsDados())
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data.metadata){
+      lsSet('cloud_last_sync', new Date().toLocaleString('pt-BR'));
+      atualizarStatusCloud(true,'✅ Sincronizado em ' + new Date().toLocaleString('pt-BR'));
+      if(manual) showAlert('api-alert');
+    } else {
+      if(manual) atualizarStatusCloud(false,'❌ Erro ao sincronizar: ' + (data.message||''));
+    }
+  })
+  .catch(function(){
+    if(manual) atualizarStatusCloud(false,'❌ Sem conexão. Tente novamente.');
+  });
+}
+
+function testarConexaoCloud(){
+  var cfg = getCloudConfig();
+  var keyEl = document.getElementById('cloud-key');
+  var key   = (keyEl && keyEl.value) || cfg.key;
+  if(!key || !cfg.binId){ alert('Configure a Master Key e crie um Bin primeiro.'); return; }
+
+  atualizarStatusCloud(true,'⏳ Testando conexão...');
+  fetch('https://api.jsonbin.io/v3/b/' + cfg.binId + '/latest', {
+    headers:{ 'X-Master-Key': key }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    if(data.record){
+      atualizarStatusCloud(true,'✅ Conexão OK! Bin acessível. Última versão: ' + new Date(data.record._v).toLocaleString('pt-BR'));
+    } else {
+      atualizarStatusCloud(false,'❌ ' + (data.message||'Erro ao acessar o Bin.'));
+    }
+  })
+  .catch(function(){ atualizarStatusCloud(false,'❌ Falha na conexão com o servidor.'); });
+}
+
+// Injeta sincronização automática em cada função de salvar
+var _origSaveFns = {};
+['savePlanos','saveCidades','saveDepoimentos','saveFaq','saveEmpresa','saveIdentidade','saveMarketing'].forEach(function(fn){
+  _origSaveFns[fn] = window[fn];
+});
+
+// Sobrescreve após load para garantir que as funções já existem
+window.addEventListener('load', function(){
+  ['savePlanos','saveCidades','saveDepoimentos','saveFaq','saveEmpresa','saveIdentidade','saveMarketing'].forEach(function(fn){
+    var orig = window[fn];
+    if(typeof orig === 'function'){
+      window[fn] = function(){
+        orig.apply(this, arguments);
+        setTimeout(function(){ sincronizarNuvem(false); }, 500);
+      };
+    }
+  });
+  loadCloudUI();
+  // Verifica se já tem bin configurado
+  var cfg = getCloudConfig();
+  if(cfg.binId) atualizarStatusCloud(true,'✅ Bin conectado. Última sincronização: ' + (ls('cloud_last_sync')||'nunca'));
+});
 
 // ── INIT ─────────────────────────────────
 checkSession();

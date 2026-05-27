@@ -478,15 +478,88 @@
   }
 
   // ══════════════════════════════════════════════════
+  //  SINCRONIZAÇÃO EM NUVEM (JSONBin.io)
+  // ══════════════════════════════════════════════════
+
+  // Tempo de cache: 5 minutos (evita muitas requisições)
+  var CACHE_TTL = 5 * 60 * 1000;
+
+  function carregarDaNuvem(callback) {
+    var binId = ls('cloud_bin_id');
+    if (!binId) { callback(false); return; }
+
+    // Verifica cache
+    var cached    = ls('cloud_cache');
+    var cachedAt  = ls('cloud_cache_at') || 0;
+    if (cached && (Date.now() - cachedAt) < CACHE_TTL) {
+      aplicarDadosNuvem(cached);
+      callback(true);
+      return;
+    }
+
+    // Lê da nuvem (bin público — sem autenticação necessária)
+    fetch('https://api.jsonbin.io/v3/b/' + binId + '/latest', {
+      headers: { 'X-Bin-Meta': 'false' }
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var record = data.record || data;
+      if (record && record._v) {
+        // Só aplica se a versão da nuvem for mais nova que o localStorage
+        var localV = ls('cloud_local_v') || 0;
+        if (record._v >= localV) {
+          // Salva no cache local
+          lsSet('cloud_cache',    record);
+          lsSet('cloud_cache_at', Date.now());
+          lsSet('cloud_local_v',  record._v);
+          // Atualiza todos os dados no localStorage
+          if (record.planos)      lsSet('planos',      record.planos);
+          if (record.cidades)     lsSet('cidades',     record.cidades);
+          if (record.depoimentos) lsSet('depoimentos', record.depoimentos);
+          if (record.faq)         lsSet('faq',         record.faq);
+          if (record.empresa)     lsSet('empresa',     record.empresa);
+          if (record.identidade)  lsSet('identidade',  record.identidade);
+          if (record.marketing)   lsSet('marketing',   record.marketing);
+          aplicarDadosNuvem(record);
+        }
+        callback(true);
+      } else {
+        callback(false);
+      }
+    })
+    .catch(function () {
+      // Falhou — usa localStorage normalmente
+      callback(false);
+    });
+  }
+
+  function aplicarDadosNuvem(record) {
+    // Re-aplica tudo com os dados da nuvem
+    aplicarCores();
+    aplicarWhatsApp();
+    renderizarPlanos();
+    renderizarCidades();
+    renderizarDepoimentos();
+    renderizarFaq();
+    aplicarEmpresa();
+    aplicarIdentidade();
+    injetarMarketing();
+  }
+
+  // ══════════════════════════════════════════════════
   //  INICIALIZAÇÃO
   // ══════════════════════════════════════════════════
-  // Aplica cores imediatamente (antes do DOM estar completo)
+
+  // 1. Aplica cores do localStorage imediatamente (sem esperar a nuvem)
   aplicarCores();
   injetarMarketing();
   contarVisitas();
 
-  // Aplica conteúdo depois que o DOM estiver pronto
+  // 2. Quando DOM estiver pronto: aplica localStorage primeiro (rápido)
+  //    depois tenta nuvem e reaaplica se houver versão mais nova
   document.addEventListener('DOMContentLoaded', function () {
+
+    // Aplica localStorage imediatamente para o usuário ver conteúdo na hora
     aplicarWhatsApp();
     renderizarPlanos();
     renderizarCidades();
@@ -495,7 +568,20 @@
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();
-    console.log('✅ Connect Admin Bridge ativo — conteúdo sincronizado com o painel.');
+
+    // Depois busca na nuvem em segundo plano
+    var binId = ls('cloud_bin_id');
+    if (binId) {
+      carregarDaNuvem(function (sucesso) {
+        if (sucesso) {
+          console.log('✅ Connect: configurações carregadas da nuvem.');
+        } else {
+          console.log('ℹ️ Connect: usando configurações locais (nuvem indisponível).');
+        }
+      });
+    }
+
+    console.log('✅ Connect Admin Bridge ativo.');
   });
 
 })();
