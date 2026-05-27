@@ -263,6 +263,10 @@
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
       Cidades
     </a>
+    <a class="nav-item" onclick="showPage('banners')" href="#">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+      Banners
+    </a>
     <a class="nav-item" onclick="showPage('depoimentos')" href="#">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
       Depoimentos
@@ -423,6 +427,50 @@
             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             Salvar Alterações
           </button>
+        </div>
+      </div>
+
+      <!-- ══ BANNERS ══ -->
+      <div class="page" id="page-banners">
+        <div class="page-title">🖼️ Banners Promocionais</div>
+        <div class="page-sub">Gerencie o carrossel de banners exibido no topo do site</div>
+        <div class="alert alert-success" id="banners-alert">✅ Banners salvos!</div>
+
+        <div class="card">
+          <div class="card-title">➕ Adicionar Banner</div>
+          <div class="card-desc">Cole a URL da imagem e defina o link de destino ao clicar</div>
+          <div class="grid-2">
+            <div class="field"><label>URL da imagem</label><input type="url" id="bn-url" placeholder="https://..." /></div>
+            <div class="field"><label>Link ao clicar (opcional)</label><input type="url" id="bn-link" placeholder="https://wa.me/..." /></div>
+          </div>
+          <div class="field" style="max-width:380px;">
+            <label>Texto alternativo (acessibilidade)</label>
+            <input type="text" id="bn-alt" placeholder="Ex: Promoção de internet 700 Mega" />
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <label style="font-size:.78rem;font-weight:500;color:#475569;">Ativo</label>
+            <label class="toggle"><input type="checkbox" id="bn-ativo" checked /><span class="toggle-slider"></span></label>
+          </div>
+          <button class="btn-add" onclick="addBanner()">+ Adicionar Banner</button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📋 Banners Cadastrados</div>
+          <div class="card-desc">Arraste para reordenar • Clique no 🗑️ para remover</div>
+          <div id="banners-list"></div>
+          <button class="btn-save" style="margin-top:10px;" onclick="saveBanners()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Salvar Banners
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-title">👁️ Pré-visualização</div>
+          <div class="card-desc">Prévia do carrossel com os banners ativos</div>
+          <div id="bn-preview" style="border-radius:10px;overflow:hidden;background:#0F2D6D;min-height:120px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;">
+            Nenhum banner ativo
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;" id="bn-preview-dots"></div>
         </div>
       </div>
 
@@ -981,7 +1029,7 @@ function checkSession(){
 // ── NAVIGATION ───────────────────────────
 var pages = {
   'dashboard':'Dashboard','leads':'Leads','planos':'Planos','cidades':'Cidades Atendidas',
-  'depoimentos':'Depoimentos','faq':'FAQ','empresa':'Dados da Empresa',
+  'banners':'Banners Promocionais','depoimentos':'Depoimentos','faq':'FAQ','empresa':'Dados da Empresa',
   'identidade':'Identidade Visual','usuarios':'Usuários','api':'API & Integrações','marketing':'Marketing & Tracking'
 };
 function showPage(id){
@@ -996,6 +1044,7 @@ function showPage(id){
   if(id==='leads') renderLeads();
   if(id==='planos') renderPlanos();
   if(id==='cidades') renderCidades();
+  if(id==='banners') renderBanners();
   if(id==='depoimentos') renderDepoimentos();
   if(id==='faq') renderFaq();
   if(id==='empresa') loadEmpresa();
@@ -1189,6 +1238,103 @@ function saveFaq(){
   });
   lsSet('faq', faqs);
   showAlert('faq-alert','FAQ salvo!','Perguntas e respostas atualizadas no site.');
+}
+
+// ── BANNERS ───────────────────────────────
+var DEFAULT_BANNERS = [];
+
+function renderBanners(){
+  var banners = ls('banners') || DEFAULT_BANNERS;
+  var c = document.getElementById('banners-list');
+  if(!c) return;
+  if(!banners.length){
+    c.innerHTML = '<p style="color:#94a3b8;font-size:.85rem;padding:12px 0;">Nenhum banner cadastrado. Adicione o primeiro acima.</p>';
+    atualizarPreviewBanners(banners);
+    return;
+  }
+  c.innerHTML = banners.map(function(b,i){
+    return '<div class="banner-item" style="display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:10px;background:#f8fafc;">'
+      + '<img src="'+b.url+'" alt="banner" onerror="this.style.display=\'none\'" style="width:90px;height:50px;object-fit:cover;border-radius:6px;background:#e2e8f0;flex-shrink:0;" />'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-size:.82rem;font-weight:600;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+b.url+'">'+(b.alt || 'Banner '+(i+1))+'</div>'
+      + '<div style="font-size:.75rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="'+(b.url||'')+'">'+(b.url ? b.url.substring(0,60)+'…' : 'Sem URL')+'</div>'
+      + '</div>'
+      + '<label class="toggle" title="Ativo/Inativo"><input type="checkbox" id="bn-at-'+i+'" '+(b.ativo!==false?'checked':'')+' onchange="toggleBannerAtivo('+i+',this.checked)" /><span class="toggle-slider"></span></label>'
+      + '<button class="btn-danger" onclick="deleteBanner('+i+')" title="Remover">🗑</button>'
+      + '</div>';
+  }).join('');
+  atualizarPreviewBanners(banners);
+}
+
+function atualizarPreviewBanners(banners){
+  var prev = document.getElementById('bn-preview');
+  var dots = document.getElementById('bn-preview-dots');
+  if(!prev) return;
+  var ativos = banners.filter(function(b){ return b.ativo !== false && b.url; });
+  if(!ativos.length){
+    prev.innerHTML = '<span style="color:#94a3b8;">Nenhum banner ativo</span>';
+    prev.style.background = '#0F2D6D';
+    if(dots) dots.innerHTML = '';
+    return;
+  }
+  prev.innerHTML = '<img src="'+ativos[0].url+'" style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;display:block;" alt="'+(ativos[0].alt||'Banner')+'"/>';
+  if(dots){
+    dots.innerHTML = ativos.map(function(b,i){
+      return '<span onclick="previewBannerSlide('+i+')" style="display:inline-block;width:'+(i===0?'24px':'8px')+';height:8px;border-radius:99px;background:'+(i===0?'#2B5FDB':'#cbd5e1')+';cursor:pointer;transition:all .3s;"></span>';
+    }).join('');
+    dots.dataset.ativos = JSON.stringify(ativos.map(function(b){return b.url;}));
+  }
+}
+
+window.previewBannerSlide = function(idx){
+  var dots = document.getElementById('bn-preview-dots');
+  var prev = document.getElementById('bn-preview');
+  if(!dots || !prev) return;
+  var urls = JSON.parse(dots.dataset.ativos || '[]');
+  if(!urls[idx]) return;
+  prev.innerHTML = '<img src="'+urls[idx]+'" style="width:100%;max-height:200px;object-fit:cover;border-radius:10px;display:block;" alt="Banner '+(idx+1)+'" />';
+  Array.from(dots.children).forEach(function(d,i){
+    d.style.width = i===idx ? '24px' : '8px';
+    d.style.background = i===idx ? '#2B5FDB' : '#cbd5e1';
+  });
+};
+
+function addBanner(){
+  var url  = document.getElementById('bn-url').value.trim();
+  var link = document.getElementById('bn-link').value.trim();
+  var alt  = document.getElementById('bn-alt').value.trim();
+  var ativo= document.getElementById('bn-ativo').checked;
+  if(!url){ alert('Cole a URL da imagem.'); return; }
+  var banners = ls('banners') || [];
+  banners.push({ url: url, link: link, alt: alt, ativo: ativo });
+  lsSet('banners', banners);
+  document.getElementById('bn-url').value = '';
+  document.getElementById('bn-link').value = '';
+  document.getElementById('bn-alt').value = '';
+  document.getElementById('bn-ativo').checked = true;
+  renderBanners();
+}
+
+function deleteBanner(i){
+  if(!confirm('Remover este banner?')) return;
+  var banners = ls('banners') || [];
+  banners.splice(i,1);
+  lsSet('banners', banners);
+  renderBanners();
+}
+
+function toggleBannerAtivo(i, val){
+  var banners = ls('banners') || [];
+  if(banners[i]) banners[i].ativo = val;
+  lsSet('banners', banners);
+  atualizarPreviewBanners(banners);
+}
+
+function saveBanners(){
+  // os toggles já salvam em tempo real, mas sincroniza com a nuvem
+  var banners = ls('banners') || [];
+  lsSet('banners', banners);
+  showAlert('banners-alert','Banners salvos!','Carrossel atualizado no site.');
 }
 
 // ── EMPRESA ───────────────────────────────

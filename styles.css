@@ -1,4 +1,152 @@
 /* ══════════════════════════════════════════
+   BANNERS PROMOCIONAIS — Carousel
+══════════════════════════════════════════ */
+
+#banners-promo {
+    width: 100%;
+    margin-top: 64px; /* altura do header fixo */
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+.bp-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #0F2D6D;
+    line-height: 0;
+}
+
+.bp-track {
+    display: flex;
+    transition: transform .55s cubic-bezier(.77,0,.18,1);
+    will-change: transform;
+}
+
+/* Cada slide */
+.bp-slide {
+    min-width: 100%;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.bp-slide img {
+    width: 100%;
+    height: auto;
+    max-height: 340px;
+    object-fit: cover;
+    display: block;
+    transition: transform .4s ease;
+}
+
+.bp-slide:hover img { transform: scale(1.01); }
+
+/* Placeholder quando não tem imagem */
+.bp-slide-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #0F2D6D, #2B5FDB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.5);
+    font-size: .9rem;
+}
+
+/* Overlay de texto opcional */
+.bp-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,.45) 0%, transparent 60%);
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    pointer-events: none;
+}
+.bp-overlay-text { color: #fff; }
+.bp-overlay-text h3 { font-size: clamp(1rem, 3vw, 1.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.bp-overlay-text p  { font-size: clamp(.75rem, 1.5vw, 1rem); opacity: .9; text-shadow: 0 1px 4px rgba(0,0,0,.3); }
+
+/* Setas */
+.bp-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,.92);
+    color: #0F2D6D;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,.18);
+    transition: all .2s;
+    z-index: 5;
+    opacity: 0;
+}
+.bp-carousel:hover .bp-nav { opacity: 1; }
+.bp-nav:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
+.bp-prev { left: 14px; }
+.bp-next { right: 14px; }
+
+/* Dots */
+.bp-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 7px;
+    z-index: 5;
+}
+.bp-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.5);
+    border: none;
+    cursor: pointer;
+    transition: all .25s;
+    padding: 0;
+}
+.bp-dot.active {
+    background: #fff;
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* Badge de quantidade de slides */
+.bp-counter {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: rgba(0,0,0,.45);
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    z-index: 5;
+    font-family: 'Poppins', sans-serif;
+}
+
+@media (max-width: 768px) {
+    #banners-promo { margin-top: 56px; }
+    .bp-slide img  { max-height: 220px; }
+    .bp-nav        { width: 34px; height: 34px; opacity: 1; }
+}
+@media (max-width: 480px) {
+    .bp-slide img  { max-height: 160px; }
+    .bp-nav        { width: 30px; height: 30px; }
+}
+
+/* ══════════════════════════════════════════
    CITY SELECT OVERLAY — Novo layout split
 ══════════════════════════════════════════ */
 

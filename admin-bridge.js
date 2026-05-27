@@ -537,9 +537,111 @@
     renderizarCidades();
     renderizarDepoimentos();
     renderizarFaq();
+    renderizarBanners();
     aplicarEmpresa();
     aplicarIdentidade();
     injetarMarketing();
+  }
+
+  // ══════════════════════════════════════════════════
+  //  7. RENDERIZAR BANNERS (carrossel promocional)
+  // ══════════════════════════════════════════════════
+  function renderizarBanners() {
+    var banners = ls('banners');
+    // Se não há banners no storage, esconde a seção e sai
+    if (!banners || !banners.length) {
+      var sec = document.getElementById('banners-promo');
+      if (sec) sec.style.display = 'none';
+      return;
+    }
+
+    var ativos = banners.filter(function(b) { return b.ativo !== false && b.url; });
+    var sec    = document.getElementById('banners-promo');
+    var track  = document.getElementById('bp-track');
+    var dotsEl = document.getElementById('bp-dots');
+
+    if (!sec || !track) return;
+
+    if (!ativos.length) {
+      sec.style.display = 'none';
+      return;
+    }
+
+    // Gera slides
+    track.innerHTML = ativos.map(function(b) {
+      var imgTag = '<img src="' + b.url + '" alt="' + (b.alt || 'Banner promocional') + '" loading="lazy" />';
+      if (b.link) {
+        return '<div class="bp-slide"><a href="' + b.link + '" target="_blank" rel="noopener">' + imgTag + '</a></div>';
+      }
+      return '<div class="bp-slide">' + imgTag + '</div>';
+    }).join('');
+
+    // Gera dots
+    if (dotsEl) {
+      dotsEl.innerHTML = ativos.map(function(_, i) {
+        return '<button class="bp-dot' + (i === 0 ? ' active' : '') + '" data-slide="' + i + '" aria-label="Banner ' + (i + 1) + '"></button>';
+      }).join('');
+    }
+
+    sec.style.display = '';
+
+    // Inicializa carrossel se ainda não foi inicializado
+    if (track.dataset.bpReady === '1') return;
+    track.dataset.bpReady = '1';
+
+    var total = ativos.length;
+    var atual = 0;
+    var timer = null;
+    var dots  = dotsEl ? dotsEl.querySelectorAll('.bp-dot') : [];
+    var prev  = document.getElementById('bp-prev');
+    var next  = document.getElementById('bp-next');
+
+    function ir(n) {
+      atual = (n + total) % total;
+      track.style.transform = 'translateX(-' + (atual * 100) + '%)';
+      if (dotsEl) {
+        dotsEl.querySelectorAll('.bp-dot').forEach(function(d, i) {
+          d.classList.toggle('active', i === atual);
+        });
+      }
+    }
+
+    function iniciarAuto() {
+      pararAuto();
+      if (total < 2) return;
+      timer = setInterval(function() { ir(atual + 1); }, 5000);
+    }
+
+    function pararAuto() { if (timer) { clearInterval(timer); timer = null; } }
+
+    if (prev) prev.addEventListener('click', function() { ir(atual - 1); iniciarAuto(); });
+    if (next) next.addEventListener('click', function() { ir(atual + 1); iniciarAuto(); });
+
+    if (dotsEl) {
+      dotsEl.addEventListener('click', function(e) {
+        var dot = e.target.closest('.bp-dot');
+        if (dot) { ir(parseInt(dot.dataset.slide)); iniciarAuto(); }
+      });
+    }
+
+    // Swipe touch
+    var touchX = 0;
+    track.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; pararAuto(); }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      var diff = touchX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) ir(atual + (diff > 0 ? 1 : -1));
+      iniciarAuto();
+    });
+
+    // Pausa no hover
+    var outer = document.getElementById('bp-carousel');
+    if (outer) {
+      outer.addEventListener('mouseenter', pararAuto);
+      outer.addEventListener('mouseleave', iniciarAuto);
+    }
+
+    ir(0);
+    iniciarAuto();
   }
 
   // ══════════════════════════════════════════════════
@@ -561,6 +663,7 @@
     renderizarCidades();
     renderizarDepoimentos();
     renderizarFaq();
+    renderizarBanners();
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();
