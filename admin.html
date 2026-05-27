@@ -176,6 +176,14 @@
     .user-info{display:flex;align-items:center;gap:12px;}
     .user-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.82rem;}
 
+    /* ── TOAST ── */
+    #toast{position:fixed;bottom:28px;right:28px;z-index:99999;display:flex;align-items:center;gap:12px;background:#0F2D6D;color:#fff;padding:14px 20px;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.22);font-size:.88rem;font-weight:500;transform:translateY(80px);opacity:0;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;pointer-events:none;min-width:260px;max-width:360px;}
+    #toast.show{transform:translateY(0);opacity:1;pointer-events:auto;}
+    #toast .toast-icon{font-size:1.2rem;flex-shrink:0;}
+    #toast .toast-bar{position:absolute;bottom:0;left:0;height:3px;background:linear-gradient(90deg,#00D4FF,#2B5FDB);border-radius:0 0 14px 14px;width:100%;transform-origin:left;animation:none;}
+    #toast.show .toast-bar{animation:toastBar 3s linear forwards;}
+    @keyframes toastBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
     /* ── RESPONSIVE ── */
     @media(max-width:768px){
       .sidebar{transform:translateX(-100%);transition:transform .25s;}
@@ -217,6 +225,16 @@
 <!-- ══════════════════════════════════
      APP
 ══════════════════════════════════ -->
+<!-- TOAST GLOBAL -->
+<div id="toast">
+  <span class="toast-icon" id="toast-icon">✅</span>
+  <div>
+    <div id="toast-title" style="font-weight:600;margin-bottom:2px;">Alterações salvas!</div>
+    <div id="toast-sub" style="font-size:.76rem;opacity:.75;">Sincronizando com a nuvem...</div>
+  </div>
+  <div class="toast-bar"></div>
+</div>
+
 <div id="app">
 
   <!-- SIDEBAR -->
@@ -998,7 +1016,7 @@ function savePlanos(){
     p.features = p.features.map(function(f,fi){ return document.getElementById('pf-'+i+'-'+fi)?.value || f; });
   });
   lsSet('planos', planos);
-  showAlert('planos-alert');
+  showAlert('planos-alert','Planos salvos!','Os planos foram atualizados no site.');
   updateStats();
 }
 
@@ -1034,7 +1052,7 @@ function saveCidades(){
     ci.uf   = document.getElementById('ci-uf-'+i)?.value || ci.uf;
   });
   lsSet('cidades', cidades);
-  showAlert('cidades-alert');
+  showAlert('cidades-alert','Cidades salvas!','Lista de cidades atualizada no site.');
   updateStats();
 }
 
@@ -1072,7 +1090,7 @@ function saveDepoimentos(){
     d.texto  = document.getElementById('d-texto-'+i)?.value || d.texto;
   });
   lsSet('depoimentos', deps);
-  showAlert('dep-alert');
+  showAlert('dep-alert','Depoimentos salvos!','Avaliações atualizadas no site.');
 }
 
 // ── FAQ ───────────────────────────────────
@@ -1100,7 +1118,7 @@ function saveFaq(){
     f.resposta = document.getElementById('fq-r-'+i)?.value || f.resposta;
   });
   lsSet('faq', faqs);
-  showAlert('faq-alert');
+  showAlert('faq-alert','FAQ salvo!','Perguntas e respostas atualizadas no site.');
 }
 
 // ── EMPRESA ───────────────────────────────
@@ -1114,7 +1132,7 @@ function saveEmpresa(){
   var fields = ['nome','slogan','whatsapp','telefone','email','cnpj','endereco','cidade','cep','maps','instagram','facebook','tiktok','youtube','horario-dias','horario-hrs','horario-sab','horario-dom'];
   fields.forEach(function(f){ var el = document.getElementById('e-'+f); if(el) e[f] = el.value; });
   lsSet('empresa', e);
-  showAlert('empresa-alert');
+  showAlert('empresa-alert','Dados da empresa salvos!','Informações atualizadas em todo o site.');
 }
 
 // ── IDENTIDADE VISUAL ────────────────────
@@ -1135,7 +1153,7 @@ function saveIdentidade(){
   ['navy','blue','cyan'].forEach(function(c){ id['c-'+c]=document.getElementById('c-'+c).value; });
   ['logo','mascote','desc-curta','hero-titulo','msg-wa'].forEach(function(k){ var el=document.getElementById('id-'+k); if(el) id[k]=el.value; });
   lsSet('identidade',id);
-  showAlert('id-alert');
+  showAlert('id-alert','Identidade visual salva!','Cores e imagens atualizadas no site.');
 }
 
 // ── USUÁRIOS ─────────────────────────────
@@ -1151,7 +1169,7 @@ function savePassword(){
   document.getElementById('pass-atual').value='';
   document.getElementById('pass-nova').value='';
   document.getElementById('pass-confirm').value='';
-  showAlert('user-alert');
+  showAlert('user-alert','Senha alterada!','Use a nova senha no próximo acesso.','success');
 }
 
 // ── API & INTEGRAÇÕES ────────────────────
@@ -1203,7 +1221,7 @@ function saveWebhooks(){
   apiData.wh_naoatende = document.getElementById('wh-naoatende').value;
   apiData.wh_visita = document.getElementById('wh-visita').value;
   lsSet('api', apiData);
-  showAlert('api-alert');
+  showAlert('api-alert','Webhooks salvos!','URLs de webhook configuradas.');
 }
 function saveApiConfig(){
   var apiData = ls('api') || {};
@@ -1211,7 +1229,7 @@ function saveApiConfig(){
   apiData.wa_token = document.getElementById('api-wa-token').value;
   apiData.wa_phone_id = document.getElementById('api-wa-phone-id').value;
   lsSet('api', apiData);
-  showAlert('api-alert');
+  showAlert('api-alert','Configurações de API salvas!','Tokens e chaves atualizados.');
 }
 function testWebhook(type){
   var urls = { lead: document.getElementById('wh-lead').value, naoatende: document.getElementById('wh-naoatende').value, visita: document.getElementById('wh-visita').value };
@@ -1255,17 +1273,44 @@ function saveMarketing(){
   var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','tiktok','script-head','script-body'];
   fields.forEach(function(f){ var el=document.getElementById('mkt-'+f); if(el) mkt[f]=el.value; });
   lsSet('marketing', mkt);
-  showAlert('mkt-alert');
-  loadMarketing(); // atualiza status
+  showAlert('mkt-alert','Marketing salvo!','Pixels e scripts de tracking atualizados.');
+  loadMarketing();
 }
 
-// ── HELPERS ───────────────────────────────
-function showAlert(id){
+// ── TOAST ─────────────────────────────────
+var _toastTimer = null;
+function showAlert(id, titulo, sub, tipo){
+  // Esconde o alert inline antigo (compatibilidade)
   var el = document.getElementById(id);
-  if(!el) return;
-  el.style.display = 'block';
-  setTimeout(function(){ el.style.display='none'; }, 3000);
+  if(el){ el.style.display='block'; setTimeout(function(){ el.style.display='none'; },100); }
+
+  // Mostra toast flutuante
+  var toast     = document.getElementById('toast');
+  var iconEl    = document.getElementById('toast-icon');
+  var titleEl   = document.getElementById('toast-title');
+  var subEl     = document.getElementById('toast-sub');
+  var barEl     = toast ? toast.querySelector('.toast-bar') : null;
+  if(!toast) return;
+
+  tipo  = tipo  || 'success';
+  titulo = titulo || 'Alterações salvas!';
+  sub   = sub   || (ls('cloud_bin_id') ? 'Sincronizando com a nuvem...' : 'Salvo localmente.');
+
+  if(iconEl)  iconEl.textContent  = tipo==='error' ? '❌' : tipo==='warn' ? '⚠️' : '✅';
+  if(titleEl) titleEl.textContent = titulo;
+  if(subEl)   subEl.textContent   = sub;
+
+  toast.style.background = tipo==='error' ? '#7f1d1d' : tipo==='warn' ? '#78350f' : '#0F2D6D';
+
+  // Reinicia animação da barra
+  if(barEl){ barEl.style.animation='none'; void barEl.offsetWidth; barEl.style.animation='toastBar 3s linear forwards'; }
+
+  if(_toastTimer) clearTimeout(_toastTimer);
+  toast.classList.add('show');
+  _toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 3200);
 }
+
+function showToast(titulo, sub, tipo){ showAlert('', titulo, sub, tipo); }
 
 // ══════════════════════════════════════════
 //  SINCRONIZAÇÃO EM NUVEM (JSONBin.io)
@@ -1379,9 +1424,9 @@ function sincronizarNuvem(manual){
     if(data.metadata){
       lsSet('cloud_last_sync', new Date().toLocaleString('pt-BR'));
       atualizarStatusCloud(true,'✅ Sincronizado em ' + new Date().toLocaleString('pt-BR'));
-      if(manual) showAlert('api-alert');
+      if(manual) showAlert('api-alert','Sincronizado com a nuvem!','Todos os visitantes verão as mudanças.');
     } else {
-      if(manual) atualizarStatusCloud(false,'❌ Erro ao sincronizar: ' + (data.message||''));
+      if(manual) { atualizarStatusCloud(false,'❌ Erro ao sincronizar: ' + (data.message||'')); showToast('Erro na sincronização','Verifique sua Master Key.','error'); }
     }
   })
   .catch(function(){
