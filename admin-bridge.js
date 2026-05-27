@@ -1,6 +1,6 @@
 // ══════════════════════════════════════════════════════
 //  admin-bridge.js — Integra o Painel Admin com o Site
-//  Inclua este script no index.html (antes do </body>)
+//  Toda alteração salva no painel reflete aqui em tempo real
 // ══════════════════════════════════════════════════════
 
 (function () {
@@ -13,154 +13,432 @@
     localStorage.setItem('connect_admin_' + key, JSON.stringify(val));
   }
 
-  // ── 1. RASTREAR LEAD (clique no WhatsApp) ──────────
-  document.addEventListener('click', function (e) {
-    var el = e.target.closest('a[href="#whatsapp"]');
-    if (!el) return;
+  // ── DEFAULTS ────────────────────────────────────────
+  var DEFAULT_PLANOS = [
+    { nome: '700 Megas', velocidade: '700', preco: 'Consulte', features: ['Internet estável e rápida', 'Streaming em HD sem travamentos', 'Perfeito para uso diário'] },
+    { nome: '800 Megas', velocidade: '800', preco: 'Consulte', features: ['Conexão para vários dispositivos', 'Streaming Full HD sem interrupções', 'Jogos online sem lag', 'Excelente custo-benefício'] },
+    { nome: '900 Megas', velocidade: '900', preco: 'Consulte', features: ['Streaming 4K com qualidade total', 'Home office', 'Downloads rápidos e estáveis'] },
+    { nome: '1 GIGA',   velocidade: '1000', preco: 'Consulte', features: ['Ultra velocidade para toda a família ou empresa', '4K simultâneo sem travar', 'Ultra-rápido'] }
+  ];
+  var DEFAULT_CIDADES = [
+    { nome: 'Porto e Região', uf: 'PI' },
+    { nome: 'Campo Largo do Piauí e Região', uf: 'PI' },
+    { nome: 'Nossa Senhora dos Remédios e Região', uf: 'PI' },
+    { nome: 'Miguel Alves e Região', uf: 'PI' },
+    { nome: 'Barras e Região', uf: 'PI' },
+    { nome: 'Zona Rural de União', uf: 'PI' },
+    { nome: 'Zona Rural de Buriti', uf: 'MA' }
+  ];
+  var DEFAULT_DEPOIMENTOS = [
+    { nome: 'Maria Rosa', inicial: 'MR', desde: 'Cliente há 2 anos', texto: 'Internet rápida e não cai. Assistir Netflix aqui em casa ficou bem melhor. Recomendo!', estrelas: 5 },
+    { nome: 'João Silva',  inicial: 'JS', desde: 'Cliente há 1 ano',  texto: 'Jogo Free Fire sem lag nenhum. O ping ficou muito bom depois que mudei pra Connect. Vale a pena.', estrelas: 5 },
+    { nome: 'Ana Costa',   inicial: 'AC', desde: 'Cliente há 3 anos', texto: 'Trabalho de casa com reuniões pelo Zoom. A internet nunca me deixou na mão. Suporte sempre atencioso.', estrelas: 5 }
+  ];
+  var DEFAULT_FAQ = [
+    { pergunta: 'Como funciona a instalação?', resposta: 'Após você entrar em contato e escolher o plano, nossa equipe agenda a visita técnica. A instalação geralmente leva de 2 a 4 horas.' },
+    { pergunta: 'Tem fidelidade?', resposta: 'Este plano possui fidelidade de 12 meses, garantindo benefícios exclusivos na instalação e mensalidade.' },
+    { pergunta: 'A velocidade é garantida?', resposta: 'Sim! Como trabalhamos com fibra óptica de ponta a ponta, a velocidade contratada é entregue diretamente na sua casa.' },
+    { pergunta: 'Como funciona o suporte técnico?', resposta: 'Nosso suporte funciona via WhatsApp com atendimento humano. Estamos disponíveis para resolver qualquer problema rapidamente.' },
+    { pergunta: 'O roteador está incluso?', resposta: 'Sim! Fornecemos o roteador Wi-Fi adequado para o plano contratado sem custo adicional.' },
+    { pergunta: 'Como faço para pagar a fatura?', resposta: 'A fatura é disponibilizada mensalmente para pagamento via boleto e Pix. Também oferecemos carnê com parcelas.' }
+  ];
 
-    var cidade = sessionStorage.getItem('cidadeEscolhida') || '—';
-    var plano = (function () {
-      var card = el.closest('.card-modern, .card-featured-modern, .card');
-      if (card) {
-        var t = card.querySelector('h3');
-        if (t) return (t.innerText || t.textContent).trim();
-      }
-      return '—';
-    })();
+  var STAR_SVG = '<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+  var CHECK_SVG = '<svg class="w-5 h-5 text-connect-cyan mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>';
 
-    var leads = ls('leads') || [];
-    leads.push({
-      acao: 'Clique WhatsApp',
-      cidade: cidade,
-      plano: plano,
-      data: new Date().toLocaleString('pt-BR'),
-      ts: Date.now()
+  // ══════════════════════════════════════════════════
+  //  1. APLICAR CORES
+  // ══════════════════════════════════════════════════
+  function aplicarCores() {
+    var id = ls('identidade');
+    if (!id) return;
+    var style = document.createElement('style');
+    style.id = 'admin-cores';
+    var css = '';
+    if (id['c-navy']) css += '--connect-navy:' + id['c-navy'] + ';';
+    if (id['c-blue']) css += '--connect-blue:' + id['c-blue'] + ';--tw-connect-blue:' + id['c-blue'] + ';';
+    if (id['c-cyan']) css += '--connect-cyan:' + id['c-cyan'] + ';';
+    if (css) style.textContent = ':root{' + css + '}';
+    var old = document.getElementById('admin-cores');
+    if (old) old.remove();
+    document.head.appendChild(style);
+  }
+
+  // ══════════════════════════════════════════════════
+  //  2. APLICAR NÚMERO WHATSAPP
+  // ══════════════════════════════════════════════════
+  function aplicarWhatsApp() {
+    var empresa = ls('empresa');
+    if (!empresa || !empresa.whatsapp) return;
+    var numero = empresa.whatsapp;
+    // Sobrescreve a função abrirWhatsApp do script.js
+    window.abrirWhatsApp = function (mensagem) {
+      var texto = mensagem || 'Olá! Quero contratar internet da Connect!';
+      var url = 'https://wa.me/' + numero + '?text=' + encodeURIComponent(texto);
+      window.open(url, '_blank');
+    };
+    // Atualiza todos os links href de WhatsApp diretos
+    document.querySelectorAll('a[href*="wa.me"]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      a.setAttribute('href', href.replace(/wa\.me\/\d+/, 'wa.me/' + numero));
     });
-    lsSet('leads', leads);
+  }
 
-    // Dispara webhook se configurado
-    var apiData = ls('api') || {};
-    if (apiData.wh_lead && apiData.int_n8n) {
-      var payload = {
-        evento: 'lead_capturado',
-        timestamp: new Date().toISOString(),
-        origem: 'site_connect',
-        lead: {
-          cidade: cidade,
-          plano_interesse: plano,
-          pagina: window.location.href
-        }
-      };
-      fetch(apiData.wh_lead, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      }).catch(function () { /* silencioso */ });
+  // ══════════════════════════════════════════════════
+  //  3. RENDERIZAR PLANOS
+  // ══════════════════════════════════════════════════
+  function renderizarPlanos() {
+    var planos = ls('planos') || DEFAULT_PLANOS;
+    var container = document.querySelector('#planos .grid.sm\\:grid-cols-2');
+    if (!container) {
+      // tenta seletor alternativo
+      var sec = document.getElementById('planos');
+      if (sec) container = sec.querySelector('.grid');
     }
-  });
+    if (!container) return;
 
-  // ── 2. RASTREAR CIDADE NÃO ATENDIDA ───────────────
-  var btnAvise = document.getElementById('cidade-btn-avise');
-  if (btnAvise) {
-    btnAvise.addEventListener('click', function () {
+    container.innerHTML = planos.map(function (p, i) {
+      var delay = (i + 1) * 0.1;
+      var features = p.features.map(function (f) {
+        return '<li class="flex items-start text-sm">' + CHECK_SVG + '<span class="text-connect-dark">' + escHtml(f) + '</span></li>';
+      }).join('');
+
+      return '<div class="group card-modern fade-in" style="animation-delay:' + delay + 's">' +
+        '<div class="p-6 h-full flex flex-col">' +
+        '<div class="flex items-center gap-3 mb-4">' +
+        '<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">' +
+        '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>' +
+        '</div>' +
+        '<div><h3 class="text-2xl font-bold text-connect-navy">' + escHtml(p.nome) + '</h3>' +
+        '<p class="text-xs text-connect-dark/70">velocidade máxima</p></div>' +
+        '</div>' +
+        '<div class="mb-6">' +
+        '<div class="flex items-baseline gap-2">' +
+        '<p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">' + escHtml(p.preco) + '</p>' +
+        '</div>' +
+        '<p class="text-xs text-connect-dark/60 mt-1">valores via WhatsApp</p>' +
+        '</div>' +
+        '<ul class="space-y-3 mb-6 flex-grow">' + features + '</ul>' +
+        '<a href="#whatsapp" class="btn-plan w-full text-sm py-3">Assinar agora</a>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  // ══════════════════════════════════════════════════
+  //  4. RENDERIZAR CIDADES (overlay + cobertura)
+  // ══════════════════════════════════════════════════
+  function renderizarCidades() {
+    var cidades = ls('cidades') || DEFAULT_CIDADES;
+
+    // — Overlay de boas-vindas (#cidade-lista) —
+    var listaOverlay = document.getElementById('cidade-lista');
+    if (listaOverlay) {
+      var botoesOverlay = cidades.map(function (c) {
+        return '<button class="ti-cidade" data-cidade="' + escAttr(c.nome) + '" data-atende="true">' +
+          '<span class="tic-icon">📍</span>' +
+          '<span class="tic-nome">' + escHtml(c.nome) + '</span>' +
+          '<span class="tic-uf">' + escHtml(c.uf) + '</span>' +
+          '<span class="tic-arrow">→</span>' +
+          '</button>';
+      }).join('');
+      botoesOverlay += '<button class="ti-cidade ti-cidade-outra" data-cidade="outra" data-atende="false">' +
+        '<span class="tic-icon">🔍</span>' +
+        '<span class="tic-nome">Minha cidade não está aqui</span>' +
+        '<span class="tic-uf"></span>' +
+        '<span class="tic-arrow">→</span>' +
+        '</button>';
+      listaOverlay.innerHTML = botoesOverlay;
+    }
+
+    // — Seção de Cobertura (.cob-cidades) —
+    var cobCidades = document.querySelector('.cob-cidades');
+    if (cobCidades) {
+      var botoesCob = cidades.map(function (c) {
+        return '<button class="cob-cidade-btn" data-cidade="' + escAttr(c.nome) + '" data-atende="true">' +
+          '<div class="cob-cidade-icon">📍</div>' +
+          '<span class="cob-cidade-nome">' + escHtml(c.nome) + '</span>' +
+          '<span class="cob-cidade-uf">' + escHtml(c.uf) + '</span>' +
+          '<div class="cob-cidade-check">✓</div>' +
+          '</button>';
+      }).join('');
+      botoesCob += '<button class="cob-cidade-btn cob-cidade-outra" data-cidade="outra" data-atende="false">' +
+        '<div class="cob-cidade-icon">🔍</div>' +
+        '<span class="cob-cidade-nome">Minha cidade não está aqui</span>' +
+        '<span class="cob-cidade-uf"></span>' +
+        '<div class="cob-cidade-check">?</div>' +
+        '</button>';
+      cobCidades.innerHTML = botoesCob;
+    }
+  }
+
+  // ══════════════════════════════════════════════════
+  //  5. RENDERIZAR DEPOIMENTOS
+  // ══════════════════════════════════════════════════
+  function renderizarDepoimentos() {
+    var deps = ls('depoimentos') || DEFAULT_DEPOIMENTOS;
+    var container = document.querySelector('#depoimentos .grid.md\\:grid-cols-3');
+    if (!container) {
+      var sec = document.getElementById('depoimentos');
+      if (sec) container = sec.querySelector('.grid');
+    }
+    if (!container) return;
+
+    container.innerHTML = deps.map(function (d, i) {
+      var stars = '';
+      for (var s = 0; s < (d.estrelas || 5); s++) stars += STAR_SVG;
+      var delay = (i + 1) * 0.1;
+      return '<div class="card fade-in" style="animation-delay:' + delay + 's">' +
+        '<div class="p-8">' +
+        '<div class="flex items-center mb-4">' + stars + '</div>' +
+        '<p class="text-connect-dark/80 mb-4 leading-relaxed">"' + escHtml(d.texto) + '"</p>' +
+        '<div class="flex items-center">' +
+        '<div class="w-10 h-10 bg-connect-cyan/20 rounded-full flex items-center justify-center mr-3">' +
+        '<span class="text-connect-cyan font-bold text-sm">' + escHtml(d.inicial) + '</span>' +
+        '</div>' +
+        '<div>' +
+        '<p class="font-semibold text-connect-navy text-sm">' + escHtml(d.nome) + '</p>' +
+        '<p class="text-xs text-connect-dark/60">' + escHtml(d.desde) + '</p>' +
+        '</div></div></div></div>';
+    }).join('');
+  }
+
+  // ══════════════════════════════════════════════════
+  //  6. RENDERIZAR FAQ
+  // ══════════════════════════════════════════════════
+  function renderizarFaq() {
+    var faqs = ls('faq') || DEFAULT_FAQ;
+    var container = document.querySelector('#faq .space-y-4');
+    if (!container) {
+      var sec = document.getElementById('faq');
+      if (sec) container = sec.querySelector('.space-y-4, .space-y-3');
+    }
+    if (!container) return;
+
+    container.innerHTML = faqs.map(function (f, i) {
+      var delay = (i + 1) * 0.1;
+      return '<div class="card fade-in" style="animation-delay:' + delay + 's">' +
+        '<button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">' +
+        '<span class="font-semibold text-connect-navy pr-4">' + escHtml(f.pergunta) + '</span>' +
+        '<svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>' +
+        '</button>' +
+        '<div class="faq-content overflow-hidden transition-all duration-300" style="max-height:0;">' +
+        '<div class="p-6 pt-0 text-connect-dark/80 leading-relaxed">' + escHtml(f.resposta) + '</div>' +
+        '</div></div>';
+    }).join('');
+
+    // Reinicializa o accordion do FAQ
+    container.querySelectorAll('.faq-button').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var content = this.nextElementSibling;
+        var expanded = this.getAttribute('aria-expanded') === 'true';
+        container.querySelectorAll('.faq-button').forEach(function (other) {
+          if (other !== btn) {
+            other.setAttribute('aria-expanded', 'false');
+            var oc = other.nextElementSibling;
+            if (oc) oc.style.maxHeight = '0';
+          }
+        });
+        this.setAttribute('aria-expanded', String(!expanded));
+        if (content) content.style.maxHeight = expanded ? '0' : content.scrollHeight + 'px';
+      });
+    });
+  }
+
+  // ══════════════════════════════════════════════════
+  //  7. APLICAR DADOS DA EMPRESA
+  // ══════════════════════════════════════════════════
+  function aplicarEmpresa() {
+    var e = ls('empresa');
+    if (!e) return;
+
+    // Nome no footer
+    if (e.nome) {
+      document.querySelectorAll('footer h3').forEach(function (el) {
+        if (el.textContent.trim() === 'Connect') el.textContent = e.nome;
+      });
+      document.title = e.nome + ' - Internet Fibra Óptica';
+    }
+
+    // Endereço no footer
+    if (e.cidade) {
+      document.querySelectorAll('footer span').forEach(function (el) {
+        if (el.textContent.includes('Porto-PI')) el.textContent = e.cidade;
+      });
+    }
+
+    // Slogan / descrição curta no footer
+    if (e.slogan) {
+      var footerP = document.querySelector('footer p.text-sm.leading-relaxed');
+      if (footerP) footerP.textContent = e.slogan;
+    }
+
+    // Horário de atendimento (se existir no HTML)
+    if (e['horario-dias'] && e['horario-hrs']) {
+      document.querySelectorAll('[data-horario]').forEach(function (el) {
+        el.textContent = e['horario-dias'] + ' — ' + e['horario-hrs'];
+      });
+    }
+  }
+
+  // ══════════════════════════════════════════════════
+  //  8. APLICAR IDENTIDADE VISUAL (textos)
+  // ══════════════════════════════════════════════════
+  function aplicarIdentidade() {
+    var id = ls('identidade');
+    if (!id) return;
+
+    // Título do Hero
+    if (id['hero-titulo']) {
+      var heroH1 = document.querySelector('#hero h1');
+      if (heroH1) {
+        // preserva o span do gradiente
+        var span = heroH1.querySelector('span');
+        if (span) {
+          heroH1.childNodes.forEach(function (n) {
+            if (n.nodeType === 3) n.textContent = id['hero-titulo'].replace(span.textContent, '');
+          });
+        }
+      }
+    }
+
+    // Descrição curta institucional
+    if (id['desc-curta']) {
+      var footerP = document.querySelector('footer p.text-sm.leading-relaxed');
+      if (footerP) footerP.textContent = id['desc-curta'];
+    }
+
+    // Mensagem padrão WhatsApp
+    if (id['msg-wa']) {
+      window._adminMsgWa = id['msg-wa'];
+    }
+
+    // Logo (se URL foi alterada)
+    if (id['logo']) {
+      document.querySelectorAll('img[alt*="Connect"]').forEach(function (img) {
+        if (img.closest('#cidade-overlay, header, footer')) {
+          img.src = id['logo'];
+        }
+      });
+    }
+
+    // Mascote
+    if (id['mascote']) {
+      document.querySelectorAll('img[src*="masconte"]').forEach(function (img) {
+        img.src = id['mascote'];
+      });
+    }
+  }
+
+  // ══════════════════════════════════════════════════
+  //  9. RASTREAR LEADS
+  // ══════════════════════════════════════════════════
+  function rastrearLeads() {
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest('a[href="#whatsapp"]');
+      if (!el) return;
+
+      var cidade = sessionStorage.getItem('cidadeEscolhida') || '—';
+      var plano = (function () {
+        var card = el.closest('.card-modern, .card-featured-modern, .card');
+        if (card) {
+          var t = card.querySelector('h3');
+          if (t) return (t.innerText || t.textContent).trim();
+        }
+        return '—';
+      })();
+
       var leads = ls('leads') || [];
       leads.push({
-        acao: 'Cidade não atendida',
-        cidade: '—',
-        plano: '—',
+        acao: 'Clique WhatsApp',
+        cidade: cidade,
+        plano: plano,
         data: new Date().toLocaleString('pt-BR'),
         ts: Date.now()
       });
       lsSet('leads', leads);
 
-      // Webhook cidade não atendida
+      // Webhook
       var apiData = ls('api') || {};
-      if (apiData.wh_naoatende && apiData.int_n8n) {
-        fetch(apiData.wh_naoatende, {
+      if (apiData.wh_lead && apiData.int_n8n) {
+        fetch(apiData.wh_lead, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ evento: 'cidade_nao_atendida', timestamp: new Date().toISOString() })
-        }).catch(function () { });
+          body: JSON.stringify({
+            evento: 'lead_capturado',
+            timestamp: new Date().toISOString(),
+            origem: 'site_connect',
+            lead: { cidade: cidade, plano_interesse: plano, pagina: window.location.href }
+          })
+        }).catch(function () {});
       }
+    });
+
+    // Cidade não atendida
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('#cidade-btn-avise, .cob-btn-avise');
+      if (!btn) return;
+      var leads = ls('leads') || [];
+      leads.push({ acao: 'Cidade não atendida', cidade: '—', plano: '—', data: new Date().toLocaleString('pt-BR'), ts: Date.now() });
+      lsSet('leads', leads);
     });
   }
 
-  // ── 3. CONTAR VISITAS ─────────────────────────────
-  (function () {
+  // ══════════════════════════════════════════════════
+  //  10. CONTAR VISITAS
+  // ══════════════════════════════════════════════════
+  function contarVisitas() {
     var hoje = new Date().toDateString();
-    var visitaData = ls('visita_data');
-    if (visitaData !== hoje) {
+    if (ls('visita_data') !== hoje) {
       lsSet('visitas', 1);
       lsSet('visita_data', hoje);
     } else {
-      var v = ls('visitas') || 0;
-      lsSet('visitas', v + 1);
+      lsSet('visitas', (ls('visitas') || 0) + 1);
     }
-  })();
+  }
 
-  // ── 4. APLICAR NÚMERO DE WHATSAPP DO PAINEL ───────
-  (function () {
-    var empresa = ls('empresa');
-    if (empresa && empresa.whatsapp) {
-      // Sobrescreve o WHATSAPP_NUMBER do script.js se existir
-      if (typeof window.WHATSAPP_NUMBER !== 'undefined') {
-        window.WHATSAPP_NUMBER = empresa.whatsapp;
-      }
-    }
-  })();
-
-  // ── 5. INJETAR MARKETING / TRACKING DO PAINEL ────
-  (function () {
+  // ══════════════════════════════════════════════════
+  //  11. INJETAR MARKETING / PIXELS
+  // ══════════════════════════════════════════════════
+  function injetarMarketing() {
     var mkt = ls('marketing');
     if (!mkt) return;
 
-    // Google Tag Manager
-    if (mkt.gtm && mkt.gtm.trim() && !document.getElementById('gtm-bridge')) {
-      var gtmId = mkt.gtm.trim();
-      // Só injeta se diferente do que já está no HTML
-      if (gtmId !== 'GTM-KZWSCQJ8') {
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || [];
-          w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-          var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-          j.async = true; j.id = 'gtm-bridge';
-          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-          f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', gtmId);
-      }
+    // Google Tag Manager (extra, se diferente do hardcoded)
+    if (mkt.gtm && mkt.gtm.trim() && mkt.gtm.trim() !== 'GTM-KZWSCQJ8' && !document.getElementById('gtm-bridge')) {
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l !== 'dataLayer' ? '&l=' + l : '';
+        j.async = true; j.id = 'gtm-bridge';
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', mkt.gtm.trim());
     }
 
     // Meta Pixel
-    if (mkt.fbpixel && mkt.fbpixel.trim() && !window.fbqLoaded) {
-      window.fbqLoaded = true;
+    if (mkt.fbpixel && mkt.fbpixel.trim() && !window._fbqLoaded) {
+      window._fbqLoaded = true;
       !function (f, b, e, v, n, t, s) {
-        if (f.fbq) return; n = f.fbq = function () {
-          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-        };
-        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-        n.queue = []; t = b.createElement(e); t.async = !0;
-        t.src = v; s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s)
+        if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+        if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+        t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
       }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
       window.fbq('init', mkt.fbpixel.trim());
       window.fbq('track', 'PageView');
-
-      // Evento de lead no clique do WhatsApp
       document.addEventListener('click', function (e2) {
-        if (e2.target.closest('a[href="#whatsapp"]')) {
+        if (e2.target.closest('a[href="#whatsapp"]') && window.fbq) {
           window.fbq('track', mkt['fb-event'] || 'Lead');
         }
       });
     }
 
     // GA4
-    if (mkt.ga4 && mkt.ga4.trim() && !window.ga4Loaded) {
-      window.ga4Loaded = true;
-      var ga4Script = document.createElement('script');
-      ga4Script.async = true;
-      ga4Script.src = 'https://www.googletagmanager.com/gtag/js?id=' + mkt.ga4.trim();
-      document.head.appendChild(ga4Script);
+    if (mkt.ga4 && mkt.ga4.trim() && !window._ga4Loaded) {
+      window._ga4Loaded = true;
+      var ga4Sc = document.createElement('script');
+      ga4Sc.async = true;
+      ga4Sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + mkt.ga4.trim();
+      document.head.appendChild(ga4Sc);
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () { window.dataLayer.push(arguments); };
       window.gtag('js', new Date());
@@ -168,32 +446,56 @@
     }
 
     // TikTok Pixel
-    if (mkt.tiktok && mkt.tiktok.trim() && !window.ttqLoaded) {
-      window.ttqLoaded = true;
+    if (mkt.tiktok && mkt.tiktok.trim() && !window._ttqLoaded) {
+      window._ttqLoaded = true;
       !function (w, d, t) {
-        w.TiktokAnalyticsObject = t;
-        var ttq = w[t] = w[t] || [];
+        w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || [];
         ttq.methods = ['page', 'track', 'identify', 'instances', 'debug', 'on', 'off', 'once', 'ready', 'alias', 'group', 'enableCookie', 'disableCookie'];
-        ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } };
+        ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))); }; };
         for (var i = 0; i < ttq.methods.length; i++) ttq.setAndDefer(ttq, ttq.methods[i]);
-        ttq.instance = function (t) { for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++) ttq.setAndDefer(e, ttq.methods[n]); return e };
-        ttq.load = function (e, n) { var i = '//analytics.tiktok.com/i18n/pixel/events.js'; ttq._i = ttq._i || {}; ttq._i[e] = []; ttq._i[e]._u = i; ttq._t = ttq._t || {}; ttq._t[e] = +new Date; ttq._o = ttq._o || {}; ttq._o[e] = n || {}; var o = document.createElement('script'); o.type = 'text/javascript'; o.async = !0; o.src = i + '?sdkid=' + e + '&lib=' + t; var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(o, a) };
+        ttq.load = function (e) { var s = document.createElement('script'); s.type = 'text/javascript'; s.async = !0; s.src = '//analytics.tiktok.com/i18n/pixel/events.js?sdkid=' + e; var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(s, a); };
         ttq.load(mkt.tiktok.trim()); ttq.page();
       }(window, document, 'ttq');
     }
 
     // Scripts personalizados
     if (mkt['script-head'] && mkt['script-head'].trim()) {
-      var div = document.createElement('div');
-      div.innerHTML = mkt['script-head'];
-      document.head.appendChild(div.firstChild);
+      var dh = document.createElement('div'); dh.innerHTML = mkt['script-head'];
+      Array.from(dh.children).forEach(function (n) { document.head.appendChild(n); });
     }
     if (mkt['script-body'] && mkt['script-body'].trim()) {
-      var divB = document.createElement('div');
-      divB.innerHTML = mkt['script-body'];
-      document.body.appendChild(divB.firstChild);
+      var db = document.createElement('div'); db.innerHTML = mkt['script-body'];
+      Array.from(db.children).forEach(function (n) { document.body.appendChild(n); });
     }
-  })();
+  }
 
-  console.log('✅ Connect Admin Bridge carregado');
+  // ── ESCAPE HELPERS ──────────────────────────────
+  function escHtml(str) {
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function escAttr(str) {
+    return String(str || '').replace(/"/g, '&quot;');
+  }
+
+  // ══════════════════════════════════════════════════
+  //  INICIALIZAÇÃO
+  // ══════════════════════════════════════════════════
+  // Aplica cores imediatamente (antes do DOM estar completo)
+  aplicarCores();
+  injetarMarketing();
+  contarVisitas();
+
+  // Aplica conteúdo depois que o DOM estiver pronto
+  document.addEventListener('DOMContentLoaded', function () {
+    aplicarWhatsApp();
+    renderizarPlanos();
+    renderizarCidades();
+    renderizarDepoimentos();
+    renderizarFaq();
+    aplicarEmpresa();
+    aplicarIdentidade();
+    rastrearLeads();
+    console.log('✅ Connect Admin Bridge ativo — conteúdo sincronizado com o painel.');
+  });
+
 })();
