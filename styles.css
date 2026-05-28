@@ -972,7 +972,7 @@ samp,
     filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
     position: relative;
     z-index: 1;
-    animation: hc2RocketFly 5s ease-in-out infinite;
+    animation: none;
 }
 
 /* Primeira imagem: oculta até o usuário escolher a cidade */
@@ -982,9 +982,7 @@ samp,
 
 /* Disparado após fechar o overlay de cidade */
 .hc2-img.hc2-launch-img.hc2-launched {
-    animation:
-        hc2BounceInRight 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards,
-        hc2RocketFly     5s ease-in-out 2.2s infinite;
+    animation: hc2BounceInRight 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
 }
 
 /* ── BOUNCE IN da direita (estilo TeleGo, mas da direita) ── */
@@ -1151,9 +1149,7 @@ samp,
 
     /* No mobile: fade-in simples, sem bounceInRight que atravessa a tela */
     .hc2-img.hc2-launch-img.hc2-launched {
-        animation:
-            hc2MobileFadeIn .9s ease forwards,
-            hc2RocketFly 5s ease-in-out .9s infinite;
+        animation: hc2MobileFadeIn .9s ease forwards;
     }
 
     .hc2-img {
