@@ -24,6 +24,30 @@ function nomeDoPlanoPeloElemento(el) {
 // ── INICIALIZAÇÃO (aguarda DOM pronto) ────────
 document.addEventListener('DOMContentLoaded', function () {
 
+    // ── 0a. LOADING SCREEN ─────────────────
+    var ls = document.getElementById('loading-screen');
+    if (ls) {
+        window.addEventListener('load', function() {
+            setTimeout(function() { ls.classList.add('ls-hide'); }, 400);
+        });
+        setTimeout(function() { ls.classList.add('ls-hide'); }, 2200);
+    }
+
+    // ── 0b. LGPD ───────────────────────────
+    var lgpd = document.getElementById('lgpd-notice');
+    if (lgpd && !localStorage.getItem('lgpd_ok')) {
+        setTimeout(function() { lgpd.style.display = ''; }, 1800);
+        document.getElementById('lgpd-accept').addEventListener('click', function() {
+            localStorage.setItem('lgpd_ok', '1');
+            lgpd.style.animation = 'lgpdSlideUp .3s ease reverse forwards';
+            setTimeout(function() { lgpd.style.display = 'none'; }, 300);
+        });
+        document.getElementById('lgpd-dismiss').addEventListener('click', function() {
+            lgpd.style.animation = 'lgpdSlideUp .3s ease reverse forwards';
+            setTimeout(function() { lgpd.style.display = 'none'; }, 300);
+        });
+    }
+
     // ── 0. TELA INICIAL — Seleção de cidade ──
     var overlay      = document.getElementById('cidade-overlay');
     var cidadeItens  = document.querySelectorAll('.ti-cidade');
@@ -204,48 +228,46 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ── 3. MENU MOBILE ────────────────────────
-    var header = document.getElementById('header');
-    var menuBtn  = document.getElementById('mobile-menu-btn');
-    var mobileMenu = document.getElementById('mobile-menu');
-    if (menuBtn && mobileMenu) {
-        var setMenuOpenState = function (aberto) {
-            mobileMenu.classList.toggle('hidden', !aberto);
-            menuBtn.setAttribute('aria-expanded', String(aberto));
-            document.body.classList.toggle('menu-aberto', aberto);
-            if (header) {
-                header.classList.toggle('menu-open', aberto);
-            }
-        };
+    // ── 3. MENU MOBILE (Drawer) ───────────────
+    var header      = document.getElementById('header');
+    var menuBtn     = document.getElementById('mobile-menu-btn');
+    var drawer      = document.getElementById('mobile-drawer');
+    var drawerOverlay = document.getElementById('drawer-overlay');
+    var drawerClose = document.getElementById('drawer-close');
 
-        setMenuOpenState(false);
+    function openDrawer() {
+        if (!drawer) return;
+        drawer.classList.add('open');
+        drawerOverlay.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeDrawer() {
+        if (!drawer) return;
+        drawer.classList.remove('open');
+        drawerOverlay.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    }
 
-        menuBtn.addEventListener('click', function () {
-            var menuAberto = menuBtn.getAttribute('aria-expanded') === 'true';
-            setMenuOpenState(!menuAberto);
-        });
+    if (menuBtn) menuBtn.addEventListener('click', openDrawer);
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
 
-        // Fechar menu ao clicar em link interno
-        mobileMenu.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', function () {
-                setMenuOpenState(false);
-            });
-        });
-
-        // Fecha no ESC para melhorar acessibilidade
-        document.addEventListener('keydown', function (event) {
-            if (event.key === 'Escape') {
-                setMenuOpenState(false);
-            }
-        });
-
-        // Evita manter menu aberto ao retornar ao desktop
-        window.addEventListener('resize', function () {
-            if (window.innerWidth >= 768) {
-                setMenuOpenState(false);
-            }
+    if (drawer) {
+        drawer.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', closeDrawer);
         });
     }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeDrawer();
+    });
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) closeDrawer();
+    });
 
     // ── 4. HEADER SCROLL ─────────────────────
     if (header) {
@@ -308,7 +330,32 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ── 8. HERO CARROSSEL ────────────────────
+    // ── 8. CONTADORES ANIMADOS ───────────────
+    var counters = document.querySelectorAll('.stat-num');
+    if (counters.length && 'IntersectionObserver' in window) {
+        var countObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (!entry.isIntersecting) return;
+                var el = entry.target;
+                var target = parseInt(el.dataset.target);
+                var suffix = el.dataset.suffix || '';
+                var duration = 1800;
+                var start = performance.now();
+                function tick(now) {
+                    var progress = Math.min((now - start) / duration, 1);
+                    var ease = 1 - Math.pow(1 - progress, 3);
+                    el.textContent = Math.floor(ease * target) + suffix;
+                    if (progress < 1) requestAnimationFrame(tick);
+                    else el.textContent = target + suffix;
+                }
+                requestAnimationFrame(tick);
+                countObserver.unobserve(el);
+            });
+        }, { threshold: 0.5 });
+        counters.forEach(function(c) { countObserver.observe(c); });
+    }
+
+    // ── 9. HERO CARROSSEL ────────────────────
     var hTrack   = document.getElementById('heroCarrosselTrack');
     var hDots    = document.querySelectorAll('.hc-dot');
     var hPrev    = document.getElementById('heroCarrosselPrev');
