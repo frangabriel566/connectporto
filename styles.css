@@ -1110,28 +1110,45 @@ samp,
 }
 
 @media (max-width: 700px) {
-    .hero-new { padding-top: 70px; min-height: auto; }
+    .hero-new {
+        padding-top: 70px;
+        min-height: auto;
+        overflow: hidden; /* impede animação de passar por cima do texto */
+    }
     .hero-inner {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 24px 0 0;
-        gap: 8px;
+        padding: 28px 0 0;
+        gap: 0;
         min-height: auto;
     }
-    .hero-content { max-width: 100%; order: 1; padding-bottom: 4px; }
+    .hero-content {
+        max-width: 100%;
+        order: 1;
+        padding-bottom: 24px;
+        position: relative;
+        z-index: 3;
+    }
     .hero-city-tag { justify-content: center; }
-    .hero-subtitle { margin-left: auto; margin-right: auto; font-size: .88rem; margin-bottom: 24px; }
+    .hero-subtitle { margin-left: auto; margin-right: auto; font-size: .88rem; margin-bottom: 20px; }
     .hero-btns { justify-content: center; flex-wrap: wrap; gap: 12px; }
 
     .hc2-wrap {
         order: 2;
-        width: clamp(200px, 70vw, 300px);
-        align-self: center;      /* cancela o flex-end do desktop */
+        width: clamp(180px, 65vw, 280px);
+        align-self: center;
         margin-bottom: 0;
-        margin-top: 0;
+        margin-top: -16px;
     }
-    .hc2-track { height: clamp(200px, 60vw, 280px); }
+    .hc2-track { height: clamp(180px, 55vw, 260px); }
+
+    /* No mobile: fade-in simples, sem bounceInRight que atravessa a tela */
+    .hc2-img.hc2-launch-img.hc2-launched {
+        animation:
+            hc2MobileFadeIn .9s ease forwards,
+            hc2RocketFly 5s ease-in-out .9s infinite;
+    }
 
     /* Barra de benefícios: 2 por linha */
     .hero-benefits-inner { gap: 0; justify-content: center; }
@@ -1145,11 +1162,16 @@ samp,
     .hero-benefit-item:nth-last-child(-n+2) { border-bottom: none; }
 }
 
+@keyframes hc2MobileFadeIn {
+    0%   { opacity: 0; transform: translateY(24px) scale(.88); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @media (max-width: 400px) {
     .hero-new h1 { font-size: 1.55rem; }
     .btn-hero-primary { font-size: .85rem; padding: 12px 20px; }
-    .hc2-wrap { width: 80vw; align-self: center; }
-    .hc2-track { height: 50vw; }
+    .hc2-wrap { width: 75vw; align-self: center; }
+    .hc2-track { height: 48vw; }
     .hero-benefit-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,.08); }
     .hero-benefit-item:last-child { border-bottom: none; }
 }
