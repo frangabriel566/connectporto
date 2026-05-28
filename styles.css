@@ -720,8 +720,7 @@ samp,
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow: visible;
     padding-top: 80px;
 }
 
@@ -896,7 +895,7 @@ samp,
     justify-content: flex-end;
     overflow: visible;
     align-self: flex-end;
-    margin-bottom: -8px;
+    margin-bottom: -90px;
 }
 
 /* Brilho de fundo embaixo do mascote/imagem */
@@ -975,8 +974,13 @@ samp,
     animation: hc2RocketFly 5s ease-in-out infinite;
 }
 
-/* Primeira imagem: entra da direita com bounce + voo contínuo */
+/* Primeira imagem: oculta até o usuário escolher a cidade */
 .hc2-img.hc2-launch-img {
+    opacity: 0;
+}
+
+/* Disparado após fechar o overlay de cidade */
+.hc2-img.hc2-launch-img.hc2-launched {
     animation:
         hc2BounceInRight 1.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards,
         hc2RocketFly     5s ease-in-out 1.3s infinite;
@@ -1162,7 +1166,6 @@ samp,
         radial-gradient(900px 460px at 85% 30%, rgba(21, 84, 227, 0.44), transparent 64%),
         linear-gradient(130deg, #07153c 0%, #0d2b74 42%, #1554e3 100%);
     isolation: isolate;
-    overflow-x: hidden;
 }
 
 #hero::before {

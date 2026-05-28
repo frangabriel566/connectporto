@@ -63,8 +63,9 @@ document.addEventListener('DOMContentLoaded', function () {
         document.body.classList.remove('cidade-bloqueada');
         setTimeout(function() {
             overlay.style.display = 'none';
-            var planos = document.getElementById('planos');
-            if (planos) planos.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Dispara animação do foguete após escolha da cidade
+            var launchImg = document.querySelector('.hc2-launch-img');
+            if (launchImg) launchImg.classList.add('hc2-launched');
         }, 380);
     }
 
