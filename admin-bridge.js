@@ -622,7 +622,7 @@
 
     function autoPlay() {
       stopAuto();
-      timer = setInterval(function() { ir(atual + 1); }, 4500);
+      timer = setInterval(function() { ir(atual + 1); }, 3000);
     }
     function stopAuto() { if (timer) clearInterval(timer); }
 
