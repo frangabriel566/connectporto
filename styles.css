@@ -982,8 +982,8 @@ samp,
 /* Disparado após fechar o overlay de cidade */
 .hc2-img.hc2-launch-img.hc2-launched {
     animation:
-        hc2BounceInRight 1.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards,
-        hc2RocketFly     5s ease-in-out 1.3s infinite;
+        hc2BounceInRight 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards,
+        hc2RocketFly     5s ease-in-out 2.2s infinite;
 }
 
 /* ── BOUNCE IN da direita (estilo TeleGo, mas da direita) ── */
