@@ -1139,7 +1139,7 @@ samp,
         width: clamp(180px, 65vw, 280px);
         align-self: center;
         margin-bottom: 0;
-        margin-top: 0;
+        margin-top: 20px;
     }
     .hc2-track { height: clamp(180px, 55vw, 260px); }
 
