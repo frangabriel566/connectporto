@@ -901,6 +901,7 @@ samp,
 
 /* Brilho de fundo embaixo do mascote/imagem */
 .hc2-glow {
+    display: none;
     position: absolute;
     bottom: -20px; left: 50%;
     transform: translateX(-50%);
@@ -1020,6 +1021,7 @@ samp,
 
 /* ── CHAMA DO FOGUETE — glow laranja pulsando ── */
 .hc2-fire-glow {
+    display: none;
     position: absolute;
     bottom: 6%; left: 52%;
     transform: translateX(-50%);
