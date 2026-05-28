@@ -692,6 +692,117 @@ samp,
     flex-shrink: 0;
 }
 
+/* ══════════════════════════════════════════
+   HERO CAROUSEL (lado direito)
+══════════════════════════════════════════ */
+.hc2-wrap {
+    flex-shrink: 0;
+    width: clamp(280px, 42vw, 500px);
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* Brilho de fundo embaixo do mascote/imagem */
+.hc2-glow {
+    position: absolute;
+    bottom: -20px; left: 50%;
+    transform: translateX(-50%);
+    width: 75%; height: 55%;
+    background: radial-gradient(ellipse, rgba(0,212,255,.22) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Track: só 1 slide visível por vez, sem overflow */
+.hc2-track {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+/* Cada slide */
+.hc2-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(80px) scale(.95);
+    transition: none;
+}
+
+/* Slide entrando (animação de entrada) */
+.hc2-slide.hc2-entering {
+    animation: hc2SlideIn .6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* Slide saindo */
+.hc2-slide.hc2-leaving {
+    animation: hc2SlideOut .45s cubic-bezier(.55,0,.45,1) forwards;
+    pointer-events: none;
+}
+
+/* Slide ativo (steady state após entrada) */
+.hc2-slide.hc2-active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+@keyframes hc2SlideIn {
+    0%   { opacity: 0; transform: translateX(90px) scale(.92); }
+    100% { opacity: 1; transform: translateX(0)    scale(1);   }
+}
+@keyframes hc2SlideOut {
+    0%   { opacity: 1; transform: translateX(0)     scale(1);   }
+    100% { opacity: 0; transform: translateX(-70px) scale(.94); }
+}
+
+/* Imagem dentro do slide */
+.hc2-img {
+    width: 100%;
+    max-width: 460px;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
+    animation: hc2Float 3.8s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+@keyframes hc2Float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-14px); }
+}
+
+/* Dots */
+.hc2-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+}
+.hc2-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.3);
+    border: none; cursor: pointer;
+    transition: all .3s;
+    padding: 0;
+}
+.hc2-dot.active {
+    width: 24px;
+    border-radius: 99px;
+    background: #00D4FF;
+}
+
 /* ── NAV LINKS (brancos sobre hero, escuros ao scrollar) ── */
 .nav-link {
     font-size: .88rem;
@@ -706,20 +817,20 @@ samp,
 
 /* ── HERO RESPONSIVO ── */
 @media (max-width: 900px) {
-    .hero-mascote-wrap { width: clamp(220px, 36vw, 340px); }
+    .hc2-wrap { width: clamp(220px, 36vw, 340px); }
+    .hc2-track { min-height: 220px; }
     .hero-new h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); }
     .hero-subtitle { font-size: .92rem; }
     .hero-benefit-item { padding: 6px 14px; }
 }
 
 @media (max-width: 700px) {
-    /* Hero vira coluna: texto em cima, mascote embaixo */
     .hero-new { padding-top: 70px; min-height: auto; }
     .hero-inner {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 32px 0 16px;
+        padding: 32px 0 0;
         gap: 0;
     }
     .hero-content { max-width: 100%; order: 1; }
@@ -727,12 +838,12 @@ samp,
     .hero-subtitle { margin-left: auto; margin-right: auto; }
     .hero-btns { justify-content: center; }
 
-    /* Mascote menor, sem margem extra */
-    .hero-mascote-wrap {
+    .hc2-wrap {
         order: 2;
-        width: clamp(200px, 70vw, 300px);
-        margin-top: 8px;
+        width: clamp(200px, 72vw, 300px);
+        margin-top: 4px;
     }
+    .hc2-track { min-height: 180px; }
 
     /* Barra de benefícios: 2 por linha */
     .hero-benefits-inner { gap: 0; justify-content: center; }
@@ -749,7 +860,8 @@ samp,
 @media (max-width: 400px) {
     .hero-new h1 { font-size: 1.7rem; }
     .btn-hero-primary { font-size: .85rem; padding: 12px 20px; }
-    .hero-mascote-wrap { width: 180px; }
+    .hc2-wrap { width: 180px; }
+    .hc2-track { min-height: 160px; }
     .hero-benefit-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,.08); }
     .hero-benefit-item:last-child { border-bottom: none; }
 }

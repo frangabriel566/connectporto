@@ -296,12 +296,19 @@
                     </div>
                 </div>
 
-                <!-- DIREITA — Mascote -->
-                <div class="hero-mascote-wrap fade-in" style="animation-delay:.15s">
-                    <div class="hero-mascote-glow"></div>
-                    <img src="img/masconte connect.png" alt="Connectinho — Mascote Connect"
-                         class="hero-mascote"
-                         onerror="this.style.display='none'" />
+                <!-- DIREITA — Carrossel Hero -->
+                <div class="hc2-wrap fade-in" style="animation-delay:.15s" id="hc2-wrap">
+                    <div class="hc2-glow"></div>
+                    <div class="hc2-track" id="hc2-track">
+                        <!-- slides injetados pelo admin-bridge.js -->
+                        <!-- fallback padrão: mascote -->
+                        <div class="hc2-slide hc2-active">
+                            <img src="img/masconte connect.png" alt="Connectinho"
+                                 class="hc2-img"
+                                 onerror="this.style.display='none'" />
+                        </div>
+                    </div>
+                    <div class="hc2-dots" id="hc2-dots"></div>
                 </div>
 
             </div>

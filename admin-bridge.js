@@ -538,13 +538,121 @@
     renderizarDepoimentos();
     renderizarFaq();
     renderizarBanners();
+    renderizarHeroCarrossel();
     aplicarEmpresa();
     aplicarIdentidade();
     injetarMarketing();
   }
 
   // ══════════════════════════════════════════════════
-  //  7. RENDERIZAR BANNERS (carrossel promocional)
+  //  7. CARROSSEL HERO (imagens lado direito)
+  // ══════════════════════════════════════════════════
+  function renderizarHeroCarrossel() {
+    var slides = ls('hero_carousel');
+    var track  = document.getElementById('hc2-track');
+    var dotsEl = document.getElementById('hc2-dots');
+    if (!track) return;
+
+    // Sem dados: mantém fallback do HTML (mascote padrão)
+    if (!slides || !slides.length) return;
+
+    var ativos = slides.filter(function(s) { return s.ativo !== false && s.url; });
+    if (!ativos.length) return;
+
+    // Gera slides
+    track.innerHTML = ativos.map(function(s, i) {
+      return '<div class="hc2-slide' + (i === 0 ? ' hc2-active' : '') + '" data-idx="' + i + '">'
+        + '<img src="' + s.url + '" alt="' + (s.alt || 'Connect') + '" class="hc2-img" />'
+        + '</div>';
+    }).join('');
+
+    // Gera dots
+    if (dotsEl) {
+      dotsEl.innerHTML = ativos.length > 1 ? ativos.map(function(_, i) {
+        return '<button class="hc2-dot' + (i === 0 ? ' active' : '') + '" data-i="' + i + '"></button>';
+      }).join('') : '';
+    }
+
+    if (ativos.length < 2) return; // só 1 imagem: sem autoplay
+
+    // Inicializa carrossel (roda uma vez)
+    if (track.dataset.hc2Ready === '1') return;
+    track.dataset.hc2Ready = '1';
+
+    var total = ativos.length;
+    var atual = 0;
+    var timer = null;
+
+    function ir(n, dir) {
+      var slides = track.querySelectorAll('.hc2-slide');
+      var dots   = dotsEl ? dotsEl.querySelectorAll('.hc2-dot') : [];
+      var prox   = (n + total) % total;
+      if (prox === atual) return;
+
+      var saindo   = slides[atual];
+      var entrando = slides[prox];
+
+      // define direção da entrada (pode expandir para esquerda também)
+      saindo.classList.remove('hc2-active');
+      saindo.classList.add('hc2-leaving');
+
+      entrando.style.transform = 'translateX(90px) scale(.92)';
+      entrando.style.opacity   = '0';
+      entrando.classList.add('hc2-entering');
+
+      saindo.addEventListener('animationend', function handler() {
+        saindo.removeEventListener('animationend', handler);
+        saindo.classList.remove('hc2-leaving');
+        saindo.style.opacity   = '';
+        saindo.style.transform = '';
+      });
+
+      entrando.addEventListener('animationend', function handler2() {
+        entrando.removeEventListener('animationend', handler2);
+        entrando.classList.remove('hc2-entering');
+        entrando.style.transform = '';
+        entrando.style.opacity   = '';
+        entrando.classList.add('hc2-active');
+      });
+
+      atual = prox;
+      dots.forEach(function(d, i) { d.classList.toggle('active', i === atual); });
+    }
+
+    function autoPlay() {
+      stopAuto();
+      timer = setInterval(function() { ir(atual + 1); }, 4500);
+    }
+    function stopAuto() { if (timer) clearInterval(timer); }
+
+    if (dotsEl) {
+      dotsEl.addEventListener('click', function(e) {
+        var btn = e.target.closest('.hc2-dot');
+        if (btn) { ir(parseInt(btn.dataset.i)); autoPlay(); }
+      });
+    }
+
+    // Pause on hover
+    var wrap = document.getElementById('hc2-wrap');
+    if (wrap) {
+      wrap.addEventListener('mouseenter', stopAuto);
+      wrap.addEventListener('mouseleave', autoPlay);
+    }
+
+    // Swipe
+    var tx = 0;
+    track.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; stopAuto(); }, { passive: true });
+    track.addEventListener('touchend', function(e) {
+      var d = tx - e.changedTouches[0].clientX;
+      if (Math.abs(d) > 40) ir(atual + (d > 0 ? 1 : -1));
+      autoPlay();
+    });
+
+    autoPlay();
+  }
+
+  // ══════════════════════════════════════════════════
+  //  8. RENDERIZAR BANNERS (carrossel promocional)
   // ══════════════════════════════════════════════════
   function renderizarBanners() {
     var banners = ls('banners');
@@ -664,6 +772,7 @@
     renderizarDepoimentos();
     renderizarFaq();
     renderizarBanners();
+    renderizarHeroCarrossel();
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();
