@@ -559,10 +559,11 @@
     var ativos = slides.filter(function(s) { return s.ativo !== false && s.url; });
     if (!ativos.length) return;
 
-    // Gera slides
+    // Gera slides — primeira imagem recebe animação de lançamento
     track.innerHTML = ativos.map(function(s, i) {
+      var imgClass = 'hc2-img' + (i === 0 ? ' hc2-launch-img' : '');
       return '<div class="hc2-slide' + (i === 0 ? ' hc2-active' : '') + '" data-idx="' + i + '">'
-        + '<img src="' + s.url + '" alt="' + (s.alt || 'Connect') + '" class="hc2-img" />'
+        + '<img src="' + s.url + '" alt="' + (s.alt || 'Connect') + '" class="' + imgClass + '" />'
         + '</div>';
     }).join('');
 

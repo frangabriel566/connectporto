@@ -738,46 +738,134 @@ samp,
     transition: none;
 }
 
-/* Slide entrando (animação de entrada) */
+/* Slide entrando — vem de baixo+direita com rotação foguete */
 .hc2-slide.hc2-entering {
-    animation: hc2SlideIn .6s cubic-bezier(.22,1,.36,1) forwards;
+    animation: hc2SlideIn .75s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 /* Slide saindo */
 .hc2-slide.hc2-leaving {
-    animation: hc2SlideOut .45s cubic-bezier(.55,0,.45,1) forwards;
+    animation: hc2SlideOut .4s cubic-bezier(.55,0,.45,1) forwards;
     pointer-events: none;
 }
 
-/* Slide ativo (steady state após entrada) */
+/* Slide ativo */
 .hc2-slide.hc2-active {
     opacity: 1;
     transform: translateX(0) scale(1);
     pointer-events: auto;
 }
 
+/* Entrada lateral com leve launch (transições do carousel) */
 @keyframes hc2SlideIn {
-    0%   { opacity: 0; transform: translateX(90px) scale(.92); }
-    100% { opacity: 1; transform: translateX(0)    scale(1);   }
+    0%   { opacity: 0; transform: translateX(70px) translateY(50px) rotate(-10deg) scale(.82); }
+    55%  { opacity: 1; transform: translateX(-6px) translateY(-10px) rotate(3deg) scale(1.04); }
+    78%  { transform: translateX(2px) translateY(4px) rotate(-0.8deg) scale(.99); }
+    100% { opacity: 1; transform: translateX(0) translateY(0) rotate(0) scale(1); }
 }
 @keyframes hc2SlideOut {
-    0%   { opacity: 1; transform: translateX(0)     scale(1);   }
-    100% { opacity: 0; transform: translateX(-70px) scale(.94); }
+    0%   { opacity: 1; transform: translateX(0) scale(1); }
+    100% { opacity: 0; transform: translateX(-60px) translateY(20px) scale(.9); }
 }
 
-/* Imagem dentro do slide */
+/* ── IMAGEM — Launch na primeira vez, float depois ── */
 .hc2-img {
     width: 100%;
     max-width: 460px;
     object-fit: contain;
     filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
-    animation: hc2Float 3.8s ease-in-out infinite;
     position: relative;
     z-index: 1;
+    /* float padrão para slides do carousel */
+    animation: hc2Float 4s ease-in-out infinite;
 }
+
+/* Primeira imagem da página: lançamento dramático + float */
+.hc2-img.hc2-launch-img {
+    animation:
+        hc2RocketLaunch 1.5s cubic-bezier(.22,1,.36,1) forwards,
+        hc2Float        4s ease-in-out 1.5s infinite;
+}
+
+/* ── KEYFRAMES ROCKET LAUNCH ── */
+@keyframes hc2RocketLaunch {
+    0%   {
+        opacity: 0;
+        transform: translateY(120px) rotate(-15deg) scale(.7);
+        filter: blur(4px) drop-shadow(0 0 0 transparent);
+    }
+    18%  {
+        opacity: .85;
+        filter: blur(0) drop-shadow(0 20px 40px rgba(255,140,0,.4));
+    }
+    52%  {
+        opacity: 1;
+        transform: translateY(-22px) rotate(5deg) scale(1.07);
+        filter: drop-shadow(0 30px 60px rgba(0,212,255,.55));
+    }
+    68%  { transform: translateY(10px) rotate(-2deg) scale(.97); }
+    82%  { transform: translateY(-7px) rotate(1.5deg) scale(1.02); }
+    92%  { transform: translateY(3px) rotate(-0.5deg) scale(.99); }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotate(0) scale(1);
+        filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
+    }
+}
+
+/* ── FLOAT com rotação leve (balança como no espaço) ── */
 @keyframes hc2Float {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-14px); }
+    0%   { transform: translateY(0)     rotate(0deg); }
+    25%  { transform: translateY(-8px)  rotate(-2.5deg); }
+    50%  { transform: translateY(-15px) rotate(0deg); }
+    75%  { transform: translateY(-8px)  rotate(2deg); }
+    100% { transform: translateY(0)     rotate(0deg); }
+}
+
+/* ── CHAMA DO FOGUETE — glow laranja pulsando ── */
+.hc2-fire-glow {
+    position: absolute;
+    bottom: 6%; left: 52%;
+    transform: translateX(-50%);
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+.hc2-fire-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,160,0,.75) 0%, rgba(255,80,0,.45) 45%, transparent 70%);
+    filter: blur(10px);
+    animation: fireInner .18s ease-in-out infinite alternate;
+}
+.hc2-fire-glow::after {
+    content: '';
+    position: absolute;
+    inset: -18px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,200,50,.35) 0%, transparent 65%);
+    filter: blur(14px);
+    animation: fireOuter 1.4s ease-in-out infinite;
+}
+@keyframes fireInner {
+    0%   { transform: scale(1)    translateY(0);    opacity: .75; }
+    100% { transform: scale(1.55) translateY(4px);  opacity: 1; }
+}
+@keyframes fireOuter {
+    0%, 100% { transform: scale(1);    opacity: .4; }
+    50%       { transform: scale(1.35); opacity: .7; }
+}
+
+/* Glow azul ciano existente fica pulsando também */
+.hc2-glow {
+    animation: hc2GlowPulse 2.5s ease-in-out infinite;
+}
+@keyframes hc2GlowPulse {
+    0%, 100% { opacity: .6; transform: translateX(-50%) scale(1); }
+    50%       { opacity: 1;  transform: translateX(-50%) scale(1.2); }
 }
 
 /* Dots */
