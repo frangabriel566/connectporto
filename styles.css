@@ -966,12 +966,13 @@ samp,
 /* ── IMAGEM — voo contínuo padrão (slides do carousel) ── */
 .hc2-img {
     width: 100%;
-    max-width: 460px;
+    max-width: 400px;
     object-fit: contain;
     filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
     position: relative;
     z-index: 1;
     animation: hc2RocketFly 5s ease-in-out infinite;
+    margin-right: 60px;
 }
 
 /* Primeira imagem: oculta até o usuário escolher a cidade */
@@ -1152,6 +1153,16 @@ samp,
         animation:
             hc2MobileFadeIn .9s ease forwards,
             hc2RocketFly 5s ease-in-out .9s infinite;
+    }
+
+    .hc2-img {
+        max-width: 200px;
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .hc2-wrap {
+        align-self: flex-start;
+        margin-left: 10px;
     }
 
     /* Barra de benefícios: 2 por linha */
