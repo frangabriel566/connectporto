@@ -682,9 +682,10 @@
     box-sizing: border-box;
 }
 
-html {
+html, body {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    max-width: 100%;
 }
 
 body {
@@ -693,7 +694,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     line-height: 1.5;
-    overflow-x: hidden;
 }
 
 code,
@@ -720,8 +720,8 @@ samp,
     display: flex;
     flex-direction: column;
     position: relative;
-    /* overflow: visible para não cortar imagem do foguete */
-    overflow: clip;
+    overflow-x: hidden;
+    overflow-y: visible;
     padding-top: 80px;
 }
 
@@ -1162,6 +1162,7 @@ samp,
         radial-gradient(900px 460px at 85% 30%, rgba(21, 84, 227, 0.44), transparent 64%),
         linear-gradient(130deg, #07153c 0%, #0d2b74 42%, #1554e3 100%);
     isolation: isolate;
+    overflow-x: hidden;
 }
 
 #hero::before {
