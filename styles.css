@@ -1114,7 +1114,7 @@ samp,
     .hero-new {
         padding-top: 70px;
         min-height: auto;
-        overflow-x: hidden;
+        overflow-x: clip;
         overflow-y: visible;
     }
     .hero-inner {

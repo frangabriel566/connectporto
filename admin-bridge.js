@@ -509,13 +509,14 @@
           lsSet('cloud_cache_at', Date.now());
           lsSet('cloud_local_v',  record._v);
           // Atualiza todos os dados no localStorage
-          if (record.planos)      lsSet('planos',      record.planos);
-          if (record.cidades)     lsSet('cidades',     record.cidades);
-          if (record.depoimentos) lsSet('depoimentos', record.depoimentos);
-          if (record.faq)         lsSet('faq',         record.faq);
-          if (record.empresa)     lsSet('empresa',     record.empresa);
-          if (record.identidade)  lsSet('identidade',  record.identidade);
-          if (record.marketing)   lsSet('marketing',   record.marketing);
+          if (record.planos)         lsSet('planos',         record.planos);
+          if (record.cidades)        lsSet('cidades',        record.cidades);
+          if (record.depoimentos)    lsSet('depoimentos',    record.depoimentos);
+          if (record.faq)            lsSet('faq',            record.faq);
+          if (record.empresa)        lsSet('empresa',        record.empresa);
+          if (record.identidade)     lsSet('identidade',     record.identidade);
+          if (record.marketing)      lsSet('marketing',      record.marketing);
+          if (record.hero_carousel)  lsSet('hero_carousel',  record.hero_carousel);
           aplicarDadosNuvem(record);
         }
         callback(true);

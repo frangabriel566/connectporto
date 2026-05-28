@@ -1798,14 +1798,15 @@ function atualizarStatusCloud(conectado, msg){
 function coletarTodosOsDados(){
   return {
     _v: Date.now(),
-    planos:      ls('planos')      || DEFAULT_PLANOS,
-    cidades:     ls('cidades')     || DEFAULT_CIDADES,
-    depoimentos: ls('depoimentos') || DEFAULT_DEPOIMENTOS,
-    faq:         ls('faq')         || DEFAULT_FAQ,
-    empresa:     ls('empresa')     || {},
-    identidade:  ls('identidade')  || {},
-    marketing:   ls('marketing')   || {},
-    api:         (function(){ var a=ls('api')||{}; delete a.key; return a; })() // não envia a chave privada
+    planos:         ls('planos')         || DEFAULT_PLANOS,
+    cidades:        ls('cidades')        || DEFAULT_CIDADES,
+    depoimentos:    ls('depoimentos')    || DEFAULT_DEPOIMENTOS,
+    faq:            ls('faq')            || DEFAULT_FAQ,
+    empresa:        ls('empresa')        || {},
+    identidade:     ls('identidade')     || {},
+    marketing:      ls('marketing')      || {},
+    hero_carousel:  ls('hero_carousel')  || [],
+    api:            (function(){ var a=ls('api')||{}; delete a.key; return a; })() // não envia a chave privada
   };
 }
 
