@@ -776,7 +776,7 @@ samp,
     100% { opacity: 0; transform: translateX(-60px) translateY(20px) scale(.9); }
 }
 
-/* ── IMAGEM — Launch na primeira vez, float depois ── */
+/* ── IMAGEM — voo contínuo padrão (slides do carousel) ── */
 .hc2-img {
     width: 100%;
     max-width: 460px;
@@ -784,50 +784,46 @@ samp,
     filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
     position: relative;
     z-index: 1;
-    /* float padrão para slides do carousel */
-    animation: hc2Float 4s ease-in-out infinite;
+    animation: hc2RocketFly 5s ease-in-out infinite;
 }
 
-/* Primeira imagem da página: lançamento dramático + float */
+/* Primeira imagem: entra da direita com bounce + voo contínuo */
 .hc2-img.hc2-launch-img {
     animation:
-        hc2RocketLaunch 1.5s cubic-bezier(.22,1,.36,1) forwards,
-        hc2Float        4s ease-in-out 1.5s infinite;
+        hc2BounceInRight 1.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards,
+        hc2RocketFly     5s ease-in-out 1.3s infinite;
 }
 
-/* ── KEYFRAMES ROCKET LAUNCH ── */
-@keyframes hc2RocketLaunch {
+/* ── BOUNCE IN da direita (estilo TeleGo, mas da direita) ── */
+@keyframes hc2BounceInRight {
     0%   {
         opacity: 0;
-        transform: translateY(120px) rotate(-15deg) scale(.7);
-        filter: blur(4px) drop-shadow(0 0 0 transparent);
+        transform: translate3d(1600px, 80px, 0) rotate(22deg) scale(.8);
     }
-    18%  {
-        opacity: .85;
-        filter: blur(0) drop-shadow(0 20px 40px rgba(255,140,0,.4));
-    }
-    52%  {
+    40%  {
         opacity: 1;
-        transform: translateY(-22px) rotate(5deg) scale(1.07);
-        filter: drop-shadow(0 30px 60px rgba(0,212,255,.55));
+        transform: translate3d(-35px, -12px, 0) rotate(-6deg) scale(1.05);
+        filter: drop-shadow(0 20px 50px rgba(0,212,255,.5));
     }
-    68%  { transform: translateY(10px) rotate(-2deg) scale(.97); }
-    82%  { transform: translateY(-7px) rotate(1.5deg) scale(1.02); }
-    92%  { transform: translateY(3px) rotate(-0.5deg) scale(.99); }
+    60%  { transform: translate3d(16px, 5px, 0) rotate(2.5deg) scale(.98); }
+    75%  { transform: translate3d(-8px, -3px, 0) rotate(-1.5deg) scale(1.01); }
+    88%  { transform: translate3d(4px, 1px, 0) rotate(.8deg) scale(.99); }
     100% {
         opacity: 1;
-        transform: translateY(0) rotate(0) scale(1);
+        transform: translate3d(0, 0, 0) rotate(0) scale(1);
         filter: drop-shadow(0 24px 56px rgba(0,0,0,.38));
     }
 }
 
-/* ── FLOAT com rotação leve (balança como no espaço) ── */
-@keyframes hc2Float {
-    0%   { transform: translateY(0)     rotate(0deg); }
-    25%  { transform: translateY(-8px)  rotate(-2.5deg); }
-    50%  { transform: translateY(-15px) rotate(0deg); }
-    75%  { transform: translateY(-8px)  rotate(2deg); }
-    100% { transform: translateY(0)     rotate(0deg); }
+/* ── VOO CONTÍNUO — foguete pilotado: sobe, inclina, balança ── */
+@keyframes hc2RocketFly {
+    0%   { transform: translateY(0)     translateX(0)     rotate(0deg); }
+    15%  { transform: translateY(-12px) translateX(7px)   rotate(-4deg); }
+    35%  { transform: translateY(-20px) translateX(-3px)  rotate(1.5deg); }
+    55%  { transform: translateY(-10px) translateX(-8px)  rotate(-3deg); }
+    75%  { transform: translateY(-16px) translateX(5px)   rotate(3deg); }
+    90%  { transform: translateY(-6px)  translateX(2px)   rotate(-1deg); }
+    100% { transform: translateY(0)     translateX(0)     rotate(0deg); }
 }
 
 /* ── CHAMA DO FOGUETE — glow laranja pulsando ── */
