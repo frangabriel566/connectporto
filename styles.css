@@ -35,8 +35,6 @@
 .bp-slide img {
     width: 100%;
     height: auto;
-    max-height: 340px;
-    object-fit: cover;
     display: block;
     transition: transform .4s ease;
 }
@@ -138,11 +136,9 @@
 
 @media (max-width: 768px) {
     #banners-promo { margin-top: 56px; }
-    .bp-slide img  { max-height: 220px; }
     .bp-nav        { width: 34px; height: 34px; opacity: 1; }
 }
 @media (max-width: 480px) {
-    .bp-slide img  { max-height: 160px; }
     .bp-nav        { width: 30px; height: 30px; }
 }
 
@@ -221,11 +217,13 @@
     border-radius: 50%;
 }
 .cs-logo {
-    height: 40px;
+    height: 64px;
+    max-width: 200px;
     object-fit: contain;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     position: relative;
     z-index: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(0,0,0,.3));
 }
 .cs-mascote-wrap {
     position: relative;
@@ -233,13 +231,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     flex: 1;
 }
 .cs-mascote-img {
-    width: 160px;
-    height: 160px;
+    width: 190px;
+    height: 190px;
     object-fit: contain;
-    filter: drop-shadow(0 8px 24px rgba(0,212,255,.3));
+    filter: drop-shadow(0 10px 28px rgba(0,212,255,.4));
     animation: csMascoteFloat 3s ease-in-out infinite;
 }
 @keyframes csMascoteFloat {
