@@ -1336,9 +1336,7 @@ function renderHeroImgs() {
   }
   c.innerHTML = imgs.map(function(img, i) {
     return '<div style="display:flex;align-items:center;gap:12px;padding:10px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;background:#f8fafc;">'
-      + '<img src="' + img.url + '" style="width:64px;height:64px;object-fit:contain;border-radius:6px;background:#e2e8f0;flex-shrink:0;" />'
-      + '<div style="flex:1;font-size:.83rem;font-weight:600;color:#1e293b;">' + (img.alt || 'Imagem ' + (i + 1)) + '</div>'
-      + '<label class="toggle" title="Ativo"><input type="checkbox" ' + (img.ativo !== false ? 'checked' : '') + ' onchange="toggleHeroImg(' + i + ',this.checked)" /><span class="toggle-slider"></span></label>'
+      + '<div style="flex:1;font-size:.85rem;font-weight:600;color:#1e293b;">📷 ' + (img.alt || 'Imagem ' + (i + 1)) + '</div>'
       + '<button class="btn-danger" onclick="deleteHeroImg(' + i + ')">🗑</button>'
       + '</div>';
   }).join('');
