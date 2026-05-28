@@ -196,16 +196,11 @@
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#planos"
-                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Planos</a>
-                    <a href="#cobertura"
-                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Cobertura</a>
-                    <a href="#vantagens"
-                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Vantagens</a>
-                    <a href="#depoimentos"
-                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">Depoimentos</a>
-                    <a href="#faq"
-                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors">FAQ</a>
+                    <a href="#planos" class="nav-link">Planos</a>
+                    <a href="#cobertura" class="nav-link">Cobertura</a>
+                    <a href="#vantagens" class="nav-link">Vantagens</a>
+                    <a href="#depoimentos" class="nav-link">Depoimentos</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
                 </div>
 
                 <!-- CTA Button -->
@@ -215,7 +210,7 @@
                     </a>
                     <!-- Mobile Menu Button -->
                     <button id="mobile-menu-btn"
-                        class="md:hidden p-2 rounded-lg text-connect-dark hover:bg-connect-gray/30 transition-colors"
+                        class="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
                         aria-label="Menu" aria-controls="mobile-menu" aria-expanded="false">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -259,182 +254,91 @@
         </div>
     </section>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative pt-24 lg:pt-32 pb-16 lg:pb-24 overflow-hidden">
-        <!-- Animated background elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <!-- Floating orbs -->
-            <div class="absolute top-20 left-10 w-96 h-96 bg-connect-cyan/20 rounded-full blur-3xl animate-pulse"></div>
-            <div class="absolute bottom-20 right-10 w-[500px] h-[500px] bg-connect-lightcyan/15 rounded-full blur-3xl animate-pulse"
-                style="animation-delay: 1s;"></div>
+    <!-- ════════════════════════════════════
+         HERO — Layout TeleGo style
+    ═════════════════════════════════════ -->
+    <section id="hero" class="hero-new">
 
-            <!-- Grid pattern -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute inset-0"
-                    style="background-image: linear-gradient(#00D4FF 1px, transparent 1px), linear-gradient(90deg, #00D4FF 1px, transparent 1px); background-size: 50px 50px;">
-                </div>
-            </div>
-        </div>
+        <!-- Fundo decorativo -->
+        <div class="hero-bg-orb hero-bg-orb-1"></div>
+        <div class="hero-bg-orb hero-bg-orb-2"></div>
+        <div class="hero-bg-orb hero-bg-orb-3"></div>
+        <div class="hero-bg-grid"></div>
 
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                <!-- Text Content -->
-                <div class="fade-in text-white">
-                    <p class="hero-kicker mb-5">Fibra óptica para Porto-PI e região</p>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative" style="z-index:2;">
+            <div class="hero-inner">
 
-                    <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                        Internet fibra para quem
-                        <span class="hero-title-gradient">não aceita instabilidade</span>
+                <!-- ESQUERDA — Conteúdo -->
+                <div class="hero-content fade-in">
+                    <div class="hero-city-tag">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Porto-PI e Região
+                    </div>
+
+                    <h1 id="hero-titulo">
+                        A internet que <span>você precisa</span>
                     </h1>
 
-                    <!-- Glass box with description -->
-                    <div class="glass-box mb-8">
-                        <p class="text-lg text-white/90 leading-relaxed">
-                            Planos para casa e empresa com rota estável, baixa latência e suporte humano de verdade
-                            quando você precisa.
-                        </p>
-                    </div>
+                    <p class="hero-subtitle" id="hero-slogan">
+                        Planos para casa e empresa com rota estável, baixa latência
+                        e suporte humano de verdade quando você precisa.
+                    </p>
 
-                    <div class="flex flex-col sm:flex-row items-start gap-4">
-                        <a href="#whatsapp" class="group btn-primary-hero w-full sm:w-auto">
-                            Assinar agora
+                    <div class="hero-btns">
+                        <a href="#whatsapp" class="btn-hero-primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.842L0 24l6.336-1.494A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.364l-.359-.213-3.723.977.993-3.63-.234-.374A9.795 9.795 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+                            Contrate Já
                         </a>
-                        <a href="#planos" class="btn-secondary-hero w-full sm:w-auto">
-                            Ver planos
+                        <a href="#planos" class="btn-hero-secondary">
+                            Conheça nossos planos
+                            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
                         </a>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="grid grid-cols-2 gap-6 mt-12 pt-8 border-t border-white/20 max-w-xl">
-                        <div>
-                            <div class="hero-stat-value text-3xl font-bold text-connect-cyan mb-1">Internet 100%</div>
-                            <div class="text-sm text-white/70">Fibra Óptica</div>
-                        </div>
-
-                        <div>
-                            <div class="hero-stat-value text-3xl font-bold text-connect-cyan mb-1">Suporte 24Hrs</div>
-                            <div class="text-sm text-white/70">Atendimento humanizado</div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- Carrossel no lugar do mascote -->
-                <div class="hero-carrossel-col fade-in relative" style="animation-delay: 0.2s">
+                <!-- DIREITA — Mascote -->
+                <div class="hero-mascote-wrap fade-in" style="animation-delay:.15s">
+                    <div class="hero-mascote-glow"></div>
+                    <img src="img/masconte connect.png" alt="Connectinho — Mascote Connect"
+                         class="hero-mascote"
+                         onerror="this.style.display='none'" />
+                </div>
 
-                    <!-- Glow de fundo -->
-                    <div class="absolute inset-0 pointer-events-none"
-                        style="background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(0,212,255,0.13),transparent 70%);">
-                    </div>
-
-                    <!-- Track wrapper -->
-                    <div class="hero-carrossel-outer" id="heroCarrosselOuter">
-                        <div class="hero-carrossel-track" id="heroCarrosselTrack">
-
-                            <!-- SLIDE 1 — Mascote -->
-                            <div class="hero-carrossel-slide">
-                                <div class="hero-slide-inner hero-slide-mascote">
-                                    <img src="img/masconte connect.png" alt="Mascote Connect"
-                                        class="hero-slide-img hero-slide-img-mascote"
-                                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                                    <div class="hero-slide-fallback" style="display:none;">
-                                        <span
-                                            style="color:rgba(255,255,255,0.45);font-size:0.75rem;text-align:center;">img/masconte
-                                            connect.png</span>
-                                    </div>
-                                    <div class="hero-slide-overlay">
-                                        <h3 class="hero-slide-title">Connect Fibra Óptica</h3>
-                                        <p class="hero-slide-caption">Internet rápida e estável em Porto-PI</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- SLIDE 2 — Família -->
-                            <div class="hero-carrossel-slide">
-                                <div class="hero-slide-inner">
-                                    <img src="img/familia.png" alt="Família conectada com a Connect"
-                                        class="hero-slide-img"
-                                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                                    <div class="hero-slide-fallback" style="display:none;">
-                                        <span
-                                            style="color:rgba(255,255,255,0.45);font-size:0.75rem;text-align:center;">img/familia.png</span>
-                                    </div>
-                                    <div class="hero-slide-overlay">
-                                        <h3 class="hero-slide-title">Para toda a família</h3>
-                                        <p class="hero-slide-caption">4-6 dispositivos ao mesmo tempo sem queda</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- SLIDE 3 — Games -->
-                            <div class="hero-carrossel-slide">
-                                <div class="hero-slide-inner">
-                                    <img src="img/gamer.png" alt="Gamer jogando com a Connect" class="hero-slide-img"
-                                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                                    <div class="hero-slide-fallback" style="display:none;">
-                                        <span
-                                            style="color:rgba(255,255,255,0.45);font-size:0.75rem;text-align:center;">img/gamer.png</span>
-                                    </div>
-                                    <div class="hero-slide-overlay">
-                                        <h3 class="hero-slide-title">Games e streaming</h3>
-                                        <p class="hero-slide-caption">Ping baixo, zero lag e resposta imediata</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- SLIDE 4 — Home Office -->
-                            <div class="hero-carrossel-slide">
-                                <div class="hero-slide-inner">
-                                    <img src="img/reuniao.png" alt="Home office conectado com a Connect"
-                                        class="hero-slide-img"
-                                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-                                    <div class="hero-slide-fallback" style="display:none;">
-                                        <span
-                                            style="color:rgba(255,255,255,0.45);font-size:0.75rem;text-align:center;">img/reuniao.png</span>
-                                    </div>
-                                    <div class="hero-slide-overlay">
-                                        <h3 class="hero-slide-title">Home office estável</h3>
-                                        <p class="hero-slide-caption">Reuniões em HD sem travar no meio do dia</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div><!-- /track -->
-
-                        <!-- Setas -->
-                        <button class="hc-nav hc-prev" id="heroCarrosselPrev" aria-label="Anterior">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5">
-                                <path d="M15 18l-6-6 6-6" />
-                            </svg>
-                        </button>
-                        <button class="hc-nav hc-next" id="heroCarrosselNext" aria-label="Próximo">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5">
-                                <path d="M9 18l6-6-6-6" />
-                            </svg>
-                        </button>
-                    </div>
-
-                    <!-- Dots -->
-                    <div class="hc-dots" id="heroCarrosselDots">
-                        <button class="hc-dot active" data-slide="0"></button>
-                        <button class="hc-dot" data-slide="1"></button>
-                        <button class="hc-dot" data-slide="2"></button>
-                        <button class="hc-dot" data-slide="3"></button>
-                    </div>
-
-                </div><!-- /carrossel hero -->
             </div>
         </div>
 
-        <!-- Wave divider -->
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-                <path
-                    d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
-                    fill="white" />
-            </svg>
+        <!-- Barra de benefícios -->
+        <div class="hero-benefits">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="hero-benefits-inner">
+                    <div class="hero-benefit-item">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 6s4-4 11-4 11 4 11 4"/><path d="M5 10s2.5-2.5 7-2.5 7 2.5 7 2.5"/><path d="M9 14s1.5-1.5 3-1.5 3 1.5 3 1.5"/><circle cx="12" cy="17.5" r="1.5" fill="currentColor"/></svg>
+                        <span class="hero-benefit-label">100% Fibra Óptica</span>
+                    </div>
+                    <div class="hero-benefit-sep"></div>
+                    <div class="hero-benefit-item">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span class="hero-benefit-label">Suporte Humanizado</span>
+                    </div>
+                    <div class="hero-benefit-sep"></div>
+                    <div class="hero-benefit-item">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span class="hero-benefit-label">Instalação Rápida</span>
+                    </div>
+                    <div class="hero-benefit-sep"></div>
+                    <div class="hero-benefit-item">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                        <span class="hero-benefit-label">Streaming 4K</span>
+                    </div>
+                    <div class="hero-benefit-sep"></div>
+                    <div class="hero-benefit-item">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+                        <span class="hero-benefit-label">Baixo Ping / Games</span>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </section>
 
     <!-- Social Proof -->

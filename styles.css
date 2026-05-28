@@ -523,6 +523,187 @@ samp,
     outline-offset: 2px;
 }
 
+/* ══════════════════════════════════════════
+   HERO NOVO — Estilo TeleGo/Connect
+══════════════════════════════════════════ */
+.hero-new {
+    background: linear-gradient(135deg, #0c2660 0%, #0F2D6D 35%, #1845a0 65%, #0a2050 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+/* Orbs de fundo */
+.hero-bg-orb { position: absolute; border-radius: 50%; pointer-events: none; }
+.hero-bg-orb-1 {
+    width: 700px; height: 700px;
+    top: -200px; right: -150px;
+    background: radial-gradient(circle, rgba(0,212,255,.13) 0%, transparent 65%);
+}
+.hero-bg-orb-2 {
+    width: 500px; height: 500px;
+    bottom: 60px; left: -120px;
+    background: radial-gradient(circle, rgba(43,95,219,.2) 0%, transparent 65%);
+}
+.hero-bg-orb-3 {
+    width: 300px; height: 300px;
+    top: 40%; left: 40%;
+    background: radial-gradient(circle, rgba(0,212,255,.07) 0%, transparent 70%);
+}
+.hero-bg-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(0,212,255,.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0,212,255,.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+/* Layout interno */
+.hero-inner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 48px 0 32px;
+}
+
+/* ESQUERDA */
+.hero-content {
+    flex: 1;
+    max-width: 560px;
+    position: relative;
+    z-index: 2;
+}
+.hero-city-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(255,255,255,.65);
+    font-size: .82rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+    margin-bottom: 18px;
+}
+.hero-new h1 {
+    font-size: clamp(2.4rem, 4.5vw, 4rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+    text-wrap: balance;
+}
+.hero-new h1 span { color: #00D4FF; }
+.hero-subtitle {
+    color: rgba(255,255,255,.78);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 460px;
+}
+
+/* Botões hero */
+.hero-btns { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+.btn-hero-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #25D366;
+    color: #fff;
+    font-weight: 700; font-size: .95rem;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all .25s;
+    box-shadow: 0 6px 24px rgba(37,211,102,.35);
+    white-space: nowrap;
+}
+.btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(37,211,102,.45); }
+
+.btn-hero-secondary {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,.88);
+    font-size: .92rem; font-weight: 500;
+    text-decoration: none;
+    transition: all .2s;
+    white-space: nowrap;
+}
+.btn-hero-secondary:hover { color: #00D4FF; }
+.btn-hero-secondary svg { transition: transform .2s; }
+.btn-hero-secondary:hover svg { transform: translateY(3px); }
+
+/* DIREITA — mascote */
+.hero-mascote-wrap {
+    flex-shrink: 0;
+    width: clamp(300px, 42vw, 520px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+.hero-mascote-glow {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80%; height: 60%;
+    background: radial-gradient(ellipse, rgba(0,212,255,.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+.hero-mascote {
+    width: 100%;
+    object-fit: contain;
+    animation: heroMascoteFloat 3.5s ease-in-out infinite;
+    filter: drop-shadow(0 24px 60px rgba(0,0,0,.35));
+    position: relative;
+}
+@keyframes heroMascoteFloat {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-16px); }
+}
+
+/* Barra de benefícios */
+.hero-benefits {
+    background: rgba(0,0,0,.2);
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding: 16px 0;
+    position: relative; z-index: 2;
+    backdrop-filter: blur(8px);
+}
+.hero-benefits-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+}
+.hero-benefit-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 6px 24px;
+    color: rgba(255,255,255,.82);
+}
+.hero-benefit-item svg { color: #00D4FF; flex-shrink: 0; }
+.hero-benefit-label { font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.hero-benefit-sep {
+    width: 1px; height: 28px;
+    background: rgba(255,255,255,.15);
+    flex-shrink: 0;
+}
+
+/* ── NAV LINKS (brancos sobre hero, escuros ao scrollar) ── */
+.nav-link {
+    font-size: .88rem;
+    font-weight: 500;
+    color: rgba(255,255,255,.85);
+    text-decoration: none;
+    transition: color .2s;
+}
+.nav-link:hover { color: #00D4FF; }
+#header.scrolled .nav-link { color: #1e293b; }
+#header.scrolled .nav-link:hover { color: #2B5FDB; }
+
 /* Header base state */
 #header {
     background: transparent;
