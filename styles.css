@@ -704,6 +704,56 @@ samp,
 #header.scrolled .nav-link { color: #1e293b; }
 #header.scrolled .nav-link:hover { color: #2B5FDB; }
 
+/* ── HERO RESPONSIVO ── */
+@media (max-width: 900px) {
+    .hero-mascote-wrap { width: clamp(220px, 36vw, 340px); }
+    .hero-new h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); }
+    .hero-subtitle { font-size: .92rem; }
+    .hero-benefit-item { padding: 6px 14px; }
+}
+
+@media (max-width: 700px) {
+    /* Hero vira coluna: texto em cima, mascote embaixo */
+    .hero-new { padding-top: 70px; min-height: auto; }
+    .hero-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 32px 0 16px;
+        gap: 0;
+    }
+    .hero-content { max-width: 100%; order: 1; }
+    .hero-city-tag { justify-content: center; }
+    .hero-subtitle { margin-left: auto; margin-right: auto; }
+    .hero-btns { justify-content: center; }
+
+    /* Mascote menor, sem margem extra */
+    .hero-mascote-wrap {
+        order: 2;
+        width: clamp(200px, 70vw, 300px);
+        margin-top: 8px;
+    }
+
+    /* Barra de benefícios: 2 por linha */
+    .hero-benefits-inner { gap: 0; justify-content: center; }
+    .hero-benefit-sep { display: none; }
+    .hero-benefit-item {
+        width: 50%;
+        justify-content: center;
+        padding: 8px 10px;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .hero-benefit-item:nth-last-child(-n+2) { border-bottom: none; }
+}
+
+@media (max-width: 400px) {
+    .hero-new h1 { font-size: 1.7rem; }
+    .btn-hero-primary { font-size: .85rem; padding: 12px 20px; }
+    .hero-mascote-wrap { width: 180px; }
+    .hero-benefit-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .hero-benefit-item:last-child { border-bottom: none; }
+}
+
 /* Header base state */
 #header {
     background: transparent;
@@ -1183,19 +1233,28 @@ button {
     #header,
     #header.scrolled,
     #header.menu-open {
-        background: rgba(255, 255, 255, 0.96);
+        background: rgba(13, 38, 96, 0.97);
         backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(15, 45, 109, 0.1);
+        border-bottom: 1px solid rgba(0, 212, 255, 0.15);
     }
 
     #header.menu-open {
-        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.14);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
     }
+
+    /* Botão menu e links ficam brancos no mobile */
+    #mobile-menu-btn { color: #fff !important; }
+    #header.scrolled #mobile-menu-btn { color: #fff !important; }
+
+    #mobile-menu a {
+        color: rgba(255,255,255,.85) !important;
+    }
+    #mobile-menu a:hover { color: #00D4FF !important; }
 
     #mobile-menu {
         margin-top: 0.5rem;
         padding-top: 0.85rem;
-        border-top: 1px solid rgba(15, 45, 109, 0.12);
+        border-top: 1px solid rgba(255,255,255,.12);
     }
 
     #mobile-menu a {
