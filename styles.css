@@ -1114,7 +1114,8 @@ samp,
     .hero-new {
         padding-top: 70px;
         min-height: auto;
-        overflow: hidden; /* impede animação de passar por cima do texto */
+        overflow-x: hidden;
+        overflow-y: visible;
     }
     .hero-inner {
         flex-direction: column;
