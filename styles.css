@@ -887,6 +887,7 @@ samp,
 .hc2-wrap {
     flex-shrink: 0;
     width: clamp(340px, 48vw, 600px);
+    overflow: hidden;
     position: relative;
     z-index: 2;
     display: flex;
@@ -913,7 +914,7 @@ samp,
 .hc2-track {
     position: relative;
     width: 100%;
-    height: clamp(380px, 62vh, 580px);
+    height: clamp(320px, 52vh, 480px);
     /* sem overflow: hidden para não cortar imagem durante animação */
     overflow: visible;
 }
