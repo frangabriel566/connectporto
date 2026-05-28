@@ -706,8 +706,9 @@ samp,
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    /* garante que a imagem não extravase pelo lado direito */
     overflow: visible;
+    align-self: flex-end;
+    margin-bottom: -8px;
 }
 
 /* Brilho de fundo embaixo do mascote/imagem */
