@@ -1141,11 +1141,11 @@ samp,
         align-self: center;
         margin-bottom: 0;
         margin-top: 16px;
-        overflow: hidden;
+        overflow: visible;
     }
     .hc2-track {
-        height: clamp(200px, 58vw, 280px);
-        overflow: hidden; /* corta translateY da animacao de voo */
+        height: clamp(220px, 62vw, 300px);
+        overflow: visible;
     }
 
     /* No mobile: fade-in simples, sem bounceInRight que atravessa a tela */
@@ -1156,12 +1156,8 @@ samp,
     }
 
     .hc2-img {
-        max-width: 170px;
+        max-width: 200px;
         margin-right: 0;
-        margin-left: 0;
-    }
-    .hc2-wrap {
-        align-self: center;
         margin-left: 0;
     }
 
