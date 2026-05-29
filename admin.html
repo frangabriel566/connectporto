@@ -1436,15 +1436,17 @@ function _syncCarrossel() {
   var imgs = ls('hero_carousel') || [];
   var ghToken = ls('github_token') || '';
   if (!ghToken) {
-    // Sem token GitHub: apenas salva local
+    showAlert('hero-alert', '⚠️ Token não configurado', 'Vá em "API & Integrações" e adicione o token GitHub para publicar para todos os visitantes.');
     return;
   }
   var content = btoa(unescape(encodeURIComponent(JSON.stringify(imgs))));
-  // Busca SHA atual do arquivo para poder atualizar
   fetch('https://api.github.com/repos/frangabriel566/connectporto/contents/data/carousel.json', {
     headers: { 'Authorization': 'token ' + ghToken, 'Accept': 'application/vnd.github.v3+json' }
   })
-  .then(function(r){ return r.json(); })
+  .then(function(r){
+    if (!r.ok) throw new Error('Erro ao buscar arquivo: ' + r.status);
+    return r.json();
+  })
   .then(function(data){
     return fetch('https://api.github.com/repos/frangabriel566/connectporto/contents/data/carousel.json', {
       method: 'PUT',
@@ -1452,9 +1454,14 @@ function _syncCarrossel() {
       body: JSON.stringify({ message: 'update carousel', content: content, sha: data.sha })
     });
   })
-  .then(function(r){ return r.json(); })
-  .then(function(){ showAlert('hero-alert', 'Carrossel publicado!', 'Imagens atualizadas para todos os visitantes.'); })
-  .catch(function(){ showAlert('hero-alert', 'Salvo localmente', 'Configure o token GitHub em API & Integrações para publicar para todos.'); });
+  .then(function(r){
+    if (!r.ok) throw new Error('Erro ao salvar: ' + r.status);
+    return r.json();
+  })
+  .then(function(){ showAlert('hero-alert', '✅ Carrossel publicado!', 'Atualizado para todos os visitantes.'); })
+  .catch(function(e){
+    showAlert('hero-alert', '❌ Erro ao publicar no GitHub', (e.message || 'Verifique o token em API & Integrações.'));
+  });
 }
 
 // ── BANNERS ───────────────────────────────
