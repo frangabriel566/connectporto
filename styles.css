@@ -918,8 +918,6 @@ samp,
     height: clamp(320px, 52vh, 480px);
     overflow: hidden;
     border-radius: 20px;
-    background: rgba(255,255,255,0.06);
-    box-shadow: 0 0 0 1.5px rgba(255,255,255,0.10);
 }
 
 /* Cada slide */
