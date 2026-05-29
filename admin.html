@@ -1390,6 +1390,7 @@ function addHeroImg() {
   var btn = document.getElementById('himg-btn-add');
   btn.disabled = true; btn.style.opacity = '.5'; btn.style.cursor = 'not-allowed';
   renderHeroImgs();
+  _syncCarrossel();
 }
 
 function deleteHeroImg(i) {
@@ -1398,6 +1399,7 @@ function deleteHeroImg(i) {
   imgs.splice(i, 1);
   lsSet('hero_carousel', imgs);
   renderHeroImgs();
+  _syncCarrossel();
 }
 
 function toggleHeroImg(i, val) {
@@ -1410,7 +1412,12 @@ function toggleHeroImg(i, val) {
 function saveHeroCarrossel() {
   var imgs = ls('hero_carousel') || [];
   lsSet('hero_carousel', imgs);
-  showAlert('hero-alert', 'Hero salvo!', 'Carrossel atualizado. Recarregue o site para ver.');
+  showAlert('hero-alert', 'Carrossel salvo!', 'Sincronizando com a nuvem...');
+  setTimeout(function(){ sincronizarNuvem(false); }, 500);
+}
+
+function _syncCarrossel() {
+  setTimeout(function(){ sincronizarNuvem(false); }, 800);
 }
 
 // ── BANNERS ───────────────────────────────
@@ -1917,7 +1924,7 @@ var _origSaveFns = {};
 
 // Sobrescreve após load para garantir que as funções já existem
 window.addEventListener('load', function(){
-  ['savePlanos','saveCidades','saveDepoimentos','saveFaq','saveEmpresa','saveIdentidade','saveMarketing'].forEach(function(fn){
+  ['savePlanos','saveCidades','saveDepoimentos','saveFaq','saveEmpresa','saveIdentidade','saveMarketing','saveHeroCarrossel'].forEach(function(fn){
     var orig = window[fn];
     if(typeof orig === 'function'){
       window[fn] = function(){
