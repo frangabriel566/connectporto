@@ -548,6 +548,20 @@
   // ══════════════════════════════════════════════════
   //  7. CARROSSEL HERO (imagens lado direito)
   // ══════════════════════════════════════════════════
+
+  // Busca imagens do carrossel do GitHub (funciona para todos os visitantes)
+  function carregarCarrosselGitHub() {
+    fetch('https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/carousel.json?t=' + Date.now())
+      .then(function(r){ return r.json(); })
+      .then(function(imgs){
+        if (imgs && imgs.length) {
+          lsSet('hero_carousel', imgs);
+          renderizarHeroCarrossel();
+        }
+      })
+      .catch(function(){});
+  }
+
   function renderizarHeroCarrossel() {
     var slides = ls('hero_carousel');
     var track  = document.getElementById('hc2-track');
@@ -774,6 +788,7 @@
     renderizarFaq();
     renderizarBanners();
     renderizarHeroCarrossel();
+    carregarCarrosselGitHub(); // busca versão mais recente do GitHub
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();

@@ -788,6 +788,12 @@
             </div>
           </div>
 
+          <div class="field" style="margin-bottom:14px;">
+            <label>Token GitHub <span style="font-weight:400;color:#94a3b8;">(para publicar carrossel para todos)</span></label>
+            <input type="password" id="github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" oninput="lsSet('github_token', this.value)" />
+            <div style="font-size:.75rem;color:#94a3b8;margin-top:4px;">Crie em github.com → Settings → Developer settings → Personal access tokens → Fine-grained → permissão <strong>Contents: Read and write</strong></div>
+          </div>
+
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
             <button class="btn-save" id="btn-criar-bin" onclick="criarBin()">
               <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -1412,12 +1418,33 @@ function toggleHeroImg(i, val) {
 function saveHeroCarrossel() {
   var imgs = ls('hero_carousel') || [];
   lsSet('hero_carousel', imgs);
-  showAlert('hero-alert', 'Carrossel salvo!', 'Sincronizando com a nuvem...');
-  setTimeout(function(){ sincronizarNuvem(false); }, 500);
+  showAlert('hero-alert', 'Carrossel salvo!', 'Publicando imagens no GitHub...');
+  _syncCarrossel();
 }
 
 function _syncCarrossel() {
-  setTimeout(function(){ sincronizarNuvem(false); }, 800);
+  var imgs = ls('hero_carousel') || [];
+  var ghToken = ls('github_token') || '';
+  if (!ghToken) {
+    // Sem token GitHub: apenas salva local
+    return;
+  }
+  var content = btoa(unescape(encodeURIComponent(JSON.stringify(imgs))));
+  // Busca SHA atual do arquivo para poder atualizar
+  fetch('https://api.github.com/repos/frangabriel566/connectporto/contents/data/carousel.json', {
+    headers: { 'Authorization': 'token ' + ghToken, 'Accept': 'application/vnd.github.v3+json' }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    return fetch('https://api.github.com/repos/frangabriel566/connectporto/contents/data/carousel.json', {
+      method: 'PUT',
+      headers: { 'Authorization': 'token ' + ghToken, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'update carousel', content: content, sha: data.sha })
+    });
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(){ showAlert('hero-alert', 'Carrossel publicado!', 'Imagens atualizadas para todos os visitantes.'); })
+  .catch(function(){ showAlert('hero-alert', 'Salvo localmente', 'Configure o token GitHub em API & Integrações para publicar para todos.'); });
 }
 
 // ── BANNERS ───────────────────────────────
@@ -1792,8 +1819,10 @@ function loadCloudUI(){
   var cfg = getCloudConfig();
   var keyEl   = document.getElementById('cloud-key');
   var binEl   = document.getElementById('cloud-bin-id');
+  var ghEl    = document.getElementById('github-token');
   if(keyEl && cfg.key)   keyEl.value   = cfg.key;
   if(binEl && cfg.binId) binEl.value   = cfg.binId;
+  if(ghEl && ls('github_token')) ghEl.value = ls('github_token');
   atualizarStatusCloud(!!cfg.binId);
 }
 
@@ -1814,6 +1843,10 @@ function atualizarStatusCloud(conectado, msg){
 }
 
 function coletarTodosOsDados(){
+  // Carousel: envia apenas metadados (sem base64) para não exceder limite do JSONBin
+  var carouselMeta = (ls('hero_carousel') || []).map(function(s) {
+    return { alt: s.alt, ativo: s.ativo };
+  });
   return {
     _v: Date.now(),
     planos:         ls('planos')         || DEFAULT_PLANOS,
@@ -1823,8 +1856,8 @@ function coletarTodosOsDados(){
     empresa:        ls('empresa')        || {},
     identidade:     ls('identidade')     || {},
     marketing:      ls('marketing')      || {},
-    hero_carousel:  ls('hero_carousel')  || [],
-    api:            (function(){ var a=ls('api')||{}; delete a.key; return a; })() // não envia a chave privada
+    hero_carousel_meta: carouselMeta,
+    api:            (function(){ var a=ls('api')||{}; delete a.key; return a; })()
   };
 }
 
