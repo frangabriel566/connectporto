@@ -970,11 +970,16 @@ samp,
     width: 100%;
     max-width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 20px;
     position: relative;
     z-index: 1;
     animation: none;
+}
+
+/* Mascote fallback (fundo transparente): usa contain para não cortar */
+.hc2-img.hc2-launch-img {
+    object-fit: contain;
 }
 
 /* Primeira imagem: oculta até o usuário escolher a cidade */
