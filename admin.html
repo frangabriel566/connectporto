@@ -1319,32 +1319,16 @@ window.previewHeroImg = function(input) {
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
-    // Comprime a imagem para caber no JSONBin (max 900px, 82% qualidade)
-    var original = new Image();
-    original.onload = function() {
-      var canvas = document.createElement('canvas');
-      var MAX = 900;
-      var w = original.width, h = original.height;
-      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-      if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
-      canvas.width = w; canvas.height = h;
-      var ctx = canvas.getContext('2d');
-      // PNG: mantém transparência. JPEG: fundo branco para evitar fundo preto
-      var isPng = file.type === 'image/png';
-      if (!isPng) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
-      ctx.drawImage(original, 0, 0, w, h);
-      var compressed = isPng ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.82);
-      window._himgBase64 = compressed;
-      var img = document.getElementById('himg-preview-img');
-      var dz  = document.getElementById('himg-dropzone');
-      img.src = compressed;
-      img.style.display = 'block';
-      dz.style.borderColor = '#2B5FDB';
-      dz.style.background  = '#eff6ff';
-      var btn = document.getElementById('himg-btn-add');
-      btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
-    };
-    original.src = e.target.result;
+    // Arquivo original sem compressão — preserva transparência PNG
+    window._himgBase64 = e.target.result;
+    var img = document.getElementById('himg-preview-img');
+    var dz  = document.getElementById('himg-dropzone');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    dz.style.borderColor = '#2B5FDB';
+    dz.style.background  = 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/16px 16px';
+    var btn = document.getElementById('himg-btn-add');
+    btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
   };
   reader.readAsDataURL(file);
 };
