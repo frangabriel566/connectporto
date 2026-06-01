@@ -1871,17 +1871,20 @@
         canvas.style.display = 'none';
       };
 
-      document.addEventListener('DOMContentLoaded', function() {
+      function lancarConfettiDatas() {
         var datas = verificarDatas();
-        if (datas.length) {
-          setTimeout(function() {
-            var temas = datas.map(function(d){ return d.tema || 'confetti'; });
-            var nomes = datas.map(function(d){ return d.emoji + ' ' + d.nome; }).join(' + ');
-            window.iniciarConfetti(temas, nomes);
-            setTimeout(window.pararConfetti, 40000);
-          }, 2500);
-        }
-      });
+        if (!datas.length) return;
+        resize();
+        var temas = datas.map(function(d){ return d.tema || 'confetti'; });
+        window.iniciarConfetti(temas);
+        setTimeout(window.pararConfetti, 40000);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function(){ setTimeout(lancarConfettiDatas, 2000); });
+      } else {
+        setTimeout(lancarConfettiDatas, 2000);
+      }
     })();
     </script>
 </body>
