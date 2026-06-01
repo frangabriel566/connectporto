@@ -2104,6 +2104,69 @@ var DATAS_PADRAO_ADMIN = [
   { nome: 'Black Friday',       mes: 11, dia: 28, margem: 1,  tema: 'blackfriday',   emoji: '🛍️', ativo: true  }
 ];
 
+// ══════════════════════════════════════════
+//  ESCRITÓRIOS
+// ══════════════════════════════════════════
+var DEFAULT_ESCRITORIOS = [
+  { cidade:'Porto',                  endereco:'Av. Presidente Vargas, 193', cep:'64145-000', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'https://maps.google.com/?q=Avenida+Presidente+Vargas+193,+Porto,+PI,+64145-000' },
+  { cidade:'N. S. dos Remédios',     endereco:'Rua Marcelino Rodrigues',    cep:'64149-000', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'https://maps.google.com/?q=Rua+Marcelino+Rodrigues,+Nossa+Senhora+dos+Remedios,+PI,+64149-000' },
+  { cidade:'Miguel Alves',           endereco:'R. São José, 85',            cep:'64130-000', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'https://maps.google.com/?q=Rua+Sao+Jose+85,+Miguel+Alves,+PI,+64130-000' },
+  { cidade:'Barras',                 endereco:'Av. Juscelino Kubitscheck',  cep:'64100-000', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'https://maps.google.com/?q=Avenida+Juscelino+Kubitscheck,+Barras,+PI,+64100-000' }
+];
+
+function getEscritorios(){ return ls('escritorios') || DEFAULT_ESCRITORIOS; }
+
+function renderEscritorios(){
+  var lista = getEscritorios();
+  var c = document.getElementById('escritorios-container');
+  if(!c) return;
+  c.innerHTML = lista.map(function(e,i){
+    return '<div class="card" style="margin-bottom:12px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">' +
+        '<span style="font-weight:600;color:var(--navy);">📍 Escritório '+(i+1)+'</span>' +
+        '<button class="btn-danger" onclick="deleteEscritorio('+i+')">🗑 Remover</button>' +
+      '</div>' +
+      '<div class="grid-2" style="gap:12px;margin-bottom:12px;">' +
+        '<div class="field" style="margin:0;"><label>Cidade</label><input type="text" id="esc-cidade-'+i+'" value="'+escHtml(e.cidade||'')+'" placeholder="Ex: Porto"/></div>' +
+        '<div class="field" style="margin:0;"><label>UF</label><input type="text" id="esc-uf-'+i+'" value="'+escHtml(e.uf||'PI')+'" maxlength="2" style="text-transform:uppercase;"/></div>' +
+      '</div>' +
+      '<div class="grid-2" style="gap:12px;margin-bottom:12px;">' +
+        '<div class="field" style="margin:0;"><label>Endereço</label><input type="text" id="esc-end-'+i+'" value="'+escHtml(e.endereco||'')+'" placeholder="Av. Principal, 100"/></div>' +
+        '<div class="field" style="margin:0;"><label>CEP</label><input type="text" id="esc-cep-'+i+'" value="'+escHtml(e.cep||'')+'" placeholder="00000-000"/></div>' +
+      '</div>' +
+      '<div class="field" style="margin-bottom:12px;"><label>Horário de Funcionamento</label><input type="text" id="esc-hor-'+i+'" value="'+escHtml(e.horario||'')+'" placeholder="Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado"/></div>' +
+      '<div class="field" style="margin:0;"><label>Link Google Maps <span style="font-weight:400;color:#94a3b8;">(cole o link do Maps aqui)</span></label><input type="text" id="esc-maps-'+i+'" value="'+escHtml(e.maps||'')+'" placeholder="https://maps.google.com/?q=..."/></div>' +
+    '</div>';
+  }).join('');
+}
+
+function addEscritorio(){
+  var lista = getEscritorios();
+  lista.push({ cidade:'Nova Unidade', endereco:'', cep:'', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'' });
+  lsSet('escritorios', lista); renderEscritorios();
+}
+
+function deleteEscritorio(i){
+  if(!confirm('Remover este escritório?')) return;
+  var lista = getEscritorios();
+  lista.splice(i,1); lsSet('escritorios', lista); renderEscritorios();
+}
+
+function saveEscritorios(){
+  var lista = getEscritorios();
+  lista.forEach(function(e,i){
+    var g = function(id){ var el=document.getElementById(id); return el?el.value:null; };
+    if(g('esc-cidade-'+i)!==null) e.cidade  = g('esc-cidade-'+i);
+    if(g('esc-uf-'+i)!==null)     e.uf      = g('esc-uf-'+i).toUpperCase();
+    if(g('esc-end-'+i)!==null)    e.endereco= g('esc-end-'+i);
+    if(g('esc-cep-'+i)!==null)    e.cep     = g('esc-cep-'+i);
+    if(g('esc-hor-'+i)!==null)    e.horario = g('esc-hor-'+i);
+    if(g('esc-maps-'+i)!==null)   e.maps    = g('esc-maps-'+i);
+  });
+  lsSet('escritorios', lista);
+  showAlert('escritorios-alert','✅ Alterações salvas com sucesso!','Escritórios atualizados no site.');
+}
+
 var TEMAS_OPCOES = ['snow','fireworks','hearts','confetti','petals','bandeirinha','soccer','verde_amarelo','halloween','blackfriday'];
 var MESES_PT = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
