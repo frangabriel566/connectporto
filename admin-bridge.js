@@ -102,7 +102,7 @@
   function renderizarPlanos() {
     var planos = ls('planos') || DEFAULT_PLANOS;
     var sec = document.getElementById('planos');
-    var container = sec ? sec.querySelector('.grid') : null;
+    var container = sec ? (sec.querySelector('.planos-grid') || sec.querySelector('.grid')) : null;
     if (!container) return;
 
     container.innerHTML = planos.map(function (p, i) {
