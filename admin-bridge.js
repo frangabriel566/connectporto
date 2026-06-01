@@ -490,6 +490,33 @@
   }
 
   // ══════════════════════════════════════════════════
+  //  8. RENDERIZAR ESCRITÓRIOS
+  // ══════════════════════════════════════════════════
+  function renderizarEscritorios() {
+    var lista = ls('escritorios') || DEFAULT_ESCRITORIOS;
+    var sec = document.getElementById('escritorios');
+    var grid = sec ? sec.querySelector('.esc-grid') : null;
+    if (!grid) return;
+
+    var PIN_SVG = '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>';
+    var MAP_SVG = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>';
+
+    grid.innerHTML = lista.map(function(e, i) {
+      var horLines = (e.horario || '').split('|').map(function(h){ return '<span>' + escHtml(h.trim()) + '</span>'; }).join('<br>');
+      var link = e.maps || ('https://maps.google.com/?q=' + encodeURIComponent((e.endereco||'') + ', ' + (e.cidade||'') + ', ' + (e.uf||'PI') + ', ' + (e.cep||'')));
+      return '<a href="' + link + '" target="_blank" rel="noopener" class="group card-modern fade-in block hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="animation-delay:' + (i * 0.1 + 0.1) + 's;text-decoration:none;">' +
+        '<div class="p-6">' +
+          '<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg mb-4">' + PIN_SVG + '</div>' +
+          '<h3 class="text-lg font-bold text-connect-navy mb-1">' + escHtml(e.cidade || '') + '</h3>' +
+          '<p class="text-sm text-connect-dark/70 mb-1">' + escHtml(e.endereco || '') + '<br>CEP ' + escHtml(e.cep || '') + ' — ' + escHtml(e.uf || '') + '</p>' +
+          '<p class="text-xs text-connect-dark/50 mb-3">⏰ ' + horLines + '</p>' +
+          '<span class="inline-flex items-center gap-1 text-xs font-semibold text-connect-blue group-hover:gap-2 transition-all">' + MAP_SVG + ' Ver rota no Maps</span>' +
+        '</div>' +
+      '</a>';
+    }).join('');
+  }
+
+  // ══════════════════════════════════════════════════
   //  SINCRONIZAÇÃO EM NUVEM (JSONBin.io)
   // ══════════════════════════════════════════════════
 
