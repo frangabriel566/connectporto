@@ -561,15 +561,16 @@
   // ══════════════════════════════════════════════════
   //  CARREGAR DATAS COMEMORATIVAS DO GITHUB
   // ══════════════════════════════════════════════════
-  function carregarDatasGitHub() {
+  function carregarDatasGitHub(callback) {
     fetch('https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/datas.json?t=' + Date.now())
       .then(function(r){ return r.ok ? r.json() : null; })
       .then(function(datas){
         if (datas && datas.length) {
           localStorage.setItem('connect_admin_datas', JSON.stringify(datas));
         }
+        if (callback) callback();
       })
-      .catch(function(){});
+      .catch(function(){ if (callback) callback(); });
   }
 
   // Busca imagens do carrossel do GitHub (funciona para todos os visitantes)
