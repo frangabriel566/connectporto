@@ -2152,9 +2152,16 @@ function renderEscritorios(){
   }).join('');
 }
 
+function previewFoto(input, prevId) {
+  var img = document.getElementById(prevId);
+  if (!img) return;
+  if (input.value) { img.src = input.value; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
+}
+
 function addEscritorio(){
   var lista = getEscritorios();
-  lista.push({ cidade:'Nova Unidade', endereco:'', cep:'', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'' });
+  lista.push({ cidade:'Nova Unidade', endereco:'', cep:'', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'', foto:'' });
   lsSet('escritorios', lista); renderEscritorios();
 }
 
