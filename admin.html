@@ -1673,7 +1673,7 @@ function saveEmpresa(){
   var fields = ['nome','slogan','whatsapp','telefone','email','cnpj','endereco','cidade','cep','maps','instagram','facebook','tiktok','youtube','horario-dias','horario-hrs','horario-sab','horario-dom'];
   fields.forEach(function(f){ var el = document.getElementById('e-'+f); if(el) e[f] = el.value; });
   lsSet('empresa', e);
-  showAlert('empresa-alert','Dados da empresa salvos!','Informações atualizadas em todo o site.');
+  showAlert('empresa-alert','✅ Alterações salvas com sucesso!','Informações atualizadas em todo o site.');
 }
 
 // ── IDENTIDADE VISUAL ────────────────────
