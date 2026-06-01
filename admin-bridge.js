@@ -101,12 +101,8 @@
   // ══════════════════════════════════════════════════
   function renderizarPlanos() {
     var planos = ls('planos') || DEFAULT_PLANOS;
-    var container = document.querySelector('#planos .grid.sm\\:grid-cols-2');
-    if (!container) {
-      // tenta seletor alternativo
-      var sec = document.getElementById('planos');
-      if (sec) container = sec.querySelector('.grid');
-    }
+    var sec = document.getElementById('planos');
+    var container = sec ? sec.querySelector('.grid') : null;
     if (!container) return;
 
     container.innerHTML = planos.map(function (p, i) {
