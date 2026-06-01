@@ -561,6 +561,7 @@
           if (record.marketing)      lsSet('marketing',      record.marketing);
           if (record.hero_carousel)  lsSet('hero_carousel',  record.hero_carousel);
           if (record.datas)          localStorage.setItem('connect_admin_datas', JSON.stringify(record.datas));
+          if (record.escritorios)    lsSet('escritorios', record.escritorios);
           aplicarDadosNuvem(record);
         }
         callback(true);
