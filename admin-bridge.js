@@ -13,6 +13,16 @@
     localStorage.setItem('connect_admin_' + key, JSON.stringify(val));
   }
 
+  // ── RESET: limpa planos antigos com "Consulte" ──────
+  (function() {
+    try {
+      var p = JSON.parse(localStorage.getItem('connect_admin_planos'));
+      if (p && p[0] && (p[0].preco === 'Consulte' || !p[0].preco)) {
+        localStorage.removeItem('connect_admin_planos');
+      }
+    } catch(e) {}
+  })();
+
   // ── DEFAULTS ────────────────────────────────────────
   var DEFAULT_PLANOS = [
     { nome: '600 Megas', velocidade: '600', preco: 'R$ 84,90', badge: '', features: ['Ideal para uso básico', 'Navegação e redes sociais', 'Vídeos em HD'] },
