@@ -812,6 +812,7 @@
     renderizarBanners();
     renderizarHeroCarrossel();
     carregarCarrosselGitHub(); // busca versão mais recente do GitHub
+    carregarDatasGitHub();     // busca datas comemorativas do GitHub (funciona no mobile)
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();
