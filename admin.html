@@ -2062,15 +2062,19 @@ var DATAS_PADRAO_ADMIN = [
 var TEMAS_OPCOES = ['snow','fireworks','hearts','confetti','petals','stars','soccer','verde_amarelo','halloween','blackfriday'];
 var MESES_PT = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
+// ── variável compartilhada entre render e salvar ──
+var _datasAtual = null;
+
 function getDatas() {
-  return ls('datas') || DATAS_PADRAO_ADMIN;
+  return JSON.parse(JSON.stringify(ls('datas') || DATAS_PADRAO_ADMIN));
 }
 
 function renderDatas() {
-  var datas = getDatas();
+  _datasAtual = getDatas();
   var lista = document.getElementById('datas-lista');
   if (!lista) return;
-  lista.innerHTML = datas.map(function(d, i) {
+
+  lista.innerHTML = _datasAtual.map(function(d, i) {
     var opts = TEMAS_OPCOES.map(function(t) {
       return '<option value="'+t+'"'+(d.tema===t?' selected':'')+'>'+t+'</option>';
     }).join('');
@@ -2092,19 +2096,22 @@ function renderDatas() {
     '</div>';
   }).join('');
 
+  // Atualiza _datasAtual a cada mudança no formulário
   lista.querySelectorAll('input,select').forEach(function(el) {
     el.addEventListener('change', function() {
       var idx = parseInt(this.dataset.i);
       var field = this.dataset.f;
       var val = this.type === 'checkbox' ? this.checked : (this.type === 'number' ? parseInt(this.value) : this.value);
-      datas[idx][field] = val;
+      _datasAtual[idx][field] = val;
     });
   });
 }
 
 function salvarDatas() {
-  var datas = getDatas();
-  lsSet('datas', datas);
+  if (!_datasAtual) _datasAtual = getDatas();
+  lsSet('datas', _datasAtual);
+  // Sinaliza ao site principal que as configurações mudaram
+  localStorage.setItem('connect_admin_saved', Date.now().toString());
   var al = document.getElementById('datas-alert');
   if (al) { al.style.display='block'; setTimeout(function(){ al.style.display='none'; }, 2500); }
 }
@@ -2117,9 +2124,9 @@ function testarTema(tema) {
 }
 
 function testarConfetti() {
-  var datas = getDatas();
-  var ativas = datas.filter(function(d){ return d.ativo; });
-  var d = ativas[Math.floor(Math.random() * ativas.length)] || datas[0];
+  if (!_datasAtual) _datasAtual = getDatas();
+  var ativas = _datasAtual.filter(function(d){ return d.ativo; });
+  var d = ativas[Math.floor(Math.random() * ativas.length)] || _datasAtual[0];
   testarTema(d ? d.tema : 'confetti');
 }
 
