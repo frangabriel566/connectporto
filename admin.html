@@ -1847,7 +1847,7 @@ function saveMarketing(){
   var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','tiktok','script-head','script-body'];
   fields.forEach(function(f){ var el=document.getElementById('mkt-'+f); if(el) mkt[f]=el.value; });
   lsSet('marketing', mkt);
-  showAlert('mkt-alert','Marketing salvo!','Pixels e scripts de tracking atualizados.');
+  showAlert('mkt-alert','✅ Alterações salvas com sucesso!','Pixels e tracking atualizados.');
   loadMarketing();
 }
 
