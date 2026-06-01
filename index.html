@@ -1700,8 +1700,16 @@
       var animId = null;
       var running = false;
 
-      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      function resize() {
+        var w = window.innerWidth  || document.documentElement.clientWidth  || 320;
+        var h = window.innerHeight || document.documentElement.clientHeight || 568;
+        canvas.width  = w;
+        canvas.height = h;
+        canvas.style.width  = w + 'px';
+        canvas.style.height = h + 'px';
+      }
       window.addEventListener('resize', resize);
+      window.addEventListener('orientationchange', function(){ setTimeout(resize, 300); });
       resize();
 
       var DATAS_PADRAO = [
