@@ -2136,7 +2136,29 @@ function salvarDatas() {
   if (!_datasAtual) _datasAtual = getDatas();
   lsSet('datas', _datasAtual);
   localStorage.setItem('connect_admin_saved', Date.now().toString());
-  showAlert('datas-alert', 'Datas salvas!', 'Configurações atualizadas no site.');
+  showAlert('datas-alert', 'Datas salvas!', 'Publicando para todos os dispositivos...');
+  _syncDatasGitHub(_datasAtual);
+}
+
+function _syncDatasGitHub(datas) {
+  var ghToken = ls('github_token') || '';
+  if (!ghToken) {
+    showAlert('datas-alert', '⚠️ Token GitHub não configurado', 'Vá em "API & Integrações" e adicione o token para sincronizar com mobile.');
+    return;
+  }
+  var content = btoa(unescape(encodeURIComponent(JSON.stringify(datas))));
+  var url = 'https://api.github.com/repos/frangabriel566/connectporto/contents/data/datas.json';
+  var headers = { 'Authorization': 'token ' + ghToken, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
+  fetch(url, { headers: headers })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(existing) {
+      var body = { message: 'update datas comemorativas', content: content };
+      if (existing && existing.sha) body.sha = existing.sha;
+      return fetch(url, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
+    })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function(){ showAlert('datas-alert', '✅ Alterações salvas com sucesso!', 'Confetti ativo em todos os dispositivos.'); })
+    .catch(function(e){ showAlert('datas-alert', '❌ Erro ao publicar', 'Verifique o token GitHub em API & Integrações.'); });
 }
 
 function testarTema(tema) {
