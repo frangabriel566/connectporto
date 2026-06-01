@@ -1656,6 +1656,20 @@
         </div>
     </nav>
 
+    <!-- Conversão Google Ads ao clicar no WhatsApp -->
+    <script>
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('a[href*="whatsapp"], a[href*="wa.me"], a[href="#whatsapp"]')) {
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'conversion', { send_to: 'AW-18179908366/cBp4CKuP-LMcEl7G7dxD' });
+          }
+          if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead');
+          }
+        }
+      });
+    </script>
+
     <!-- Admin Bridge: aplica configs do painel ANTES do script principal -->
     <script src="admin-bridge.js"></script>
     <!-- JavaScript -->
