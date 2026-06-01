@@ -1254,13 +1254,21 @@ function deletePlano(i){
 function savePlanos(){
   var planos = ls('planos') || DEFAULT_PLANOS;
   planos.forEach(function(p,i){
-    p.nome   = document.getElementById('p-nome-'+i)?.value || p.nome;
-    p.preco  = document.getElementById('p-preco-'+i)?.value || p.preco;
-    p.velocidade = document.getElementById('p-vel-'+i)?.value || p.velocidade;
-    p.features = p.features.map(function(f,fi){ return document.getElementById('pf-'+i+'-'+fi)?.value || f; });
+    var nomeEl  = document.getElementById('p-nome-'+i);
+    var precoEl = document.getElementById('p-preco-'+i);
+    var velEl   = document.getElementById('p-vel-'+i);
+    var badgeEl = document.getElementById('p-badge-'+i);
+    if(nomeEl)  p.nome       = nomeEl.value;
+    if(precoEl) p.preco      = precoEl.value;
+    if(velEl)   p.velocidade = velEl.value;
+    if(badgeEl) p.badge      = badgeEl.value;
+    p.features = p.features.map(function(f,fi){
+      var el = document.getElementById('pf-'+i+'-'+fi);
+      return el ? el.value : f;
+    });
   });
   lsSet('planos', planos);
-  showAlert('planos-alert','Planos salvos!','Os planos foram atualizados no site.');
+  showAlert('planos-alert','✅ Alterações salvas com sucesso!','Os planos foram atualizados no site.');
   updateStats();
 }
 
