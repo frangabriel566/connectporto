@@ -2138,7 +2138,16 @@ function renderEscritorios(){
         '<div class="field" style="margin:0;"><label>CEP</label><input type="text" id="esc-cep-'+i+'" value="'+escHtml(e.cep||'')+'" placeholder="00000-000"/></div>' +
       '</div>' +
       '<div class="field" style="margin-bottom:12px;"><label>Horário de Funcionamento</label><input type="text" id="esc-hor-'+i+'" value="'+escHtml(e.horario||'')+'" placeholder="Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado"/></div>' +
-      '<div class="field" style="margin:0;"><label>Link Google Maps <span style="font-weight:400;color:#94a3b8;">(cole o link do Maps aqui)</span></label><input type="text" id="esc-maps-'+i+'" value="'+escHtml(e.maps||'')+'" placeholder="https://maps.google.com/?q=..."/></div>' +
+      '<div class="field" style="margin-bottom:12px;">' +
+        '<label>📸 Foto da Fachada <span style="font-weight:400;color:#94a3b8;">(URL da imagem)</span></label>' +
+        '<input type="text" id="esc-foto-'+i+'" value="'+escHtml(e.foto||'')+'" placeholder="https://... cole o link da foto aqui" oninput="previewFoto(this,\'esc-prev-'+i+'\')" />' +
+        '<div style="margin-top:8px;">' +
+          (e.foto
+            ? '<img id="esc-prev-'+i+'" src="'+escHtml(e.foto)+'" alt="preview" style="width:100%;max-height:140px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;" onerror="this.style.display=\'none\'">'
+            : '<img id="esc-prev-'+i+'" src="" alt="" style="display:none;width:100%;max-height:140px;object-fit:cover;border-radius:8px;border:1px solid #e2e8f0;">') +
+        '</div>' +
+      '</div>' +
+      '<div class="field" style="margin:0;"><label>📍 Link Google Maps <span style="font-weight:400;color:#94a3b8;">(cole o link do Maps aqui)</span></label><input type="text" id="esc-maps-'+i+'" value="'+escHtml(e.maps||'')+'" placeholder="https://maps.google.com/?q=..."/></div>' +
     '</div>';
   }).join('');
 }
