@@ -1636,6 +1636,170 @@
     <script src="admin-bridge.js"></script>
     <!-- JavaScript -->
     <script src="script.js"></script>
+
+    <!-- ═══════════════════════════════════════════════════
+         CANVAS CONFETTI — Datas Comemorativas
+    ════════════════════════════════════════════════════ -->
+    <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;display:none;"></canvas>
+
+    <script>
+    (function () {
+      var canvas = document.getElementById('confetti-canvas');
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      var animId = null;
+      var running = false;
+
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      window.addEventListener('resize', resize);
+      resize();
+
+      var DATAS_PADRAO = [
+        { nome: 'Natal',                mes: 12, dia: 25, margem: 3,  tema: 'snow',         emoji: '❄️', ativo: true  },
+        { nome: 'Réveillon',            mes: 12, dia: 31, margem: 1,  tema: 'fireworks',    emoji: '🎆', ativo: true  },
+        { nome: 'Ano Novo',             mes:  1, dia:  1, margem: 1,  tema: 'fireworks',    emoji: '✨', ativo: true  },
+        { nome: 'São Valentim',         mes:  2, dia: 14, margem: 1,  tema: 'hearts',       emoji: '❤️', ativo: true  },
+        { nome: 'Carnaval',             mes:  3, dia:  3, margem: 4,  tema: 'confetti',     emoji: '🎉', ativo: true  },
+        { nome: 'Dia das Mães',         mes:  5, dia: 11, margem: 2,  tema: 'petals',       emoji: '🌸', ativo: true  },
+        { nome: 'Dia dos Namorados',    mes:  6, dia: 12, margem: 1,  tema: 'hearts',       emoji: '💑', ativo: true  },
+        { nome: 'Festa Junina',         mes:  6, dia: 24, margem: 7,  tema: 'stars',        emoji: '⭐', ativo: true  },
+        { nome: 'Copa do Mundo',        mes:  6, dia: 14, margem: 30, tema: 'soccer',       emoji: '⚽', ativo: false },
+        { nome: 'Independência BR',     mes:  9, dia:  7, margem: 1,  tema: 'verde_amarelo',emoji: '🇧🇷', ativo: true  },
+        { nome: 'Dia das Crianças',     mes: 10, dia: 12, margem: 1,  tema: 'confetti',     emoji: '🎈', ativo: true  },
+        { nome: 'Halloween',            mes: 10, dia: 31, margem: 1,  tema: 'halloween',    emoji: '🎃', ativo: true  },
+        { nome: 'Dia dos Pais',         mes:  8, dia: 10, margem: 2,  tema: 'confetti',     emoji: '👔', ativo: true  },
+        { nome: 'Black Friday',         mes: 11, dia: 28, margem: 1,  tema: 'blackfriday',  emoji: '🛍️', ativo: true  },
+        { nome: 'Páscoa',               mes:  4, dia: 20, margem: 2,  tema: 'petals',       emoji: '🐣', ativo: true  }
+      ];
+
+      var TEMAS = {
+        snow:         { colors: ['#ffffff','#87ceeb','#b0e0e6','#e8f4fd'], shape: 'circle', dir: 'down', wobble: true  },
+        fireworks:    { colors: ['#ffd700','#ff69b4','#00ff00','#ff4500','#00d4ff'], shape: 'circle', dir: 'down', wobble: false },
+        hearts:       { colors: ['#ff69b4','#ff1493','#ff0000','#ff6b6b'], shape: 'heart',  dir: 'up',   wobble: true  },
+        confetti:     { colors: ['#ff0000','#ffff00','#00cc66','#0066ff','#ff00ff','#00ffff'], shape: 'rect', dir: 'down', wobble: true },
+        petals:       { colors: ['#ff69b4','#ffb6c1','#ff1493','#ffc0cb'], shape: 'circle', dir: 'down', wobble: true  },
+        stars:        { colors: ['#ff6600','#ffcc00','#cc0000','#ffffff'], shape: 'star',   dir: 'down', wobble: true  },
+        soccer:       { colors: ['#009c3b','#ffdf00','#002776','#ffffff'], shape: 'circle', dir: 'down', wobble: false },
+        verde_amarelo:{ colors: ['#009c3b','#ffdf00','#002776'],           shape: 'rect',   dir: 'down', wobble: false },
+        halloween:    { colors: ['#ff6600','#333333','#9b59b6','#ff4500'],shape: 'rect',   dir: 'down', wobble: true  },
+        blackfriday:  { colors: ['#111111','#ffd700','#ffffff','#ff3333'], shape: 'rect',   dir: 'down', wobble: false }
+      };
+
+      function lerDatas() {
+        try { var s = localStorage.getItem('connect_admin_datas'); return s ? JSON.parse(s) : DATAS_PADRAO; }
+        catch (e) { return DATAS_PADRAO; }
+      }
+
+      function verificarData() {
+        var datas = lerDatas();
+        var hoje = new Date();
+        var mes = hoje.getMonth() + 1, dia = hoje.getDate();
+        for (var i = 0; i < datas.length; i++) {
+          var d = datas[i];
+          if (!d.ativo) continue;
+          if (d.mes !== mes) continue;
+          if (Math.abs(dia - d.dia) <= (d.margem || 1)) return d;
+        }
+        return null;
+      }
+
+      function criarP(tema) {
+        var t = TEMAS[tema] || TEMAS.confetti;
+        var dir = t.dir;
+        return {
+          x: Math.random() * canvas.width,
+          y: dir === 'up' ? canvas.height + 10 : -10,
+          vx: (Math.random() - 0.5) * 2,
+          vy: dir === 'up' ? -(Math.random() * 2 + 1) : (Math.random() * 3 + 1),
+          color: t.colors[Math.floor(Math.random() * t.colors.length)],
+          size: Math.random() * 8 + 4,
+          shape: t.shape,
+          rot: Math.random() * 360,
+          rotS: (Math.random() - 0.5) * 6,
+          alpha: 1,
+          wobble: t.wobble,
+          wAngle: 0,
+          dir: dir
+        };
+      }
+
+      function desenharP(p) {
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        if (p.shape === 'rect') {
+          ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size / 1.5);
+        } else if (p.shape === 'heart') {
+          var s = p.size / 2;
+          ctx.moveTo(0, s * 0.3);
+          ctx.bezierCurveTo(s, -s * 0.5, s * 1.5, s * 0.5, 0, s * 1.2);
+          ctx.bezierCurveTo(-s * 1.5, s * 0.5, -s, -s * 0.5, 0, s * 0.3);
+          ctx.fill();
+        } else if (p.shape === 'star') {
+          for (var j = 0; j < 5; j++) {
+            var a = (j * 4 * Math.PI / 5) - Math.PI / 2;
+            var b = ((j * 4 + 2) * Math.PI / 5) - Math.PI / 2;
+            if (j === 0) ctx.moveTo(Math.cos(a) * p.size, Math.sin(a) * p.size);
+            else ctx.lineTo(Math.cos(a) * p.size, Math.sin(a) * p.size);
+            ctx.lineTo(Math.cos(b) * p.size * 0.4, Math.sin(b) * p.size * 0.4);
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      function animar() {
+        if (!running) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (particles.length < 160) {
+          for (var i = 0; i < 4; i++) particles.push(criarP(window._confettiTema));
+        }
+        particles = particles.filter(function (p) {
+          p.x += p.vx; p.y += p.vy; p.rot += p.rotS;
+          if (p.wobble) { p.wAngle += 0.05; p.x += Math.sin(p.wAngle) * 0.6; }
+          if (p.dir === 'down' && p.y > canvas.height * 0.75) p.alpha -= 0.015;
+          if (p.dir === 'up'   && p.y < canvas.height * 0.25) p.alpha -= 0.015;
+          desenharP(p);
+          return p.alpha > 0.01 && p.y < canvas.height + 40 && p.y > -40;
+        });
+        animId = requestAnimationFrame(animar);
+      }
+
+      window.iniciarConfetti = function (tema) {
+        if (running) window.pararConfetti();
+        window._confettiTema = tema || 'confetti';
+        particles = [];
+        running = true;
+        canvas.style.display = 'block';
+        animar();
+      };
+
+      window.pararConfetti = function () {
+        running = false;
+        if (animId) cancelAnimationFrame(animId);
+        particles = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'none';
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var data = verificarData();
+        if (data) {
+          setTimeout(function () {
+            window.iniciarConfetti(data.tema || 'confetti');
+            setTimeout(window.pararConfetti, 35000);
+          }, 2500);
+        }
+      });
+    })();
+    </script>
 </body>
 
 </html>
