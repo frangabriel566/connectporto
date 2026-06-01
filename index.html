@@ -84,6 +84,12 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
+    <style>
+      .planos-grid { display: grid; grid-template-columns: 1fr; }
+      @media (min-width: 640px)  { .planos-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (min-width: 1024px) { .planos-grid { grid-template-columns: repeat(3, 1fr); } }
+      @media (min-width: 1400px) { .planos-grid { grid-template-columns: repeat(6, minmax(0,1fr)); } }
+    </style>
 </head>
 
 <body>
