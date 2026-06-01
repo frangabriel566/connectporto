@@ -2115,10 +2115,13 @@ function renderDatas() {
 function salvarDatas() {
   if (!_datasAtual) _datasAtual = getDatas();
   lsSet('datas', _datasAtual);
-  // Sinaliza ao site principal que as configurações mudaram
   localStorage.setItem('connect_admin_saved', Date.now().toString());
   var al = document.getElementById('datas-alert');
-  if (al) { al.style.display='block'; setTimeout(function(){ al.style.display='none'; }, 2500); }
+  if (al) {
+    al.textContent = '✅ Alterações salvas com sucesso!';
+    al.style.display = 'block';
+    setTimeout(function(){ al.style.display='none'; }, 3000);
+  }
 }
 
 function testarTema(tema) {
