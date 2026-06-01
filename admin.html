@@ -2038,6 +2038,98 @@ window.addEventListener('load', function(){
   if(cfg.binId) atualizarStatusCloud(true,'✅ Bin conectado. Última sincronização: ' + (ls('cloud_last_sync')||'nunca'));
 });
 
+// ══════════════════════════════════════════
+//  DATAS COMEMORATIVAS
+// ══════════════════════════════════════════
+var DATAS_PADRAO_ADMIN = [
+  { nome: 'Natal',              mes: 12, dia: 25, margem: 3,  tema: 'snow',          emoji: '❄️', ativo: true  },
+  { nome: 'Réveillon',          mes: 12, dia: 31, margem: 1,  tema: 'fireworks',     emoji: '🎆', ativo: true  },
+  { nome: 'Ano Novo',           mes:  1, dia:  1, margem: 1,  tema: 'fireworks',     emoji: '✨', ativo: true  },
+  { nome: 'São Valentim',       mes:  2, dia: 14, margem: 1,  tema: 'hearts',        emoji: '❤️', ativo: true  },
+  { nome: 'Carnaval',           mes:  3, dia:  3, margem: 4,  tema: 'confetti',      emoji: '🎉', ativo: true  },
+  { nome: 'Páscoa',             mes:  4, dia: 20, margem: 2,  tema: 'petals',        emoji: '🐣', ativo: true  },
+  { nome: 'Dia das Mães',       mes:  5, dia: 11, margem: 2,  tema: 'petals',        emoji: '🌸', ativo: true  },
+  { nome: 'Dia dos Namorados',  mes:  6, dia: 12, margem: 1,  tema: 'hearts',        emoji: '💑', ativo: true  },
+  { nome: 'Festa Junina',       mes:  6, dia: 24, margem: 7,  tema: 'stars',         emoji: '⭐', ativo: true  },
+  { nome: 'Copa do Mundo',      mes:  6, dia: 14, margem: 30, tema: 'soccer',        emoji: '⚽', ativo: false },
+  { nome: 'Dia dos Pais',       mes:  8, dia: 10, margem: 2,  tema: 'confetti',      emoji: '👔', ativo: true  },
+  { nome: 'Independência BR',   mes:  9, dia:  7, margem: 1,  tema: 'verde_amarelo', emoji: '🇧🇷', ativo: true  },
+  { nome: 'Dia das Crianças',   mes: 10, dia: 12, margem: 1,  tema: 'confetti',      emoji: '🎈', ativo: true  },
+  { nome: 'Halloween',          mes: 10, dia: 31, margem: 1,  tema: 'halloween',     emoji: '🎃', ativo: true  },
+  { nome: 'Black Friday',       mes: 11, dia: 28, margem: 1,  tema: 'blackfriday',   emoji: '🛍️', ativo: true  }
+];
+
+var TEMAS_OPCOES = ['snow','fireworks','hearts','confetti','petals','stars','soccer','verde_amarelo','halloween','blackfriday'];
+var MESES_PT = ['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
+function getDatas() {
+  return ls('datas') || DATAS_PADRAO_ADMIN;
+}
+
+function renderDatas() {
+  var datas = getDatas();
+  var lista = document.getElementById('datas-lista');
+  if (!lista) return;
+  lista.innerHTML = datas.map(function(d, i) {
+    var opts = TEMAS_OPCOES.map(function(t) {
+      return '<option value="'+t+'"'+(d.tema===t?' selected':'')+'>'+t+'</option>';
+    }).join('');
+    return '<div style="display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:8px;flex-wrap:wrap;">' +
+      '<span style="font-size:1.3rem;min-width:28px;">'+d.emoji+'</span>' +
+      '<div style="flex:1;min-width:120px;font-size:.88rem;font-weight:600;color:#1e293b;">'+d.nome+'</div>' +
+      '<div style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:#64748b;">' +
+        'Dia <input type="number" min="1" max="31" value="'+d.dia+'" style="width:48px;padding:4px 6px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:.78rem;" data-i="'+i+'" data-f="dia"> / ' +
+        '<select style="padding:4px 6px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:.78rem;" data-i="'+i+'" data-f="mes">' +
+          [1,2,3,4,5,6,7,8,9,10,11,12].map(function(m){return '<option value="'+m+'"'+(d.mes===m?' selected':'')+'>'+MESES_PT[m]+'</option>';}).join('') +
+        '</select>' +
+        ' ±<input type="number" min="0" max="30" value="'+d.margem+'" style="width:44px;padding:4px 6px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:.78rem;" data-i="'+i+'" data-f="margem"> dias' +
+      '</div>' +
+      '<select style="padding:4px 8px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:.78rem;" data-i="'+i+'" data-f="tema">' + opts + '</select>' +
+      '<button onclick="testarTema(\''+d.tema+'\')" style="padding:5px 12px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:7px;font-size:.75rem;cursor:pointer;white-space:nowrap;">▶ Testar</button>' +
+      '<label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:.82rem;">' +
+        '<input type="checkbox" data-i="'+i+'" data-f="ativo"'+(d.ativo?' checked':'')+' style="width:16px;height:16px;cursor:pointer;accent-color:#2B5FDB;"> Ativo' +
+      '</label>' +
+    '</div>';
+  }).join('');
+
+  lista.querySelectorAll('input,select').forEach(function(el) {
+    el.addEventListener('change', function() {
+      var idx = parseInt(this.dataset.i);
+      var field = this.dataset.f;
+      var val = this.type === 'checkbox' ? this.checked : (this.type === 'number' ? parseInt(this.value) : this.value);
+      datas[idx][field] = val;
+    });
+  });
+}
+
+function salvarDatas() {
+  var datas = getDatas();
+  lsSet('datas', datas);
+  var al = document.getElementById('datas-alert');
+  if (al) { al.style.display='block'; setTimeout(function(){ al.style.display='none'; }, 2500); }
+}
+
+function testarTema(tema) {
+  var site = window.open('index.html', '_site');
+  setTimeout(function() {
+    try { if (site && site.iniciarConfetti) site.iniciarConfetti(tema); } catch(e) {}
+  }, 1800);
+}
+
+function testarConfetti() {
+  var datas = getDatas();
+  var ativas = datas.filter(function(d){ return d.ativo; });
+  var d = ativas[Math.floor(Math.random() * ativas.length)] || datas[0];
+  testarTema(d ? d.tema : 'confetti');
+}
+
+function pararConfettiAdmin() {
+  try {
+    var site = window.open('index.html','_site');
+    setTimeout(function(){ if(site && site.pararConfetti) site.pararConfetti(); }, 500);
+  } catch(e) {}
+}
+
 // ── INIT ─────────────────────────────────
 checkSession();
 </script>
