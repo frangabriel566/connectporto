@@ -1803,7 +1803,7 @@ function saveApiConfig(){
   apiData.wa_token = document.getElementById('api-wa-token').value;
   apiData.wa_phone_id = document.getElementById('api-wa-phone-id').value;
   lsSet('api', apiData);
-  showAlert('api-alert','Configurações de API salvas!','Tokens e chaves atualizados.');
+  showAlert('api-alert','✅ Alterações salvas com sucesso!','Tokens e chaves atualizados.');
 }
 function testWebhook(type){
   var urls = { lead: document.getElementById('wh-lead').value, naoatende: document.getElementById('wh-naoatende').value, visita: document.getElementById('wh-visita').value };
