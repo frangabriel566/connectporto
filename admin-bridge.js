@@ -813,7 +813,10 @@
     renderizarBanners();
     renderizarHeroCarrossel();
     carregarCarrosselGitHub(); // busca versão mais recente do GitHub
-    carregarDatasGitHub();     // busca datas comemorativas do GitHub (funciona no mobile)
+    carregarDatasGitHub(function() {
+      // Dispara confetti DEPOIS que as datas do GitHub chegaram
+      if (window.lancarConfettiDatas) window.lancarConfettiDatas();
+    });
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();
