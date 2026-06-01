@@ -2136,12 +2136,7 @@ function salvarDatas() {
   if (!_datasAtual) _datasAtual = getDatas();
   lsSet('datas', _datasAtual);
   localStorage.setItem('connect_admin_saved', Date.now().toString());
-  var al = document.getElementById('datas-alert');
-  if (al) {
-    al.textContent = '✅ Alterações salvas com sucesso!';
-    al.style.display = 'block';
-    setTimeout(function(){ al.style.display='none'; }, 3000);
-  }
+  showAlert('datas-alert', 'Datas salvas!', 'Configurações atualizadas no site.');
 }
 
 function testarTema(tema) {
