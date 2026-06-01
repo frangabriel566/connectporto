@@ -2122,17 +2122,20 @@ function salvarDatas() {
 }
 
 function testarTema(tema) {
+  var temas = Array.isArray(tema) ? tema : [tema];
   var site = window.open('index.html', '_site');
   setTimeout(function() {
-    try { if (site && site.iniciarConfetti) site.iniciarConfetti(tema); } catch(e) {}
+    try { if (site && site.iniciarConfetti) site.iniciarConfetti(temas, 'Prévia'); } catch(e) {}
   }, 1800);
 }
 
 function testarConfetti() {
   if (!_datasAtual) _datasAtual = getDatas();
   var ativas = _datasAtual.filter(function(d){ return d.ativo; });
-  var d = ativas[Math.floor(Math.random() * ativas.length)] || _datasAtual[0];
-  testarTema(d ? d.tema : 'confetti');
+  if (!ativas.length) { alert('Nenhuma data ativa! Ative ao menos uma data primeiro.'); return; }
+  var temas = ativas.map(function(d){ return d.tema || 'confetti'; });
+  var nomes = ativas.map(function(d){ return d.emoji + ' ' + d.nome; }).join(' + ');
+  testarTema(temas);
 }
 
 function pararConfettiAdmin() {
