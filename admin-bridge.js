@@ -15,10 +15,12 @@
 
   // ── DEFAULTS ────────────────────────────────────────
   var DEFAULT_PLANOS = [
-    { nome: '700 Megas', velocidade: '700', preco: 'Consulte', features: ['Internet estável e rápida', 'Streaming em HD sem travamentos', 'Perfeito para uso diário'] },
-    { nome: '800 Megas', velocidade: '800', preco: 'Consulte', features: ['Conexão para vários dispositivos', 'Streaming Full HD sem interrupções', 'Jogos online sem lag', 'Excelente custo-benefício'] },
-    { nome: '900 Megas', velocidade: '900', preco: 'Consulte', features: ['Streaming 4K com qualidade total', 'Home office', 'Downloads rápidos e estáveis'] },
-    { nome: '1 GIGA',   velocidade: '1000', preco: 'Consulte', features: ['Ultra velocidade para toda a família ou empresa', '4K simultâneo sem travar', 'Ultra-rápido'] }
+    { nome: '600 Megas', velocidade: '600', preco: 'R$ 84,90', badge: '', features: ['Ideal para uso básico', 'Navegação e redes sociais', 'Vídeos em HD'] },
+    { nome: '700 Megas', velocidade: '700', preco: 'R$ 89,90', badge: '', features: ['Internet estável e rápida', 'Streaming em HD sem travamentos', 'Perfeito para uso diário'] },
+    { nome: '800 Megas', velocidade: '800', preco: 'R$ 99,90', badge: '', features: ['Conexão para vários dispositivos', 'Streaming Full HD sem interrupções', 'Jogos online sem lag', 'Excelente custo-benefício'] },
+    { nome: '900 Megas', velocidade: '900', preco: 'R$ 109,90', badge: '📺 + HUB TOP', features: ['Streaming 4K com qualidade total', 'Home office', 'Downloads rápidos e estáveis'] },
+    { nome: '1 GIGA',   velocidade: '1000', preco: 'R$ 119,90', badge: '🎬 + MAX ou TELECINE', features: ['Ultra velocidade para toda a família', '4K simultâneo sem travar', 'Ultra-rápido'] },
+    { nome: '1 GIGA',   velocidade: '1000', preco: 'R$ 129,90', badge: '⚽ + PREMIER ou COMBAT', features: ['Ultra velocidade para toda a família', '4K simultâneo sem travar', 'Ultra-rápido'] }
   ];
   var DEFAULT_CIDADES = [
     { nome: 'Porto e Região', uf: 'PI' },
