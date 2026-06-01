@@ -1254,6 +1254,11 @@ function deletePlano(i){
   var planos = ls('planos') || DEFAULT_PLANOS;
   planos.splice(i,1); lsSet('planos', planos); renderPlanos();
 }
+function addPlano(){
+  var planos = ls('planos') || DEFAULT_PLANOS;
+  planos.push({ nome:'Novo Plano', velocidade:'', preco:'R$ 0,00', badge:'', features:['Benefício 1'] });
+  lsSet('planos', planos); renderPlanos();
+}
 function savePlanos(){
   var planos = ls('planos') || DEFAULT_PLANOS;
   planos.forEach(function(p,i){
