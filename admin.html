@@ -410,10 +410,13 @@
         <div class="page-sub">Configure os planos exibidos no site</div>
         <div class="alert alert-success" id="planos-alert">✅ Planos salvos com sucesso!</div>
         <div id="planos-container"></div>
-        <button class="btn-save" onclick="savePlanos()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          Salvar Planos
-        </button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+          <button class="btn-save" onclick="savePlanos()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Salvar Planos
+          </button>
+          <button class="btn-add" onclick="addPlano()">+ Novo Plano</button>
+        </div>
       </div>
 
       <!-- ══ CIDADES ══ -->
