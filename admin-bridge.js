@@ -558,6 +558,20 @@
   //  7. CARROSSEL HERO (imagens lado direito)
   // ══════════════════════════════════════════════════
 
+  // ══════════════════════════════════════════════════
+  //  CARREGAR DATAS COMEMORATIVAS DO GITHUB
+  // ══════════════════════════════════════════════════
+  function carregarDatasGitHub() {
+    fetch('https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/datas.json?t=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(datas){
+        if (datas && datas.length) {
+          localStorage.setItem('connect_admin_datas', JSON.stringify(datas));
+        }
+      })
+      .catch(function(){});
+  }
+
   // Busca imagens do carrossel do GitHub (funciona para todos os visitantes)
   function carregarCarrosselGitHub() {
     fetch('https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/carousel.json?t=' + Date.now())
