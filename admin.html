@@ -1947,6 +1947,7 @@ function coletarTodosOsDados(){
     empresa:        ls('empresa')        || {},
     identidade:     ls('identidade')     || {},
     marketing:      ls('marketing')      || {},
+    datas:          _datasAtual          || (function(){ try{ var d=localStorage.getItem('connect_admin_datas'); return d?JSON.parse(d):null; }catch(e){ return null; } })() || DATAS_PADRAO_ADMIN,
     hero_carousel_meta: carouselMeta,
     api:            (function(){ var a=ls('api')||{}; delete a.key; return a; })()
   };
