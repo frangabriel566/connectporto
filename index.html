@@ -1871,20 +1871,20 @@
         canvas.style.display = 'none';
       };
 
-      function lancarConfettiDatas() {
+      var _confettiJaDisparado = false;
+      window.lancarConfettiDatas = function() {
+        if (_confettiJaDisparado) return;
         var datas = verificarDatas();
         if (!datas.length) return;
+        _confettiJaDisparado = true;
         resize();
         var temas = datas.map(function(d){ return d.tema || 'confetti'; });
         window.iniciarConfetti(temas);
         setTimeout(window.pararConfetti, 40000);
-      }
+      };
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function(){ setTimeout(lancarConfettiDatas, 2000); });
-      } else {
-        setTimeout(lancarConfettiDatas, 2000);
-      }
+      // Tenta disparar após 3s como fallback (caso admin-bridge não chame)
+      setTimeout(window.lancarConfettiDatas, 3000);
     })();
     </script>
 </body>
