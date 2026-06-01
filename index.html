@@ -1763,13 +1763,29 @@
         animId = requestAnimationFrame(animar);
       }
 
-      window.iniciarConfetti = function (tema) {
+      function mostrarToast(msg) {
+        var t = document.getElementById('confetti-toast');
+        if (!t) return;
+        t.textContent = msg;
+        t.style.display = 'block';
+        t.style.animation = 'none';
+        setTimeout(function(){ t.style.animation = 'toastIn .4s ease'; }, 10);
+        if (window._toastTimer) clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(function(){
+          t.style.opacity = '0';
+          t.style.transition = 'opacity .5s';
+          setTimeout(function(){ t.style.display='none'; t.style.opacity=''; t.style.transition=''; }, 500);
+        }, 4000);
+      }
+
+      window.iniciarConfetti = function (tema, nomeData) {
         if (running) window.pararConfetti();
         window._confettiTema = tema || 'confetti';
         particles = [];
         running = true;
         canvas.style.display = 'block';
         animar();
+        if (nomeData) mostrarToast('🎉 ' + nomeData + '!');
       };
 
       window.pararConfetti = function () {
@@ -1784,7 +1800,7 @@
         var data = verificarData();
         if (data) {
           setTimeout(function () {
-            window.iniciarConfetti(data.tema || 'confetti');
+            window.iniciarConfetti(data.tema || 'confetti', data.nome);
             setTimeout(window.pararConfetti, 35000);
           }, 2500);
         }
