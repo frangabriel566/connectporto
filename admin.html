@@ -2181,6 +2181,7 @@ function saveEscritorios(){
     if(g('esc-cep-'+i)!==null)    e.cep     = g('esc-cep-'+i);
     if(g('esc-hor-'+i)!==null)    e.horario = g('esc-hor-'+i);
     if(g('esc-maps-'+i)!==null)   e.maps    = g('esc-maps-'+i);
+    if(g('esc-foto-'+i)!==null)   e.foto    = g('esc-foto-'+i);
   });
   lsSet('escritorios', lista);
   showAlert('escritorios-alert','✅ Alterações salvas com sucesso!','Escritórios atualizados no site.');
