@@ -1032,6 +1032,49 @@
         </button>
       </div>
 
+      <!-- ══ DATAS COMEMORATIVAS ══ -->
+      <div class="page" id="page-datas">
+        <div class="page-title">🎉 Datas Comemorativas</div>
+        <div class="page-sub">Configure a chuva de confetti para datas especiais. O efeito aparece automaticamente no site quando a data chegar.</div>
+
+        <div class="alert alert-success" id="datas-alert" style="display:none;">✅ Configurações salvas!</div>
+
+        <div class="card">
+          <div class="card-title">Datas Ativas</div>
+          <div class="card-desc">Ative ou desative o confetti para cada data. O efeito dura 35 segundos na chegada do visitante.</div>
+          <div id="datas-lista"></div>
+          <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-save" onclick="salvarDatas()">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              Salvar Configurações
+            </button>
+            <button class="btn-add" onclick="testarConfetti()">
+              🎆 Testar Confetti Agora
+            </button>
+            <button onclick="pararConfettiAdmin()" style="padding:8px 18px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;color:#64748b;">
+              ⏹ Parar
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Temas Disponíveis</div>
+          <div class="card-desc">Cada tema tem partículas e cores diferentes</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+            <span onclick="window.open('index.html','_site'); setTimeout(function(){window.iniciarConfetti&&window.iniciarConfetti('snow')},1000)" style="padding:6px 14px;background:#e8f4fd;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">❄️ Snow — Natal</span>
+            <span onclick="testarTema('fireworks')" style="padding:6px 14px;background:#fff3cd;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">🎆 Fireworks — Réveillon</span>
+            <span onclick="testarTema('hearts')" style="padding:6px 14px;background:#ffe4e4;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">❤️ Hearts — Namorados</span>
+            <span onclick="testarTema('confetti')" style="padding:6px 14px;background:#f0fdf4;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">🎊 Confetti — Geral</span>
+            <span onclick="testarTema('petals')" style="padding:6px 14px;background:#fdf4ff;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">🌸 Petals — Dia das Mães</span>
+            <span onclick="testarTema('stars')" style="padding:6px 14px;background:#fefce8;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">⭐ Stars — São João</span>
+            <span onclick="testarTema('soccer')" style="padding:6px 14px;background:#f0fdf4;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">⚽ Soccer — Copa</span>
+            <span onclick="testarTema('verde_amarelo')" style="padding:6px 14px;background:#f0fdf4;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">🇧🇷 Verde-Amarelo — 7 Set</span>
+            <span onclick="testarTema('halloween')" style="padding:6px 14px;background:#fff7ed;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">🎃 Halloween</span>
+            <span onclick="testarTema('blackfriday')" style="padding:6px 14px;background:#f1f5f9;border-radius:20px;cursor:pointer;font-size:.82rem;font-weight:500;">🛍️ Black Friday</span>
+          </div>
+        </div>
+      </div>
+
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
