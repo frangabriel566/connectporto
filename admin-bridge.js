@@ -105,6 +105,7 @@
         return '<li class="flex items-start text-sm">' + CHECK_SVG + '<span class="text-connect-dark">' + escHtml(f) + '</span></li>';
       }).join('');
 
+      var badgeHtml = p.badge ? '<div class="mt-2"><span class="inline-flex items-center gap-1 bg-gradient-to-r from-connect-blue to-connect-cyan text-white text-xs font-bold px-2 py-1 rounded-full">' + escHtml(p.badge) + '</span></div>' : '';
       return '<div class="group card-modern fade-in" style="animation-delay:' + delay + 's">' +
         '<div class="p-6 h-full flex flex-col">' +
         '<div class="flex items-center gap-3 mb-4">' +
@@ -114,11 +115,11 @@
         '<div><h3 class="text-2xl font-bold text-connect-navy">' + escHtml(p.nome) + '</h3>' +
         '<p class="text-xs text-connect-dark/70">velocidade máxima</p></div>' +
         '</div>' +
-        '<div class="mb-6">' +
-        '<div class="flex items-baseline gap-2">' +
+        '<div class="mb-4">' +
+        '<div class="flex items-baseline gap-1">' +
         '<p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">' + escHtml(p.preco) + '</p>' +
-        '</div>' +
-        '<p class="text-xs text-connect-dark/60 mt-1">valores via WhatsApp</p>' +
+        '<span class="text-xs text-connect-dark/50">/mês</span>' +
+        '</div>' + badgeHtml +
         '</div>' +
         '<ul class="space-y-3 mb-6 flex-grow">' + features + '</ul>' +
         '<a href="#whatsapp" class="btn-plan w-full text-sm py-3">Assinar agora</a>' +
