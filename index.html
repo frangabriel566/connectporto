@@ -1680,7 +1680,17 @@
 
     <!-- Toast de notificação das datas comemorativas -->
     <div id="confetti-toast" style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;background:linear-gradient(135deg,#2B5FDB,#00D4FF);color:#fff;padding:14px 28px;border-radius:50px;font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;box-shadow:0 8px 32px rgba(43,95,219,.4);white-space:nowrap;animation:toastIn .4s ease;"></div>
-    <style>@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}</style>
+    <style>
+      @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+      /* Temas visuais comemorativas */
+      body.tema-festa-junina { background-color:#fffbf0 !important; }
+      body.tema-festa-junina #hero { background: linear-gradient(135deg,#7B1A00 0%,#B84800 50%,#FFD700 100%) !important; }
+      body.tema-festa-junina .section-title-gradient { background: linear-gradient(135deg,#B84800,#FFD700) !important; -webkit-background-clip:text; background-clip:text; }
+      .tema-banner { position:fixed;top:0;left:0;right:0;z-index:9997;padding:8px 16px;text-align:center;font-weight:700;font-size:.95rem;font-family:'Poppins',sans-serif;cursor:pointer;transition:all .3s; }
+      .tema-banner:hover { opacity:.85; }
+      body.tema-copa .tema-banner { background:linear-gradient(90deg,#009C3B,#002776,#FFD700,#009C3B);color:#fff; }
+      body.tema-festa-junina .tema-banner { background:linear-gradient(90deg,#B84800,#FFD700,#cc0000,#B84800);color:#fff; }
+    </style>
 
     <script>
     (function () {
