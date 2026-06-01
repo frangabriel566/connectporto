@@ -1852,6 +1852,10 @@ function saveMarketing(){
 }
 
 // ── TOAST ─────────────────────────────────
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 var _toastTimer = null;
 function showAlert(id, titulo, sub, tipo){
   // Esconde o alert inline antigo (compatibilidade)
