@@ -627,9 +627,12 @@
   // Busca imagens do carrossel do GitHub (funciona para todos os visitantes)
   function carregarCarrosselGitHub() {
     fetch('https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/carousel.json?t=' + Date.now())
-      .then(function(r){ return r.json(); })
+      .then(function(r){ return r.ok ? r.json() : null; })
       .then(function(imgs){
-        if (imgs && imgs.length) {
+        if (!imgs || !imgs.length) return;
+        var local = ls('hero_carousel') || [];
+        // Só sobrescreve se o GitHub tiver igual ou mais itens (evita apagar adições locais não sincronizadas)
+        if (imgs.length >= local.length) {
           lsSet('hero_carousel', imgs);
           renderizarHeroCarrossel();
         }
