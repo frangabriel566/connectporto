@@ -1,0 +1,38 @@
+[
+  {
+    "cidade": "Porto-Pi",
+    "endereco": "Av. Presidente Vargas, 193",
+    "cep": "64145-000",
+    "uf": "PI",
+    "horario": "Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado",
+    "maps": "https://maps.app.goo.gl/jKtTqEDryhaYBsZL6",
+    "foto": "https://br.images.search.yahoo.com/search/images?p=festa+junina+fotos&fr=mcafee&fr2=p%3As%2Cv%3Ai&type=E210BR714G91978&imgurl=http%3A%2F%2Fwww.ebc.com.br%2Fespeciais%2Fsites%2Fdefault%2Ffiles%2Fthumbnails%2Fimage%2Ffoto01.jpg#id=5&iurl=https%3A%2F%2Fimages.rove.me%2Fw_1920%2Cq_85%2Fzjjmm2pogbqxedkvpn4s%2Frio-de-janeiro-festa-junina.jpg&action=click"
+  },
+  {
+    "cidade": "Nossa Senhora dos Remédios-Pi",
+    "endereco": "Rua Marcelino Rodrigues",
+    "cep": "64149-000",
+    "uf": "PI",
+    "horario": "Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado",
+    "maps": "https://maps.app.goo.gl/448sHGHJaQ4pTbSt5",
+    "foto": ""
+  },
+  {
+    "cidade": "Miguel Alves-Pi",
+    "endereco": "R. São José, 85",
+    "cep": "64130-000",
+    "uf": "PI",
+    "horario": "Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado",
+    "maps": "https://maps.app.goo.gl/HaHjPuttG7NBzihg8",
+    "foto": ""
+  },
+  {
+    "cidade": "Barras-Pi",
+    "endereco": "Av. Juscelino Kubitscheck",
+    "cep": "64100-000",
+    "uf": "PI",
+    "horario": "Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado",
+    "maps": "https://maps.app.goo.gl/ha35JvA1NLwjoLMj7",
+    "foto": ""
+  }
+]
