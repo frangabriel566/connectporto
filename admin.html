@@ -2156,19 +2156,11 @@ function renderEscritorios(){
   }).join('');
 }
 
-function uploadFoto(input, idx, prevId) {
-  var file = input.files && input.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var base64 = e.target.result;
-    var lista = getEscritorios();
-    lista[idx].foto = base64;
-    lsSet('escritorios', lista);
-    var img = document.getElementById(prevId);
-    if (img) { img.src = base64; img.style.display = 'block'; }
-  };
-  reader.readAsDataURL(file);
+function previewFoto(input, prevId) {
+  var img = document.getElementById(prevId);
+  if (!img) return;
+  if (input.value) { img.src = input.value; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
 }
 
 function addEscritorio(){
