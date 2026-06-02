@@ -1400,47 +1400,11 @@ function saveFaq(){
 }
 
 // ── HERO CARROSSEL ────────────────────────
-window._himgBase64 = null;
-
-window.previewHeroImg = function(input) {
-  var file = input.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) {
-    var original = new Image();
-    original.onload = function() {
-      var canvas = document.createElement('canvas');
-      var MAX = 1000;
-      var w = original.width, h = original.height;
-      if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-      if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
-      canvas.width = w; canvas.height = h;
-      var ctx = canvas.getContext('2d');
-      var isPng = file.type === 'image/png';
-      if (isPng) {
-        ctx.drawImage(original, 0, 0, w, h);
-        var px = ctx.getImageData(0, 0, w, h).data;
-        var hasAlpha = false;
-        for (var i = 3; i < px.length; i += 4) { if (px[i] < 255) { hasAlpha = true; break; } }
-        if (!hasAlpha) { isPng = false; ctx.clearRect(0, 0, w, h); }
-      }
-      if (!isPng) {
-        ctx.drawImage(original, 0, 0, w, h);
-      }
-      var result = isPng ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.88);
-      window._himgBase64 = result;
-      var img = document.getElementById('himg-preview-img');
-      var dz  = document.getElementById('himg-dropzone');
-      img.src = result;
-      img.style.display = 'block';
-      dz.style.borderColor = '#2B5FDB';
-      dz.style.background = isPng ? 'repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/16px 16px' : '#eff6ff';
-      var btn = document.getElementById('himg-btn-add');
-      btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer';
-    };
-    original.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
+window.previewHeroUrl = function(input) {
+  var img = document.getElementById('himg-preview-img');
+  if (!img) return;
+  if (input.value) { img.src = input.value; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
 };
 
 function renderHeroImgs() {
