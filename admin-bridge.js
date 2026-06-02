@@ -919,9 +919,13 @@
     renderizarBanners();
     renderizarHeroCarrossel();
     renderizarEscritorios();
+    renderizarCampanhaBanner(); // campanha ativa (localStorage imediato)
     carregarCarrosselGitHub(); // busca versão mais recente do GitHub
     carregarDatasGitHub(function() {
       if (window.lancarConfettiDatas) window.lancarConfettiDatas(true);
+    });
+    carregarCampanhasGitHub(function(dados) {
+      if (dados) renderizarCampanhaBanner(dados);
     });
     // Carrega demais seções do GitHub e re-renderiza
     carregarJsonGitHub('planos.json',      'planos',      function(d){ if(d) renderizarPlanos(); });
