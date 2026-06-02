@@ -2228,8 +2228,21 @@ function renderDatas() {
     el.addEventListener('change', function() {
       var idx = parseInt(this.dataset.i);
       var field = this.dataset.f;
-      var val = this.type === 'checkbox' ? this.checked : (this.type === 'number' ? parseInt(this.value) : this.value);
+      var val = this.type === 'checkbox' ? this.checked : this.value;
       _datasAtual[idx][field] = val;
+      // Atualiza visual do card ao marcar/desmarcar
+      if (field === 'ativo') {
+        var card = this.closest('div[style]');
+        if (card) {
+          card.style.border = '1.5px solid ' + (val ? '#2B5FDB' : '#e2e8f0');
+          card.style.background = val ? '#f0f4ff' : '#fff';
+        }
+        var label = this.parentElement;
+        if (label) {
+          label.style.color = val ? '#2B5FDB' : '#94a3b8';
+          label.childNodes[label.childNodes.length - 1].textContent = ' ' + (val ? 'Ativo' : 'Inativo');
+        }
+      }
     });
   });
 }
