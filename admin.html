@@ -1297,7 +1297,8 @@ function savePlanos(){
     });
   });
   lsSet('planos', planos);
-  showAlert('planos-alert','✅ Alterações salvas com sucesso!','Os planos foram atualizados no site.');
+  showAlert('planos-alert','✅ Salvando...','Publicando planos para todos os dispositivos...');
+  _syncGitHub('planos.json', planos, 'planos-alert', 'Planos');
   updateStats();
 }
 
