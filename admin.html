@@ -1334,7 +1334,8 @@ function saveCidades(){
     ci.uf   = document.getElementById('ci-uf-'+i)?.value || ci.uf;
   });
   lsSet('cidades', cidades);
-  showAlert('cidades-alert','✅ Alterações salvas com sucesso!','Cidades atualizadas no site.');
+  showAlert('cidades-alert','✅ Salvando...','Publicando cidades para todos os dispositivos...');
+  _syncGitHub('cidades.json', cidades, 'cidades-alert', 'Cidades');
   updateStats();
 }
 
