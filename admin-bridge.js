@@ -598,6 +598,58 @@
   // ══════════════════════════════════════════════════
 
   // ══════════════════════════════════════════════════
+  //  9. CAMPANHA SAZONAL (banner no site público)
+  // ══════════════════════════════════════════════════
+
+  var CAMPANHAS_PADRAO_BRIDGE = [
+    {id:1,slug:'promocoes-mes', nome:'Promoções do Mês',  emoji:'🎉',cor:'#f59e0b',corBg:'#fffbeb',corTexto:'#92400e',ativo:false},
+    {id:2,slug:'volta-aulas',   nome:'Volta às Aulas',    emoji:'🎓',cor:'#3b82f6',corBg:'#eff6ff',corTexto:'#1e40af',ativo:false},
+    {id:3,slug:'dia-maes',      nome:'Dia das Mães',      emoji:'❤️',cor:'#ec4899',corBg:'#fdf2f8',corTexto:'#9d174d',ativo:false},
+    {id:4,slug:'dia-namorados', nome:'Dia dos Namorados', emoji:'💘',cor:'#ef4444',corBg:'#fef2f2',corTexto:'#991b1b',ativo:false},
+    {id:5,slug:'festa-junina',  nome:'Festa Junina',      emoji:'🌽',cor:'#d97706',corBg:'#fef3c7',corTexto:'#78350f',ativo:false},
+    {id:6,slug:'dia-pais',      nome:'Dia dos Pais',      emoji:'👔',cor:'#0ea5e9',corBg:'#f0f9ff',corTexto:'#075985',ativo:false},
+    {id:7,slug:'dia-cliente',   nome:'Dia do Cliente',    emoji:'🛍️',cor:'#8b5cf6',corBg:'#faf5ff',corTexto:'#5b21b6',ativo:false},
+    {id:8,slug:'dia-criancas',  nome:'Dia das Crianças',  emoji:'🎮',cor:'#22c55e',corBg:'#f0fdf4',corTexto:'#15803d',ativo:false},
+    {id:9,slug:'black-friday',  nome:'Black Friday',      emoji:'⚡',cor:'#f97316',corBg:'#1c1c1c',corTexto:'#ffffff',ativo:false},
+    {id:10,slug:'natal',        nome:'Natal',             emoji:'🎄',cor:'#16a34a',corBg:'#f0fdf4',corTexto:'#14532d',ativo:false},
+    {id:11,slug:'ano-novo',     nome:'Ano Novo',          emoji:'🎆',cor:'#7c3aed',corBg:'#0f172a',corTexto:'#ffffff',ativo:false}
+  ];
+
+  function renderizarCampanhaBanner(campanhas) {
+    var lista = campanhas || ls('campanhas') || CAMPANHAS_PADRAO_BRIDGE;
+    var banner = document.getElementById('campanha-banner');
+    if (!banner) return;
+
+    var ativa = lista.find(function(c){ return c.ativo; });
+
+    if (!ativa) {
+      banner.classList.remove('camp-visible');
+      banner.style.background = '';
+      banner.style.color = '';
+      return;
+    }
+
+    var emoji = document.getElementById('camp-b-emoji');
+    var nome  = document.getElementById('camp-b-nome');
+    if (emoji) emoji.textContent = ativa.emoji;
+    if (nome)  nome.textContent  = ativa.nome;
+
+    banner.style.background = ativa.corBg || '#fffbeb';
+    banner.style.color      = ativa.corTexto || '#1e293b';
+    banner.classList.add('camp-visible');
+  }
+
+  function carregarCampanhasGitHub(callback) {
+    fetch(BASE_RAW + 'campanhas.json?t=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(dados){
+        if (dados && dados.length) lsSet('campanhas', dados);
+        if (callback) callback(dados);
+      })
+      .catch(function(){ if (callback) callback(null); });
+  }
+
+  // ══════════════════════════════════════════════════
   //  CARREGAR DADOS DO GITHUB (sync para todos os dispositivos)
   // ══════════════════════════════════════════════════
   var BASE_RAW = 'https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/';
