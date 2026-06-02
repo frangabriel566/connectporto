@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0F2D6D;
+  --brand: #2B5FDB;
+  --cyan: #00D4FF;
+}
+
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: #F1F5F9;
+  color: #1e293b;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* Transitions */
+* { box-sizing: border-box; }
+
+/* Admin sidebar */
+.sidebar-item {
+  @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-500 text-sm font-medium transition-all duration-150 cursor-pointer;
+}
+.sidebar-item:hover  { @apply bg-slate-100 text-slate-700; }
+.sidebar-item.active { @apply bg-blue-50 text-brand font-semibold; }
+.sidebar-item svg    { @apply w-4 h-4 flex-shrink-0; }
+
+/* Cards */
+.admin-card {
+  @apply bg-white rounded-xl border border-slate-200 p-6;
+}
+
+/* Stat cards */
+.stat-card {
+  @apply bg-white rounded-xl border border-slate-200 p-5;
+}
+
+/* Inputs */
+.admin-input {
+  @apply w-full px-3 py-2 border border-slate-200 rounded-lg text-sm outline-none transition-all
+         focus:border-brand focus:ring-2 focus:ring-brand/10;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-4 py-2 bg-brand text-white text-sm font-semibold rounded-lg
+         hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+}
+.btn-secondary {
+  @apply inline-flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg
+         hover:bg-slate-200 transition-colors;
+}
+.btn-danger {
+  @apply inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-600 text-xs font-medium rounded-lg
+         border border-red-100 hover:bg-red-100 transition-colors;
+}
+.btn-success {
+  @apply inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-lg
+         hover:bg-emerald-700 transition-colors;
+}
+
+/* Toggle switch */
+.toggle-wrap  { @apply relative inline-block w-11 h-6; }
+.toggle-input { @apply opacity-0 w-0 h-0; }
+.toggle-slider {
+  @apply absolute cursor-pointer inset-0 bg-slate-300 rounded-full transition-all duration-200;
+}
+.toggle-slider::before {
+  content: '';
+  @apply absolute h-5 w-5 left-0.5 bottom-0.5 bg-white rounded-full transition-all duration-200;
+}
+.toggle-input:checked + .toggle-slider { @apply bg-brand; }
+.toggle-input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+/* Badge */
+.badge {
+  @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold;
+}
+.badge-green  { @apply bg-emerald-100 text-emerald-700; }
+.badge-red    { @apply bg-red-100 text-red-600; }
+.badge-gray   { @apply bg-slate-100 text-slate-500; }
+.badge-blue   { @apply bg-blue-100 text-blue-700; }
+.badge-yellow { @apply bg-amber-100 text-amber-700; }
+
+/* Table */
+.admin-table { @apply w-full text-sm; }
+.admin-table th {
+  @apply px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide
+         border-b border-slate-100 bg-slate-50/70;
+}
+.admin-table td { @apply px-4 py-3 border-b border-slate-50 text-slate-700; }
+.admin-table tr:hover td { @apply bg-slate-50/50; }
+.admin-table tr:last-child td { @apply border-0; }
+
+/* Page header */
+.page-header {
+  @apply flex items-start justify-between mb-6;
+}
+.page-title { @apply text-xl font-bold text-navy; }
+.page-sub   { @apply text-sm text-slate-500 mt-0.5; }
