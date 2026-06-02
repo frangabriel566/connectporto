@@ -874,6 +874,7 @@
     carregarJsonGitHub('depoimentos.json', 'depoimentos', function(d){ if(d) renderizarDepoimentos(); });
     carregarJsonGitHub('faq.json',         'faq',         function(d){ if(d) renderizarFaq(); });
     carregarJsonGitHub('escritorios.json', 'escritorios', function(d){ if(d) renderizarEscritorios(); });
+    carregarJsonGitHub('banners.json',     'banners',     function(d){ if(d) renderizarBanners(); });
     aplicarEmpresa();
     aplicarIdentidade();
     rastrearLeads();
