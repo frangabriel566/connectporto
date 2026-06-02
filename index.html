@@ -1873,7 +1873,7 @@
         running = true;
         canvas.style.clipPath = '';
         canvas.style.display = 'block';
-        clipConfettiAoHero();
+        if (window.clipConfettiAoHero) window.clipConfettiAoHero();
         animar();
       };
 
