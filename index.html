@@ -1901,6 +1901,24 @@
 
       // Tenta disparar após 3s como fallback (caso admin-bridge não chame)
       setTimeout(window.lancarConfettiDatas, 3000);
+
+      // Restringe o confetti à seção hero: recorta o canvas conforme o scroll
+      (function() {
+        function clipConfettiAoHero() {
+          if (!running) return;
+          var hero = document.getElementById('hero');
+          if (!hero) return;
+          var heroBottom = hero.getBoundingClientRect().bottom;
+          if (heroBottom <= 0) {
+            canvas.style.clipPath = 'inset(0 0 100% 0)';
+          } else {
+            var cut = Math.max(0, window.innerHeight - heroBottom);
+            canvas.style.clipPath = 'inset(0 0 ' + cut + 'px 0)';
+          }
+        }
+        window.addEventListener('scroll', clipConfettiAoHero, { passive: true });
+        window.addEventListener('resize', clipConfettiAoHero, { passive: true });
+      })();
     })();
     </script>
 </body>
