@@ -1647,6 +1647,7 @@ function deleteBanner(i){
   banners.splice(i,1);
   lsSet('banners', banners);
   renderBanners();
+  _sincronizarBanners(banners);
 }
 
 function toggleBannerAtivo(i, val){
@@ -1654,6 +1655,11 @@ function toggleBannerAtivo(i, val){
   if(banners[i]) banners[i].ativo = val;
   lsSet('banners', banners);
   atualizarPreviewBanners(banners);
+  _sincronizarBanners(banners);
+}
+
+function _sincronizarBanners(banners) {
+  _syncGitHub('banners.json', banners, 'banners-alert', 'Banners');
 }
 
 function saveBanners(){
