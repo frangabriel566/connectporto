@@ -855,7 +855,7 @@
     carregarCarrosselGitHub(); // busca versão mais recente do GitHub
     carregarDatasGitHub(function() {
       // Dispara confetti DEPOIS que as datas do GitHub chegaram
-      if (window.lancarConfettiDatas) window.lancarConfettiDatas();
+      if (window.lancarConfettiDatas) window.lancarConfettiDatas(true);
     });
     aplicarEmpresa();
     aplicarIdentidade();
