@@ -1871,7 +1871,9 @@
         window._confettiTemas = Array.isArray(tema) ? tema : [tema || 'confetti'];
         particles = [];
         running = true;
+        canvas.style.clipPath = '';
         canvas.style.display = 'block';
+        clipConfettiAoHero();
         animar();
       };
 
