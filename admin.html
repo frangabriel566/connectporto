@@ -1879,7 +1879,7 @@ function loadMarketing(){
 }
 function saveMarketing(){
   var mkt = {};
-  var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','tiktok','script-head','script-body'];
+  var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','gads-id','gads-label','tiktok','script-head','script-body'];
   fields.forEach(function(f){ var el=document.getElementById('mkt-'+f); if(el) mkt[f]=el.value; });
   lsSet('marketing', mkt);
   showAlert('mkt-alert','✅ Alterações salvas com sucesso!','Pixels e tracking atualizados.');
