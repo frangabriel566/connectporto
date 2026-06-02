@@ -1402,7 +1402,8 @@ function saveFaq(){
     f.resposta = document.getElementById('fq-r-'+i)?.value || f.resposta;
   });
   lsSet('faq', faqs);
-  showAlert('faq-alert','✅ Alterações salvas com sucesso!','FAQ atualizado no site.');
+  showAlert('faq-alert','✅ Salvando...','Publicando FAQ para todos os dispositivos...');
+  _syncGitHub('faq.json', faqs, 'faq-alert', 'FAQ');
 }
 
 // ── HERO CARROSSEL ────────────────────────
