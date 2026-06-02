@@ -1663,10 +1663,9 @@ function _sincronizarBanners(banners) {
 }
 
 function saveBanners(){
-  // os toggles já salvam em tempo real, mas sincroniza com a nuvem
   var banners = ls('banners') || [];
   lsSet('banners', banners);
-  showAlert('banners-alert','✅ Alterações salvas com sucesso!','Carrossel atualizado no site.');
+  _sincronizarBanners(banners);
 }
 
 // ── EMPRESA ───────────────────────────────
