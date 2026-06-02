@@ -2163,6 +2163,17 @@ function previewFoto(input, prevId) {
   else { img.style.display = 'none'; }
 }
 
+var _autoSalvarTimer = null;
+function autoSalvarFoto(input, idx) {
+  var lista = getEscritorios();
+  lista[idx].foto = input.value;
+  lsSet('escritorios', lista);
+  clearTimeout(_autoSalvarTimer);
+  _autoSalvarTimer = setTimeout(function() {
+    _syncGitHub('escritorios.json', lista, 'escritorios-alert', 'Escritórios');
+  }, 1200);
+}
+
 function addEscritorio(){
   var lista = getEscritorios();
   lista.push({ cidade:'Nova Unidade', endereco:'', cep:'', uf:'PI', horario:'Seg–Sex: 08h–12h / 14h–17h | Sáb: 08h–12h | Dom: Fechado', maps:'', foto:'' });
