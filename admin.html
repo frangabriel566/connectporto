@@ -1859,7 +1859,7 @@ function genKey(len){
 // ── MARKETING ────────────────────────────
 function loadMarketing(){
   var mkt = ls('marketing') || {};
-  var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','tiktok','script-head','script-body'];
+  var fields = ['gtm','fbpixel','fbtoken','fb-event','ga4','gads-id','gads-label','tiktok','script-head','script-body'];
   fields.forEach(function(f){ var el=document.getElementById('mkt-'+f); if(el && mkt[f]) el.value=mkt[f]; });
   // Status GTM
   var gtmEl = document.getElementById('gtm-status');
