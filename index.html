@@ -1888,16 +1888,25 @@
       };
 
       var _confettiJaDisparado = false;
-      window.lancarConfettiDatas = function() {
-        if (_confettiJaDisparado) return;
+      window.lancarConfettiDatas = function(forcar) {
+        if (_confettiJaDisparado && !forcar) return;
         var datas = verificarDatas();
-        if (!datas.length) return;
+        if (!datas.length) { window.pararConfetti(); return; }
         _confettiJaDisparado = true;
         resize();
         var temas = datas.map(function(d){ return d.tema || 'confetti'; });
         window.iniciarConfetti(temas);
-        setTimeout(window.pararConfetti, 40000);
+        if (window._confettiTimer) clearTimeout(window._confettiTimer);
+        window._confettiTimer = setTimeout(window.pararConfetti, 40000);
       };
+
+      // Quando admin salvar novas datas em outra aba, relança automaticamente
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'connect_admin_datas') {
+          _confettiJaDisparado = false;
+          window.lancarConfettiDatas();
+        }
+      });
 
       // Tenta disparar após 3s como fallback (caso admin-bridge não chame)
       setTimeout(window.lancarConfettiDatas, 3000);
