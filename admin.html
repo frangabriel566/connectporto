@@ -2196,7 +2196,10 @@ function saveEscritorios(){
     /* foto é salva diretamente via uploadFoto(), não precisa ler aqui */
   });
   lsSet('escritorios', lista);
-  showAlert('escritorios-alert','✅ Alterações salvas com sucesso!','Escritórios atualizados no site.');
+  showAlert('escritorios-alert','✅ Salvando...','Publicando escritórios para todos os dispositivos...');
+  /* Remove fotos base64 grandes do sync para não estourar o limite do GitHub */
+  var listaSync = lista.map(function(e){ var c=Object.assign({},e); delete c.foto; return c; });
+  _syncGitHub('escritorios.json', listaSync, 'escritorios-alert', 'Escritórios');
 }
 
 var TEMAS_OPCOES = ['snow','fireworks','hearts','confetti','petals','bandeirinha','soccer','verde_amarelo','halloween','blackfriday'];
