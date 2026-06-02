@@ -1765,14 +1765,10 @@
         catch(e) { return DATAS_PADRAO; }
       }
 
-      /* Retorna TODAS as datas ativas que batem com hoje */
+      /* Retorna TODAS as datas marcadas como ativas pelo admin */
       function verificarDatas() {
         var datas = lerDatas();
-        var hoje = new Date();
-        var mes = hoje.getMonth() + 1, dia = hoje.getDate();
-        return datas.filter(function(d) {
-          return d.ativo && d.mes === mes && Math.abs(dia - d.dia) <= (d.margem || 1);
-        });
+        return datas.filter(function(d) { return d.ativo; });
       }
 
       /* Cria partícula escolhendo aleatoriamente entre os temas ativos */
