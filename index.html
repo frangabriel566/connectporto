@@ -1820,6 +1820,14 @@
           ctx.stroke();
         } else if (p.shape === 'rect') {
           ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size / 1.5);
+        } else if (p.shape === 'star') {
+          var sp = 5, or = p.size, ir = p.size * 0.4, ra = -Math.PI / 2, step = Math.PI / sp;
+          ctx.moveTo(Math.cos(ra) * or, Math.sin(ra) * or);
+          for (var si = 0; si < sp; si++) {
+            ra += step; ctx.lineTo(Math.cos(ra) * ir, Math.sin(ra) * ir);
+            ra += step; ctx.lineTo(Math.cos(ra) * or, Math.sin(ra) * or);
+          }
+          ctx.closePath(); ctx.fill();
         } else if (p.shape === 'heart') {
           var s = p.size / 2;
           ctx.moveTo(0, s * 0.3);
