@@ -2274,6 +2274,32 @@ function _syncDatasGitHub(datas) {
     .catch(function(e){ showAlert('datas-alert', '❌ Erro ao publicar', 'Verifique o token GitHub em API & Integrações.'); });
 }
 
+/* Sync genérico para qualquer arquivo em data/ no GitHub */
+function _syncGitHub(arquivo, dados, alertId, nomeSecao) {
+  var ghToken = ls('github_token') || '';
+  if (!ghToken) {
+    if (alertId) showAlert(alertId, '⚠️ Token GitHub não configurado', 'Vá em "API & Integrações" e configure o token para sincronizar com todos os dispositivos.');
+    return;
+  }
+  var content = btoa(unescape(encodeURIComponent(JSON.stringify(dados, null, 2))));
+  var url = 'https://api.github.com/repos/frangabriel566/connectporto/contents/data/' + arquivo;
+  var headers = { 'Authorization': 'token ' + ghToken, 'Accept': 'application/vnd.github.v3+json', 'Content-Type': 'application/json' };
+  fetch(url, { headers: headers })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(existing) {
+      var body = { message: 'update ' + (nomeSecao || arquivo), content: content };
+      if (existing && existing.sha) body.sha = existing.sha;
+      return fetch(url, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
+    })
+    .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function(){
+      if (alertId) showAlert(alertId, '✅ Publicado em todos os dispositivos!', (nomeSecao || arquivo) + ' atualizado com sucesso.');
+    })
+    .catch(function(){
+      if (alertId) showAlert(alertId, '❌ Erro ao publicar no GitHub', 'Verifique o token em "API & Integrações".');
+    });
+}
+
 function testarTema(tema) {
   var temas = Array.isArray(tema) ? tema : [tema];
   var site = window.open('index.html', '_site');
