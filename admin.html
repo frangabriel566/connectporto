@@ -1440,23 +1440,17 @@ function atualizarPrevHero(imgs) {
 }
 
 function addHeroImg() {
-  var base64 = window._himgBase64;
-  var alt    = document.getElementById('himg-alt').value.trim();
-  var ativo  = document.getElementById('himg-ativo').checked;
-  if (!base64) { alert('Selecione uma imagem primeiro.'); return; }
+  var url   = (document.getElementById('himg-url').value || '').trim();
+  var alt   = document.getElementById('himg-alt').value.trim();
+  var ativo = document.getElementById('himg-ativo').checked;
+  if (!url) { alert('Cole a URL da imagem primeiro.'); return; }
   var imgs = ls('hero_carousel') || [];
-  imgs.push({ url: base64, alt: alt, ativo: ativo });
+  imgs.push({ url: url, alt: alt, ativo: ativo });
   lsSet('hero_carousel', imgs);
-  // reset
-  window._himgBase64 = null;
-  document.getElementById('himg-file').value = '';
+  document.getElementById('himg-url').value = '';
   document.getElementById('himg-preview-img').style.display = 'none';
   document.getElementById('himg-alt').value = '';
   document.getElementById('himg-ativo').checked = true;
-  var dz = document.getElementById('himg-dropzone');
-  dz.style.borderColor = '#cbd5e1'; dz.style.background = '#f8fafc';
-  var btn = document.getElementById('himg-btn-add');
-  btn.disabled = true; btn.style.opacity = '.5'; btn.style.cursor = 'not-allowed';
   renderHeroImgs();
   _syncCarrossel();
 }
