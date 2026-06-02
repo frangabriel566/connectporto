@@ -1614,51 +1614,31 @@ window.previewBannerSlide = function(idx){
   });
 };
 
-window._bnBase64 = null;
-
-window.previewBannerFile = function(input){
-  var file = input.files[0];
-  if(!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e){
-    window._bnBase64 = e.target.result;
-    var img = document.getElementById('bn-preview-img');
-    var dz  = document.getElementById('bn-dropzone');
-    img.src = e.target.result;
-    img.style.display = 'block';
-    dz.style.borderColor = '#2B5FDB';
-    dz.style.background  = '#eff6ff';
-    var btn = document.getElementById('bn-btn-add');
-    btn.disabled = false;
-    btn.style.opacity = '1';
-    btn.style.cursor  = 'pointer';
-  };
-  reader.readAsDataURL(file);
+window.previewBannerUrl = function(input) {
+  var img = document.getElementById('bn-preview-img');
+  if (!img) return;
+  if (input.value) { img.src = input.value; img.style.display = 'block'; }
+  else { img.style.display = 'none'; }
 };
 
 function addBanner(){
-  var base64 = window._bnBase64;
-  var link   = document.getElementById('bn-link').value.trim();
-  var alt    = document.getElementById('bn-alt').value.trim();
-  var ativo  = document.getElementById('bn-ativo').checked;
-  if(!base64){ alert('Selecione uma imagem primeiro.'); return; }
+  var url   = (document.getElementById('bn-url').value || '').trim();
+  var link  = document.getElementById('bn-link').value.trim();
+  var alt   = document.getElementById('bn-alt').value.trim();
+  var ativo = document.getElementById('bn-ativo').checked;
+  if(!url){ alert('Cole a URL da imagem primeiro.'); return; }
   var banners = ls('banners') || [];
-  banners.push({ url: base64, link: link, alt: alt, ativo: ativo });
+  banners.push({ url: url, link: link, alt: alt, ativo: ativo });
   lsSet('banners', banners);
   // reset form
-  window._bnBase64 = null;
-  document.getElementById('bn-file').value = '';
+  document.getElementById('bn-url').value = '';
   document.getElementById('bn-preview-img').style.display = 'none';
   document.getElementById('bn-link').value = '';
   document.getElementById('bn-alt').value = '';
   document.getElementById('bn-ativo').checked = true;
-  var dz = document.getElementById('bn-dropzone');
-  dz.style.borderColor = '#cbd5e1';
-  dz.style.background  = '#f8fafc';
-  var btn = document.getElementById('bn-btn-add');
-  btn.disabled = true; btn.style.opacity = '.5'; btn.style.cursor = 'not-allowed';
   renderBanners();
-  showAlert('banners-alert','Banner adicionado!','Imagem salva. Clique em Salvar Banners para publicar no site.');
+  _sincronizarBanners(banners);
+  showAlert('banners-alert','✅ Banner adicionado e publicado!','Aparecendo no site para todos os dispositivos.');
 }
 
 function deleteBanner(i){
