@@ -2241,6 +2241,8 @@ function salvarDatas() {
   localStorage.setItem('connect_admin_saved', Date.now().toString());
   showAlert('datas-alert', 'Datas salvas!', 'Publicando para todos os dispositivos...');
   _syncDatasGitHub(_datasAtual);
+  // Dispara evento para forçar atualização nas abas do site abertas
+  try { window.dispatchEvent(new StorageEvent('storage', { key: 'connect_admin_datas', newValue: JSON.stringify(_datasAtual) })); } catch(e) {}
 }
 
 function _syncDatasGitHub(datas) {
