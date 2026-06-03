@@ -972,6 +972,7 @@
     // Carrega demais seções do GitHub e re-renderiza
     carregarJsonGitHub('planos.json',      'planos',      function(d){ if(d) renderizarPlanos(); });
     carregarJsonGitHub('cidades.json',     'cidades',     function(d){ if(d) renderizarCidades(); });
+    carregarJsonGitHub('vantagens.json',   'vantagens',   function(d){ if(d) renderizarVantagens(d); });
     carregarJsonGitHub('depoimentos.json', 'depoimentos', function(d){ if(d) renderizarDepoimentos(); });
     carregarJsonGitHub('faq.json',         'faq',         function(d){ if(d) renderizarFaq(); });
     carregarJsonGitHub('escritorios.json', 'escritorios', function(d){ if(d) renderizarEscritorios(); });
