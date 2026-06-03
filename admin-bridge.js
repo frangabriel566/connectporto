@@ -955,12 +955,13 @@
     aplicarWhatsApp();
     renderizarPlanos();
     renderizarCidades();
+    renderizarVantagens();
     renderizarDepoimentos();
     renderizarFaq();
     renderizarBanners();
     renderizarHeroCarrossel();
     renderizarEscritorios();
-    renderizarCampanhaBanner(); // campanha ativa (localStorage imediato)
+    renderizarCampanhaBanner();
     carregarCarrosselGitHub(); // busca versão mais recente do GitHub
     carregarDatasGitHub(function() {
       if (window.lancarConfettiDatas) window.lancarConfettiDatas(true);
