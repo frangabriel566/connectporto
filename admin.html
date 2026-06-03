@@ -2471,6 +2471,69 @@ function restaurarTemaNormal() {
 }
 
 // ══════════════════════════════════════════
+//  VANTAGENS / BENEFÍCIOS
+// ══════════════════════════════════════════
+
+var VANTAGENS_PADRAO = [
+  {titulo:'Conexão estável',        texto:'Fibra óptica de ponta a ponta garante mais estabilidade na sua conexão, sem oscilações constantes.'},
+  {titulo:'Streaming sem travar',   texto:'Assista suas séries, filmes e vídeos favoritos sem interrupções, com qualidade HD e 4K.'},
+  {titulo:'Games com menor latência',texto:'Jogue online sem lag e com ping baixo. Conexão ideal para gamers que levam a sério.'},
+  {titulo:'Suporte rápido',         texto:'Atendimento humano e ágil quando você precisar. Estamos aqui para resolver seu problema rapidamente.'},
+  {titulo:'Confiança local',        texto:'Anos conectando Porto-PI com qualidade. Somos parte da comunidade e conhecemos as necessidades da região.'},
+  {titulo:'Wi-Fi de alta performance',texto:'Roteador incluso e configurado para levar sinal forte a todos os cômodos da sua casa.'}
+];
+
+function getVantagens(){ return JSON.parse(JSON.stringify(ls('vantagens') || VANTAGENS_PADRAO)); }
+
+function renderVantagens(){
+  var lista = getVantagens();
+  var el = document.getElementById('vantagens-lista');
+  if(!el) return;
+  el.innerHTML = lista.map(function(v,i){
+    return '<div style="border:1px solid #e2e8f0;border-radius:10px;padding:16px;margin-bottom:10px;background:#fafafa;">'
+      +'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'
+      +'<span style="font-size:.8rem;font-weight:600;color:#64748b;">Benefício '+(i+1)+'</span>'
+      +'<button class="btn-danger" onclick="removeVantagem('+i+')">🗑️ Remover</button>'
+      +'</div>'
+      +'<div class="field"><label>Título</label>'
+      +'<input type="text" id="vt-titulo-'+i+'" value="'+escAdmin(v.titulo)+'" placeholder="Ex: Conexão estável" /></div>'
+      +'<div class="field"><label>Descrição</label>'
+      +'<textarea id="vt-texto-'+i+'" rows="2" placeholder="Descreva este benefício...">'+escAdmin(v.texto)+'</textarea>'
+      +'</div></div>';
+  }).join('');
+}
+
+function escAdmin(s){ return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function addVantagem(){
+  var lista = getVantagens();
+  lista.push({titulo:'Novo Benefício', texto:'Descreva aqui.'});
+  lsSet('vantagens', lista);
+  renderVantagens();
+}
+
+function removeVantagem(i){
+  var lista = getVantagens();
+  lista.splice(i,1);
+  lsSet('vantagens', lista);
+  renderVantagens();
+}
+
+function saveVantagens(){
+  var lista = getVantagens();
+  lista.forEach(function(v,i){
+    var t = document.getElementById('vt-titulo-'+i);
+    var d = document.getElementById('vt-texto-'+i);
+    if(t) v.titulo = t.value;
+    if(d) v.texto  = d.value;
+  });
+  lsSet('vantagens', lista);
+  showAlert('vantagens-alert','✅ Salvando...','Publicando benefícios para todos os dispositivos...');
+  _syncGitHub('vantagens.json', lista, 'vantagens-alert', 'Benefícios');
+  try{ window.dispatchEvent(new StorageEvent('storage',{key:'connect_admin_vantagens',newValue:JSON.stringify(lista)})); }catch(e){}
+}
+
+// ══════════════════════════════════════════
 //  CAMPANHAS SAZONAIS
 // ══════════════════════════════════════════
 
