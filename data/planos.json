@@ -49,13 +49,21 @@
     "velocidade": "1000",
     "preco": "R$ 119,90",
     "badge": "🎬 + MAX ou TELECINE",
-    "features": []
+    "features": [
+      "Novo benefício",
+      "Novo benefício",
+      "Novo benefício"
+    ]
   },
   {
     "nome": "1 GIGA",
     "velocidade": "1000",
     "preco": "R$ 129,90",
     "badge": "⚽ + PREMIER ou COMBAT",
-    "features": []
+    "features": [
+      "Futebol e lutas ao vivo",
+      "Streaming em alta definição",
+      "Conexão ultrarrápida"
+    ]
   }
 ]
