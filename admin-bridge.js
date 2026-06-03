@@ -598,7 +598,48 @@
   // ══════════════════════════════════════════════════
 
   // ══════════════════════════════════════════════════
-  //  9. CAMPANHA SAZONAL (banner no site público)
+  //  9. VANTAGENS / BENEFÍCIOS
+  // ══════════════════════════════════════════════════
+
+  var ICONES_VANTAGEM = {
+    shield:  'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
+    play:    'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    gamepad: 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z',
+    support: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z',
+    star:    'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z',
+    wifi:    'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0'
+  };
+
+  var VANTAGENS_DEFAULT_BRIDGE = [
+    {icone:'shield',  titulo:'Conexão estável',          texto:'Fibra óptica de ponta a ponta garante mais estabilidade na sua conexão, sem oscilações constantes.'},
+    {icone:'play',    titulo:'Streaming sem travar',      texto:'Assista suas séries, filmes e vídeos favoritos sem interrupções, com qualidade HD e 4K.'},
+    {icone:'gamepad', titulo:'Games com menor latência',  texto:'Jogue online sem lag e com ping baixo. Conexão ideal para gamers que levam a sério.'},
+    {icone:'support', titulo:'Suporte rápido',            texto:'Atendimento humano e ágil quando você precisar. Estamos aqui para resolver seu problema rapidamente.'},
+    {icone:'star',    titulo:'Confiança local',           texto:'Anos conectando Porto-PI com qualidade. Somos parte da comunidade e conhecemos as necessidades da região.'},
+    {icone:'wifi',    titulo:'Wi-Fi de alta performance', texto:'Roteador incluso e configurado para levar sinal forte a todos os cômodos da sua casa.'}
+  ];
+
+  var ICONES_LISTA = Object.keys(ICONES_VANTAGEM);
+
+  function renderizarVantagens(dados) {
+    var grid = document.getElementById('vantagens-grid');
+    if (!grid) return;
+    var vantagens = dados || ls('vantagens') || VANTAGENS_DEFAULT_BRIDGE;
+    grid.innerHTML = vantagens.map(function(v, i) {
+      var iconeKey = v.icone || ICONES_LISTA[i % ICONES_LISTA.length];
+      var pathD    = ICONES_VANTAGEM[iconeKey] || ICONES_VANTAGEM.star;
+      return '<div class="flex flex-col items-start fade-in" style="animation-delay:' + ((i+1)*0.1) + 's">'
+        + '<div class="w-14 h-14 bg-connect-primary/10 rounded-xl flex items-center justify-center mb-4">'
+        + '<svg class="w-7 h-7 text-connect-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">'
+        + '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="' + escHtml(pathD) + '"></path></svg></div>'
+        + '<h3 class="text-xl font-bold text-connect-navy mb-3">' + escHtml(v.titulo) + '</h3>'
+        + '<p class="text-connect-dark/80 leading-relaxed">' + escHtml(v.texto) + '</p>'
+        + '</div>';
+    }).join('');
+  }
+
+  // ══════════════════════════════════════════════════
+  //  10. CAMPANHA SAZONAL (banner no site público)
   // ══════════════════════════════════════════════════
 
   var CAMPANHAS_PADRAO_BRIDGE = [
