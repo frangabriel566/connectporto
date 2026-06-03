@@ -49,19 +49,13 @@
     "velocidade": "1000",
     "preco": "R$ 119,90",
     "badge": "🎬 + MAX ou TELECINE",
-    "features": [
-      "Ultra velocidade para toda a família",
-      "4K simultâneo sem travar",
-      "Ultra-rápido"
-    ]
+    "features": []
   },
   {
     "nome": "1 GIGA",
     "velocidade": "1000",
     "preco": "R$ 129,90",
     "badge": "⚽ + PREMIER ou COMBAT",
-    "features": [
-      "Conexão ultrarrápida"
-    ]
+    "features": []
   }
 ]
