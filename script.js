@@ -101,30 +101,29 @@ document.addEventListener('DOMContentLoaded', function () {
     if (overlay) {
         document.body.classList.add('cidade-bloqueada');
 
-        cidadeItens.forEach(function(item) {
-            item.addEventListener('click', function() {
-                var cidade = this.dataset.cidade;
-                var atende = this.dataset.atende === 'true';
+        // Delegação de eventos — funciona com cidades renderizadas dinamicamente pelo admin-bridge
+        overlay.addEventListener('click', function(e) {
+            var item = e.target.closest('.ti-cidade');
+            if (!item) return;
 
-                if (atende) {
-                    // Mensagem personalizada no WhatsApp ao clicar em "Assinar" mais tarde
-                    // Guarda cidade escolhida para uso no site
-                    sessionStorage.setItem('cidadeEscolhida', cidade);
-                    fecharOverlay();
-                } else {
-                    // Mostrar tela "não atendemos"
-                    if (cidadeLista)  cidadeLista.style.display  = 'none';
-                    if (cidadeHeader) cidadeHeader.style.display = 'none';
-                    if (naoAtendeDiv) naoAtendeDiv.style.display = 'flex';
+            var cidade = item.dataset.cidade;
+            var atende = item.dataset.atende === 'true';
 
-                    if (btnAvise) {
-                        btnAvise.onclick = function(e) {
-                            e.preventDefault();
-                            abrirWhatsApp('Olá! Ainda não tenho Connect na minha cidade. Gostaria de ser avisado quando chegarem!');
-                        };
-                    }
+            if (atende) {
+                sessionStorage.setItem('cidadeEscolhida', cidade);
+                fecharOverlay();
+            } else {
+                if (cidadeLista)  cidadeLista.style.display  = 'none';
+                if (cidadeHeader) cidadeHeader.style.display = 'none';
+                if (naoAtendeDiv) naoAtendeDiv.style.display = 'flex';
+
+                if (btnAvise) {
+                    btnAvise.onclick = function(e) {
+                        e.preventDefault();
+                        abrirWhatsApp('Olá! Ainda não tenho Connect na minha cidade. Gostaria de ser avisado quando chegarem!');
+                    };
                 }
-            });
+            }
         });
 
         if (btnVoltar) {
