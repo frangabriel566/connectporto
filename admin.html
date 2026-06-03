@@ -2632,6 +2632,30 @@ function _syncCampanhasGitHub(campanhas) {
     .catch(function(){});
 }
 
+// ── DESABILITA AUTOCOMPLETE DO NAVEGADOR ──────────────────
+// Evita popup "Salvar senha?" ao clicar em Salvar em qualquer seção do painel
+(function(){
+  function aplicarAutocompleteOff(){
+    document.querySelectorAll('input:not([autocomplete]), textarea:not([autocomplete]), select:not([autocomplete])').forEach(function(el){
+      if(el.type === 'password') return; // tratado individualmente abaixo
+      el.setAttribute('autocomplete','off');
+    });
+    // Campo de senha do LOGIN: mantém comportamento normal
+    var lp = document.getElementById('login-pass');
+    if(lp) lp.setAttribute('autocomplete','current-password');
+    // Campos de troca de senha: usa new-password para não poluir o gerenciador
+    ['pass-atual','pass-nova','pass-conf'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.setAttribute('autocomplete','new-password');
+    });
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    aplicarAutocompleteOff();
+    // Reaplicar quando seções dinâmicas forem renderizadas
+    new MutationObserver(aplicarAutocompleteOff).observe(document.body,{childList:true,subtree:true});
+  });
+})();
+
 // ── INIT ─────────────────────────────────
 checkSession();
 </script>
