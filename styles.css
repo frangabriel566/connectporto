@@ -1543,6 +1543,80 @@ samp,
     border-color: var(--connect-lightcyan);
 }
 
+/* ── CARD 800 MEGAS — DESTAQUE ───────────────────────── */
+.card-800-destaque {
+    background: white;
+    border-radius: 1.5rem;
+    border: 3px solid var(--connect-blue);
+    box-shadow:
+        0 12px 48px rgba(43, 95, 219, 0.28),
+        0 0 24px rgba(0, 212, 255, 0.12);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: visible;
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.card-800-destaque:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow:
+        0 24px 64px rgba(43, 95, 219, 0.38),
+        0 0 40px rgba(0, 212, 255, 0.22);
+    border-color: var(--connect-cyan);
+}
+
+.card-800-destaque .inner {
+    background: white;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Badge "MAIS RECOMENDADO" */
+.badge-mais-recomendado {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--connect-blue) 0%, var(--connect-cyan) 100%);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 18px;
+    border-radius: 99px;
+    white-space: nowrap;
+    box-shadow:
+        0 4px 16px rgba(43, 95, 219, 0.55),
+        0 0 14px rgba(0, 212, 255, 0.35);
+    z-index: 3;
+}
+
+/* Texto "preferido dos clientes" */
+.label-preferido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--connect-blue);
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+
+/* Responsivo: remove scale no mobile para não cortar */
+@media (max-width: 768px) {
+    .card-800-destaque {
+        transform: scale(1);
+    }
+    .card-800-destaque:hover {
+        transform: translateY(-6px) scale(1);
+    }
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
