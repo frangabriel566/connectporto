@@ -13,7 +13,7 @@ function abrirWhatsApp(mensagem) {
 }
 
 function nomeDoPlanoPeloElemento(el) {
-    var card = el.closest('.card-modern, .card-featured-modern, .card');
+    var card = el.closest('.card-modern, .card-featured-modern, .card-800-destaque, .card');
     if (card) {
         var titulo = card.querySelector('h3');
         if (titulo) return (titulo.innerText || titulo.textContent).trim();
