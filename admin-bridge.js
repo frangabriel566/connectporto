@@ -996,10 +996,10 @@
     // Atualização em tempo real: escuta mudanças de campanhas de outras abas (admin)
     window.addEventListener('storage', function(e) {
       if (e.key === 'connect_admin_campanhas' && e.newValue) {
-        try {
-          var dados = JSON.parse(e.newValue);
-          renderizarCampanhaBanner(dados);
-        } catch(ex) {}
+        try { renderizarCampanhaBanner(JSON.parse(e.newValue)); } catch(ex) {}
+      }
+      if (e.key === 'connect_admin_vantagens' && e.newValue) {
+        try { renderizarVantagens(JSON.parse(e.newValue)); } catch(ex) {}
       }
     });
 
