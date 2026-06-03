@@ -113,30 +113,60 @@
     if (!container) return;
 
     container.innerHTML = planos.map(function (p, i) {
-      var delay = (i + 1) * 0.1;
+      var delay    = (i + 1) * 0.1;
+      var destaque = (p.velocidade === '800');
+
       var features = p.features.map(function (f) {
         return '<li class="flex items-start text-sm">' + CHECK_SVG + '<span class="text-connect-dark">' + escHtml(f) + '</span></li>';
       }).join('');
 
-      var badgeHtml = p.badge ? '<div class="mt-2"><span class="inline-flex items-center gap-1 bg-gradient-to-r from-connect-blue to-connect-cyan text-white text-xs font-bold px-2 py-1 rounded-full">' + escHtml(p.badge) + '</span></div>' : '';
-      return '<div class="group card-modern fade-in" style="animation-delay:' + delay + 's">' +
-        '<div class="p-6 h-full flex flex-col">' +
-        '<div class="flex items-center gap-3 mb-4">' +
-        '<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">' +
-        '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>' +
-        '</div>' +
-        '<div><h3 class="text-2xl font-bold text-connect-navy">' + escHtml(p.nome) + '</h3>' +
-        '<p class="text-xs text-connect-dark/70">velocidade máxima</p></div>' +
-        '</div>' +
-        '<div class="mb-4">' +
-        '<div class="flex items-baseline gap-1">' +
-        '<p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">' + escHtml(p.preco) + '</p>' +
-        '<span class="text-xs text-connect-dark/50">/mês</span>' +
-        '</div>' + badgeHtml +
-        '</div>' +
-        '<ul class="space-y-3 mb-6 flex-grow">' + features + '</ul>' +
-        '<a href="#whatsapp" class="btn-plan w-full text-sm py-3">Assinar agora</a>' +
-        '</div></div>';
+      var badgeHtml = p.badge
+        ? '<div class="mt-2"><span class="inline-flex items-center gap-1 bg-gradient-to-r from-connect-blue to-connect-cyan text-white text-xs font-bold px-2 py-1 rounded-full">' + escHtml(p.badge) + '</span></div>'
+        : '';
+
+      if (destaque) {
+        // ── Card 800 Megas — Destaque ──
+        return '<div class="card-800-destaque fade-in" style="animation-delay:' + delay + 's">'
+          + '<span class="badge-mais-recomendado">⭐ Mais Recomendado</span>'
+          + '<div class="inner p-6 h-full flex flex-col">'
+          + '<div class="flex items-center gap-3 mb-4">'
+          + '<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">'
+          + '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>'
+          + '</div>'
+          + '<div><h3 class="text-2xl font-bold text-connect-navy">' + escHtml(p.nome) + '</h3>'
+          + '<p class="text-xs text-connect-dark/70">velocidade máxima</p></div>'
+          + '</div>'
+          + '<div class="mb-1">'
+          + '<div class="flex items-baseline gap-1">'
+          + '<p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">' + escHtml(p.preco) + '</p>'
+          + '<span class="text-xs text-connect-dark/50">/mês</span>'
+          + '</div>' + badgeHtml
+          + '</div>'
+          + '<p class="label-preferido">🔥 O plano preferido dos nossos clientes</p>'
+          + '<ul class="space-y-3 mb-6 flex-grow mt-3">' + features + '</ul>'
+          + '<a href="#whatsapp" class="btn-plan w-full text-sm py-3" style="background:linear-gradient(135deg,#2B5FDB,#00D4FF);color:#fff;border:none;font-weight:700;box-shadow:0 4px 16px rgba(43,95,219,.35);">Assinar agora</a>'
+          + '</div></div>';
+      }
+
+      // ── Cards normais ──
+      return '<div class="group card-modern fade-in" style="animation-delay:' + delay + 's">'
+        + '<div class="p-6 h-full flex flex-col">'
+        + '<div class="flex items-center gap-3 mb-4">'
+        + '<div class="w-12 h-12 rounded-xl bg-gradient-to-br from-connect-blue to-connect-cyan flex items-center justify-center shadow-lg">'
+        + '<svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>'
+        + '</div>'
+        + '<div><h3 class="text-2xl font-bold text-connect-navy">' + escHtml(p.nome) + '</h3>'
+        + '<p class="text-xs text-connect-dark/70">velocidade máxima</p></div>'
+        + '</div>'
+        + '<div class="mb-4">'
+        + '<div class="flex items-baseline gap-1">'
+        + '<p class="text-3xl font-bold bg-gradient-to-r from-connect-blue to-connect-cyan bg-clip-text text-transparent">' + escHtml(p.preco) + '</p>'
+        + '<span class="text-xs text-connect-dark/50">/mês</span>'
+        + '</div>' + badgeHtml
+        + '</div>'
+        + '<ul class="space-y-3 mb-6 flex-grow">' + features + '</ul>'
+        + '<a href="#whatsapp" class="btn-plan w-full text-sm py-3">Assinar agora</a>'
+        + '</div></div>';
     }).join('');
   }
 
