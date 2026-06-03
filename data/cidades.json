@@ -1,9 +1,34 @@
 [
-  {"nome":"Porto e Região","uf":"PI"},
-  {"nome":"Campo Largo do Piauí e Região","uf":"PI"},
-  {"nome":"Nossa Senhora dos Remédios e Região","uf":"PI"},
-  {"nome":"Miguel Alves e Região","uf":"PI"},
-  {"nome":"Barras e Região","uf":"PI"},
-  {"nome":"Zona Rural de União","uf":"PI"},
-  {"nome":"Zona Rural de Buriti","uf":"MA"}
+  {
+    "nome": "Porto e Região",
+    "uf": "PI"
+  },
+  {
+    "nome": "Campo Largo do Piauí e Região",
+    "uf": "PI"
+  },
+  {
+    "nome": "Nossa Senhora dos Remédios e Região",
+    "uf": "PI"
+  },
+  {
+    "nome": "Miguel Alves e Região",
+    "uf": "PI"
+  },
+  {
+    "nome": "Barras e Região",
+    "uf": "PI"
+  },
+  {
+    "nome": "Zona Rural de União",
+    "uf": "PI"
+  },
+  {
+    "nome": "Zona Rural de Buriti",
+    "uf": "MA"
+  },
+  {
+    "nome": "thrq",
+    "uf": "PI"
+  }
 ]
