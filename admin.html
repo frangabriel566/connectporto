@@ -1238,7 +1238,6 @@ function doLogin(){
   var pass = document.getElementById('login-pass').value;
   var saved = ls('password') || 'Biel5432@';
   if(pass === saved){
-    lsSet('session', true);
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     initApp();
