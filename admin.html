@@ -2156,6 +2156,16 @@ var DEFAULT_ESCRITORIOS = [
 
 function getEscritorios(){ return ls('escritorios') || DEFAULT_ESCRITORIOS; }
 
+function sincronizarEscritoriosGitHub(){
+  fetch('https://raw.githubusercontent.com/frangabriel566/connectporto/main/data/escritorios.json?t=' + Date.now())
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(dados){
+      if(dados && dados.length){ lsSet('escritorios', dados); }
+      renderEscritorios();
+    })
+    .catch(function(){ renderEscritorios(); });
+}
+
 function renderEscritorios(){
   var lista = getEscritorios();
   var c = document.getElementById('escritorios-container');
