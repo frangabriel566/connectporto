@@ -1409,7 +1409,12 @@ function addCidade(){
 function deleteCidade(i){
   if(!confirm('Remover esta cidade?')) return;
   var cidades = ls('cidades') || DEFAULT_CIDADES;
-  cidades.splice(i,1); lsSet('cidades', cidades); renderCidades(); updateStats();
+  cidades.splice(i,1);
+  lsSet('cidades', cidades);
+  renderCidades();
+  updateStats();
+  _syncGitHub('cidades.json', cidades, 'cidades-alert', 'Cidades');
+  showAlert('cidades-alert','✅ Cidade removida!','Sincronizando com o site...');
 }
 function saveCidades(){
   var cidades = ls('cidades') || DEFAULT_CIDADES;
