@@ -2192,7 +2192,7 @@ function renderEscritorios(){
 function previewFoto(input, prevId) {
   var img = document.getElementById(prevId);
   if (!img) return;
-  if (input.value) { img.src = input.value; img.style.display = 'block'; }
+  if (input.value) { img.src = input.value.replace(/ /g, '%20'); img.style.display = 'block'; }
   else { img.style.display = 'none'; }
 }
 
