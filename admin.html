@@ -1246,16 +1246,9 @@ function doLogin(){
   }
 }
 function doLogout(){
-  lsSet('session', false);
   location.reload();
 }
-function checkSession(){
-  if(ls('session') === true){
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    initApp();
-  }
-}
+function checkSession(){}
 
 // ── NAVIGATION ───────────────────────────
 var pages = {
