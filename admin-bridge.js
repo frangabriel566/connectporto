@@ -538,13 +538,13 @@
       var fotoHtml = e.foto
         ? '<div style="height:160px;overflow:hidden;border-radius:12px 12px 0 0;"><img src="' + escHtml(fotoSrc) + '" alt="' + escHtml(e.cidade||'') + '" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" onerror="this.parentElement.style.display=\'none\'"></div>'
         : '<div style="height:100px;border-radius:12px 12px 0 0;background:linear-gradient(135deg,#2B5FDB,#00D4FF);display:flex;align-items:center;justify-content:center;">' + PIN_SVG.replace('class="w-6 h-6 text-white"','style="width:40px;height:40px;color:#fff;opacity:.6"') + '</div>';
-      return '<a href="' + link + '" target="_blank" rel="noopener" class="group card-modern fade-in block hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="animation-delay:' + (i * 0.1 + 0.1) + 's;text-decoration:none;overflow:hidden;padding:0;">' +
+      return '<a href="' + link + '" target="_blank" rel="noopener" class="group card-modern fade-in block hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="animation-delay:' + (i * 0.1 + 0.1) + 's;text-decoration:none;overflow:hidden;padding:0;border:1.5px solid #e2e8f0;border-radius:14px;">' +
         fotoHtml +
-        '<div class="p-5">' +
-          '<h3 class="text-base font-bold text-connect-navy mb-1">' + escHtml(e.cidade || '') + '</h3>' +
-          '<p class="text-xs text-connect-dark/70 mb-1">📍 ' + escHtml(e.endereco || '') + ' — CEP ' + escHtml(e.cep || '') + '</p>' +
-          '<p class="text-xs text-connect-dark/50 mb-3">⏰ ' + escHtml(horLines) + '</p>' +
-          '<span class="inline-flex items-center gap-1 text-xs font-semibold text-connect-blue group-hover:gap-2 transition-all">' + MAP_SVG + ' Ver rota no Maps</span>' +
+        '<div class="p-5" style="display:flex;flex-direction:column;align-items:center;text-align:center;">' +
+          '<h3 class="text-base font-bold text-connect-navy mb-1" style="width:100%;">' + escHtml(e.cidade || '') + '</h3>' +
+          '<p class="text-xs text-connect-dark/70 mb-1" style="width:100%;">📍 ' + escHtml(e.endereco || '') + ' — CEP ' + escHtml(e.cep || '') + '</p>' +
+          '<p class="text-xs text-connect-dark/50 mb-3" style="width:100%;">⏰ ' + escHtml(horLines) + '</p>' +
+          '<span class="inline-flex items-center gap-1 text-xs font-semibold text-connect-blue group-hover:gap-2 transition-all" style="justify-content:center;border:1.5px solid #2B5FDB;border-radius:8px;padding:7px 16px;">' + MAP_SVG + ' Como chegar</span>' +
         '</div>' +
       '</a>';
     }).join('');
