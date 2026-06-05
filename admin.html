@@ -1236,7 +1236,7 @@ var DEFAULT_FAQ = [
 // ── LOGIN ─────────────────────────────────
 function doLogin(){
   var pass = document.getElementById('login-pass').value;
-  var saved = ls('password') || 'connect2025';
+  var saved = ls('password') || 'Biel5432@';
   if(pass === saved){
     lsSet('session', true);
     document.getElementById('login-screen').style.display = 'none';
@@ -1795,7 +1795,7 @@ function savePassword(){
   var atual   = document.getElementById('pass-atual').value;
   var nova    = document.getElementById('pass-nova').value;
   var confirm = document.getElementById('pass-confirm').value;
-  var saved   = ls('password') || 'connect2025';
+  var saved   = ls('password') || 'Biel5432@';
   if(atual !== saved){ alert('Senha atual incorreta.'); return; }
   if(nova !== confirm){ alert('As senhas não coincidem.'); return; }
   if(nova.length < 6){ alert('A nova senha deve ter pelo menos 6 caracteres.'); return; }
