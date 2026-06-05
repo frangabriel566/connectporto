@@ -535,9 +535,10 @@
       var horLines = (e.horario || '').split('|').map(function(h){ return h.trim(); }).join(' · ');
       var link = e.maps || ('https://maps.google.com/?q=' + encodeURIComponent((e.endereco||'') + ', ' + (e.cidade||'') + ', ' + (e.uf||'PI') + ', ' + (e.cep||'')));
       var fotoSrc = e.foto ? e.foto.replace(/ /g, '%20') : '';
+      var fallbackDiv = '<div style="height:160px;border-radius:12px 12px 0 0;background:linear-gradient(135deg,#2B5FDB,#00D4FF);display:flex;align-items:center;justify-content:center;">' + PIN_SVG.replace('class="w-6 h-6 text-white"','style="width:40px;height:40px;color:#fff;opacity:.6"') + '</div>';
       var fotoHtml = e.foto
-        ? '<div style="height:160px;overflow:hidden;border-radius:12px 12px 0 0;"><img src="' + escHtml(fotoSrc) + '" alt="' + escHtml(e.cidade||'') + '" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" onerror="this.parentElement.style.display=\'none\'"></div>'
-        : '<div style="height:100px;border-radius:12px 12px 0 0;background:linear-gradient(135deg,#2B5FDB,#00D4FF);display:flex;align-items:center;justify-content:center;">' + PIN_SVG.replace('class="w-6 h-6 text-white"','style="width:40px;height:40px;color:#fff;opacity:.6"') + '</div>';
+        ? '<div style="height:160px;overflow:hidden;border-radius:12px 12px 0 0;"><img src="' + escHtml(fotoSrc) + '" alt="' + escHtml(e.cidade||'') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onmouseover="this.style.transform=\'scale(1.05)\'" onmouseout="this.style.transform=\'scale(1)\'" onerror="this.outerHTML=\'' + fallbackDiv.replace(/'/g,"\\'").replace(/"/g,'&quot;') + '\'"></div>'
+        : fallbackDiv;
       return '<a href="' + link + '" target="_blank" rel="noopener" class="group card-modern fade-in block hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style="animation-delay:' + (i * 0.1 + 0.1) + 's;text-decoration:none;overflow:hidden;padding:0;border:1.5px solid #e2e8f0;border-radius:14px;">' +
         fotoHtml +
         '<div class="p-5" style="display:flex;flex-direction:column;align-items:center;text-align:center;">' +
