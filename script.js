@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ── 6. FAQ ACCORDION ─────────────────────
-    document.querySelectorAll('.faq-button').forEach(function (btn) {
+    document.querySelectorAll('.faq-button:not([data-init])').forEach(function (btn) {
         btn.addEventListener('click', function () {
             var content  = this.nextElementSibling;
             var expanded = this.getAttribute('aria-expanded') === 'true';
