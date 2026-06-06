@@ -259,7 +259,7 @@
     container.innerHTML = faqs.map(function (f, i) {
       var delay = (i + 1) * 0.1;
       return '<div class="card fade-in" style="animation-delay:' + delay + 's">' +
-        '<button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false">' +
+        '<button class="faq-button w-full text-left p-6 flex items-center justify-between" aria-expanded="false" data-init="1">' +
         '<span class="font-semibold text-connect-navy pr-4">' + escHtml(f.pergunta) + '</span>' +
         '<svg class="faq-icon w-5 h-5 text-connect-primary transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>' +
         '</button>' +
