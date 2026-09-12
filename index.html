@@ -1583,13 +1583,13 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-connect-dark text-white/70 py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-wrap gap-x-12 gap-y-8 mb-8">
-                <!-- Coluna 2 -->
-                <div class="w-full sm:w-56">
-                    <h4 class="text-sm font-semibold text-white mb-4">Links rápidos</h4>
-                    <ul class="space-y-2 text-sm">
+    <footer class="bg-connect-dark text-white/70 py-14 lg:py-16">
+        <div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 lg:gap-x-14 gap-y-10">
+                <!-- Coluna 1: Links rápidos -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wide mb-5">Links rápidos</h4>
+                    <ul class="space-y-3 text-sm">
                         <li><a href="#hero" class="hover:text-white transition-colors">Início</a></li>
                         <li><a href="#planos" class="hover:text-white transition-colors">Planos</a></li>
                         <li><a href="#vantagens" class="hover:text-white transition-colors">Benefícios</a></li>
@@ -1599,50 +1599,63 @@
                     </ul>
                 </div>
 
-                <!-- Coluna 3 -->
-                <div class="w-full sm:w-64">
-                    <h4 class="text-sm font-semibold text-white mb-4">Contato</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li>
+                <!-- Coluna 2: Contato -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wide mb-5">Contato</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="space-y-1">
                             <p>📍 <strong class="text-white">Porto:</strong> Av. Presidente Vargas, 193, CEP 64145-000</p>
                             <p>📞 <a href="tel:+5586988665182" class="hover:text-white transition-colors">86 98866-5182</a></p>
                         </li>
-                        <li>
+                        <li class="space-y-1">
                             <p>📍 <strong class="text-white">Miguel Alves:</strong> R. São José, 85, CEP 64130-000</p>
                             <p>📞 <a href="tel:+5586999777724" class="hover:text-white transition-colors">86 99977-7724</a></p>
                         </li>
-                        <li>
+                        <li class="space-y-1">
                             <p>📍 <strong class="text-white">N. Sra dos Remédios:</strong> Rua Marcelino Rodrigues, CEP 64149-000</p>
                             <p>📞 <a href="tel:+5586981182721" class="hover:text-white transition-colors">86 98118-2721</a></p>
                         </li>
-                        <li>
+                        <li class="space-y-1">
                             <p>📍 <strong class="text-white">Barras:</strong> Av. Juscelino Kubitscheck, CEP 64100-000</p>
                         </li>
-                        <li class="pt-1 border-t border-white/10 space-y-2">
+                        <li class="pt-2 border-t border-white/10 space-y-2">
                             <p>📞 <a href="tel:08000806767" class="hover:text-white transition-colors">0800 080 6767</a></p>
-                            <p>✉️ <a href="mailto:connectporto@gmail.com" class="hover:text-white transition-colors">connectporto@gmail.com</a></p>
+                            <p>✉️ <a href="mailto:connectporto@gmail.com" class="hover:text-white transition-colors break-all">connectporto@gmail.com</a></p>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Coluna 4 -->
-                <div class="w-full sm:w-64">
-                    <h4 class="text-sm font-semibold text-white mb-4">Informações</h4>
-                    <p class="text-sm font-semibold text-white mb-1">CONNECT TELECOMUNICAÇÕES LTDA</p>
-                    <p class="text-sm mb-4">CNPJ: 08.395.388/0001-89</p>
-                    <p class="text-sm font-semibold text-white mb-1">Horário de Funcionamento</p>
-                    <p class="text-sm">Segunda a Sexta das 08:00h às 12:00, e<br>das 14:00 às 17:30.<br>Aos sábados das 08:00 às 12:00.</p>
+                <!-- Coluna 3: Informações -->
+                <div>
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wide mb-5">Informações</h4>
+                    <div class="space-y-4 text-sm">
+                        <div>
+                            <p class="text-white/50 text-xs uppercase tracking-wide mb-1">Razão Social</p>
+                            <p class="text-white font-medium">CONNECT TELECOMUNICAÇÕES LTDA</p>
+                        </div>
+                        <div>
+                            <p class="text-white/50 text-xs uppercase tracking-wide mb-1">CNPJ</p>
+                            <p>08.395.388/0001-89</p>
+                        </div>
+                        <div>
+                            <p class="text-white/50 text-xs uppercase tracking-wide mb-1">Horário de Funcionamento</p>
+                            <p>Segunda a Sexta das 08:00h às 12:00, e<br>das 14:00 às 17:30.<br>Aos sábados das 08:00 às 12:00.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Logo ANATEL -->
-                <div class="ml-auto self-center">
-                    <img src="img/Anatel.png" alt="Provedor licenciado pela ANATEL" class="h-24 w-auto">
+                <!-- Coluna 4: ANATEL -->
+                <div class="flex flex-col items-center text-center sm:items-start lg:items-center">
+                    <h4 class="text-sm font-semibold text-white uppercase tracking-wide mb-5">ANATEL</h4>
+                    <img src="img/Anatel.png" alt="Provedor licenciado pela ANATEL"
+                        class="w-full object-contain" style="max-width:130px; height:auto;">
                 </div>
             </div>
 
-            <div class="border-t border-white/10 pt-8 text-center text-sm">
+            <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-2 text-center text-xs text-white/50">
                 <p>&copy; 2026 Connect Provedor. Todos os direitos reservados.</p>
-                <a href="admin.html" class="inline-flex items-center gap-1 mt-3 text-white/30 hover:text-white/70 text-xs transition-colors duration-200">
+                <span class="hidden sm:inline">·</span>
+                <a href="admin.html" class="inline-flex items-center gap-1 hover:text-white/70 transition-colors duration-200">
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
                     Painel Admin
                 </a>
