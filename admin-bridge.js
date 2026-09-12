@@ -191,26 +191,6 @@
         '</button>';
       listaOverlay.innerHTML = botoesOverlay;
     }
-
-    // — Seção de Cobertura (.cob-cidades) —
-    var cobCidades = document.querySelector('.cob-cidades');
-    if (cobCidades) {
-      var botoesCob = cidades.map(function (c) {
-        return '<button class="cob-cidade-btn" data-cidade="' + escAttr(c.nome) + '" data-atende="true">' +
-          '<div class="cob-cidade-icon">📍</div>' +
-          '<span class="cob-cidade-nome">' + escHtml(c.nome) + '</span>' +
-          '<span class="cob-cidade-uf">' + escHtml(c.uf) + '</span>' +
-          '<div class="cob-cidade-check">✓</div>' +
-          '</button>';
-      }).join('');
-      botoesCob += '<button class="cob-cidade-btn cob-cidade-outra" data-cidade="outra" data-atende="false">' +
-        '<div class="cob-cidade-icon">🔍</div>' +
-        '<span class="cob-cidade-nome">Minha cidade não está aqui</span>' +
-        '<span class="cob-cidade-uf"></span>' +
-        '<div class="cob-cidade-check">?</div>' +
-        '</button>';
-      cobCidades.innerHTML = botoesCob;
-    }
   }
 
   // ══════════════════════════════════════════════════
@@ -417,7 +397,7 @@
 
     // Cidade não atendida
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest('#cidade-btn-avise, .cob-btn-avise');
+      var btn = e.target.closest('#cidade-btn-avise');
       if (!btn) return;
       var leads = ls('leads') || [];
       leads.push({ acao: 'Cidade não atendida', cidade: '—', plano: '—', data: new Date().toLocaleString('pt-BR'), ts: Date.now() });

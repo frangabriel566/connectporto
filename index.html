@@ -268,7 +268,7 @@
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#planos" class="nav-link">Planos</a>
-                    <a href="#cobertura" class="nav-link">Cobertura</a>
+                    <a href="#missao" class="nav-link">Missão</a>
                     <a href="#vantagens" class="nav-link">Vantagens</a>
                     <a href="#depoimentos" class="nav-link">Depoimentos</a>
                     <a href="#escritorios" class="nav-link">Nossas Unidades</a>
@@ -297,8 +297,8 @@
                 <div class="flex flex-col space-y-3">
                     <a href="#planos"
                         class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Planos</a>
-                    <a href="#cobertura"
-                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Cobertura</a>
+                    <a href="#missao"
+                        class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Missão</a>
                     <a href="#vantagens"
                         class="text-sm font-medium text-connect-dark hover:text-connect-primary transition-colors py-2">Vantagens</a>
                     <a href="#depoimentos"
@@ -1142,134 +1142,124 @@
         </div>
     </section>
 
-    <!-- Cobertura Section -->
-    <section id="cobertura" class="cobertura-section">
+    <!-- Missão, Visão e Valores Section -->
+    <section id="missao" class="missao-section">
 
-        <!-- Fundo animado -->
-        <div class="cobertura-bg">
-            <div class="cob-orb cob-orb1"></div>
-            <div class="cob-orb cob-orb2"></div>
-            <div class="cob-grid"></div>
+        <!-- Fundo decorativo -->
+        <div class="missao-bg">
+            <div class="missao-orb missao-orb1"></div>
+            <div class="missao-orb missao-orb2"></div>
+            <div class="missao-grid"></div>
         </div>
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-            <!-- PASSO 1 — Pergunta cidade -->
-            <div id="cob-step1" class="cob-step fade-in">
+            <div class="missao-header fade-in">
+                <div class="missao-icon-wrap">
+                    <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <circle cx="12" cy="12" r="6" />
+                        <circle cx="12" cy="12" r="2" />
+                    </svg>
+                </div>
+                <h2 class="missao-titulo">Nossa missão para você, <span>cliente Connect</span></h2>
+                <p class="missao-subtitulo">O que nos move todos os dias para levar a melhor conexão até a sua casa</p>
+            </div>
 
-                <div class="cob-header">
-                    <div class="cob-icon-wrap">
-                        <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            <!-- TEXTO PROVISÓRIO: substituir pelos textos oficiais de Missão, Visão e Valores -->
+            <div class="mvv-grid fade-in" style="animation-delay: 0.15s">
+
+                <!-- Missão -->
+                <article class="mvv-card">
+                    <span class="mvv-num">01</span>
+                    <div class="mvv-card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                            <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
                         </svg>
                     </div>
-                    <h2 class="cob-titulo">Qual é a sua cidade?</h2>
-                    <p class="cob-subtitulo">Selecione abaixo e veja se a Connect já chegou até você</p>
-                </div>
+                    <h3 class="mvv-card-titulo">Missão</h3>
+                    <p class="mvv-card-texto">Levar internet de qualidade, estável e acessível a cada casa e empresa da
+                        nossa região, com um atendimento próximo e humano que resolve de verdade.</p>
+                </article>
 
-                <!-- Cards de cidades -->
-                <div class="cob-cidades">
-
-                    <button class="cob-cidade-btn" data-cidade="Porto" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">Porto  e Região</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn" data-cidade="Campo Largo do Piauí" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">Campo Largo do Piauí  e Região</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn" data-cidade="Nossa Senhora dos Remédios" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">Nossa Senhora dos Remédios  e Região</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn" data-cidade="Miguel Alves" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">Miguel Alves e Região</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn" data-cidade="Barras" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">Barras  e Região</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn" data-cidade="União" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">União</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn" data-cidade="Buriti e Região" data-atende="true">
-                        <div class="cob-cidade-icon">📍</div>
-                        <span class="cob-cidade-nome">Buriti e Região</span>
-                        <span class="cob-cidade-uf">PI</span>
-                        <div class="cob-cidade-check">✓</div>
-                    </button>
-
-                    <button class="cob-cidade-btn cob-cidade-outra" data-cidade="outra" data-atende="false">
-                        <div class="cob-cidade-icon">🔍</div>
-                        <span class="cob-cidade-nome">Minha cidade não está aqui</span>
-                        <span class="cob-cidade-uf"></span>
-                        <div class="cob-cidade-check">?</div>
-                    </button>
-
-                </div>
-            </div>
-
-            <!-- PASSO 2 — Disponível -->
-            <div id="cob-step2" class="cob-step" style="display:none;">
-                <div class="cob-resultado cob-resultado-sim">
-                    <div class="cob-res-icon">🎉</div>
-                    <h3 class="cob-res-titulo">Boa notícia! Atendemos <span id="cob-cidade-nome"></span>!</h3>
-                    <p class="cob-res-desc">A Connect já está na sua cidade com fibra óptica de verdade. Fale agora com
-                        nossa equipe e garanta seu plano!</p>
-                    <div class="cob-res-btns">
-                        <a href="#whatsapp" class="cob-btn-whatsapp" id="cob-btn-cidade">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                            </svg>
-                            Quero assinar agora!
-                        </a>
-                        <button class="cob-btn-voltar" id="cob-voltar1">← Escolher outra cidade</button>
+                <!-- Visão -->
+                <article class="mvv-card">
+                    <span class="mvv-num">02</span>
+                    <div class="mvv-card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
                     </div>
-                </div>
-            </div>
+                    <h3 class="mvv-card-titulo">Visão</h3>
+                    <p class="mvv-card-texto">Ser o provedor de internet mais lembrado e recomendado da região,
+                        reconhecido pela qualidade da conexão e pelo cuidado com cada cliente.</p>
+                </article>
 
-            <!-- PASSO 3 — Não atendemos ainda -->
-            <div id="cob-step3" class="cob-step" style="display:none;">
-                <div class="cob-resultado cob-resultado-nao">
-                    <div class="cob-res-icon">📡</div>
-                    <h3 class="cob-res-titulo">Ainda não chegamos até você...</h3>
-                    <p class="cob-res-desc">Mas estamos em expansão! Deixe seu contato no WhatsApp e avisamos assim que
-                        a Connect chegar na sua cidade.</p>
-                    <div class="cob-res-btns">
-                        <a href="#whatsapp" class="cob-btn-whatsapp cob-btn-avise">
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                            </svg>
-                            Me avise quando chegar!
-                        </a>
-                        <button class="cob-btn-voltar" id="cob-voltar2">← Escolher outra cidade</button>
+                <!-- Valores -->
+                <article class="mvv-card mvv-card-valores">
+                    <span class="mvv-num">03</span>
+                    <div class="mvv-card-icon">
+                        <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M6 3h12l4 6-10 13L2 9Z" />
+                            <path d="M11 3 8 9l4 13 4-13-3-6" />
+                            <path d="M2 9h20" />
+                        </svg>
                     </div>
-                </div>
+                    <h3 class="mvv-card-titulo">Valores</h3>
+                    <ul class="mvv-valores">
+                        <li class="mvv-valor">
+                            <span class="mvv-valor-check">✓</span>
+                            <div>
+                                <span class="mvv-valor-nome">Transparência</span>
+                                <span class="mvv-valor-desc">Clareza em cada plano, preço e contrato.</span>
+                            </div>
+                        </li>
+                        <li class="mvv-valor">
+                            <span class="mvv-valor-check">✓</span>
+                            <div>
+                                <span class="mvv-valor-nome">Respeito ao cliente</span>
+                                <span class="mvv-valor-desc">Você é ouvido e bem atendido sempre.</span>
+                            </div>
+                        </li>
+                        <li class="mvv-valor">
+                            <span class="mvv-valor-check">✓</span>
+                            <div>
+                                <span class="mvv-valor-nome">Qualidade</span>
+                                <span class="mvv-valor-desc">Conexão estável e rápida no dia a dia.</span>
+                            </div>
+                        </li>
+                        <li class="mvv-valor">
+                            <span class="mvv-valor-check">✓</span>
+                            <div>
+                                <span class="mvv-valor-nome">Compromisso</span>
+                                <span class="mvv-valor-desc">Cumprimos o que prometemos.</span>
+                            </div>
+                        </li>
+                        <li class="mvv-valor">
+                            <span class="mvv-valor-check">✓</span>
+                            <div>
+                                <span class="mvv-valor-nome">Inovação</span>
+                                <span class="mvv-valor-desc">Tecnologia sempre atualizada para você.</span>
+                            </div>
+                        </li>
+                        <li class="mvv-valor">
+                            <span class="mvv-valor-check">✓</span>
+                            <div>
+                                <span class="mvv-valor-nome">Proximidade</span>
+                                <span class="mvv-valor-desc">Uma empresa da região, perto de você.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
             </div>
 
         </div>
@@ -1598,7 +1588,7 @@
                     <h4 class="text-sm font-semibold text-white mb-4">Navegação</h4>
                     <ul class="space-y-2 text-sm">
                         <li><a href="#planos" class="hover:text-white transition-colors">Planos</a></li>
-                        <li><a href="#cobertura" class="hover:text-white transition-colors">Cobertura</a></li>
+                        <li><a href="#missao" class="hover:text-white transition-colors">Nossa Missão</a></li>
                         <li><a href="#vantagens" class="hover:text-white transition-colors">Vantagens</a></li>
                         <li><a href="#depoimentos" class="hover:text-white transition-colors">Depoimentos</a></li>
                         <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
@@ -1681,7 +1671,7 @@
         </div>
         <div class="drawer-links">
             <a href="#planos" class="drawer-link">⚡ Planos</a>
-            <a href="#cobertura" class="drawer-link">📍 Cobertura</a>
+            <a href="#missao" class="drawer-link">🎯 Nossa Missão</a>
             <a href="#vantagens" class="drawer-link">🎁 Vantagens</a>
             <a href="#depoimentos" class="drawer-link">💬 Depoimentos</a>
             <a href="#escritorios" class="drawer-link">🏢 Nossas Unidades</a>

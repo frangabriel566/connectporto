@@ -2596,10 +2596,10 @@ button {
 }
 
 /* ═══════════════════════════════════════════
-   SEÇÃO COBERTURA — Seleção de Cidade
+   SEÇÃO MISSÃO — Missão, Visão e Valores
 ════════════════════════════════════════════ */
 
-.cobertura-section {
+.missao-section {
     position: relative;
     padding: 80px 0 100px;
     overflow: hidden;
@@ -2607,18 +2607,18 @@ button {
 }
 
 /* Fundo decorativo */
-.cobertura-bg {
+.missao-bg {
     position: absolute;
     inset: 0;
     pointer-events: none;
 }
 
-.cob-orb {
+.missao-orb {
     position: absolute;
     border-radius: 50%;
 }
 
-.cob-orb1 {
+.missao-orb1 {
     width: 500px;
     height: 500px;
     top: -120px;
@@ -2626,7 +2626,7 @@ button {
     background: radial-gradient(circle, rgba(0, 212, 255, 0.15), transparent 70%);
 }
 
-.cob-orb2 {
+.missao-orb2 {
     width: 600px;
     height: 600px;
     bottom: -150px;
@@ -2634,7 +2634,7 @@ button {
     background: radial-gradient(circle, rgba(79, 229, 255, 0.1), transparent 70%);
 }
 
-.cob-grid {
+.missao-grid {
     position: absolute;
     inset: 0;
     opacity: 0.06;
@@ -2643,19 +2643,14 @@ button {
     background-size: 50px 50px;
 }
 
-/* Step container */
-.cob-step {
-    max-width: 780px;
-    margin: 0 auto;
-}
-
 /* Header */
-.cob-header {
+.missao-header {
     text-align: center;
-    margin-bottom: 40px;
+    max-width: 720px;
+    margin: 0 auto 48px;
 }
 
-.cob-icon-wrap {
+.missao-icon-wrap {
     width: 64px;
     height: 64px;
     margin: 0 auto 16px;
@@ -2668,88 +2663,142 @@ button {
     color: #00D4FF;
 }
 
-.cob-titulo {
+.missao-titulo {
     font-size: 2.2rem;
     font-weight: 800;
+    line-height: 1.2;
     color: #fff;
     margin-bottom: 10px;
 }
 
-.cob-subtitulo {
+.missao-titulo span {
+    white-space: nowrap;
+    background: linear-gradient(90deg, #00D4FF, #4FE5FF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.missao-subtitulo {
     font-size: 1.05rem;
+    line-height: 1.6;
     color: rgba(255, 255, 255, 0.65);
 }
 
-/* Grid de cidades */
-.cob-cidades {
+/* Grid Missão / Visão / Valores */
+.mvv-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-/* Card de cidade */
-.cob-cidade-btn {
+.mvv-card {
     position: relative;
     background: rgba(255, 255, 255, 0.06);
     border: 1.5px solid rgba(0, 212, 255, 0.2);
-    border-radius: 16px;
-    padding: 22px 16px 18px;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    text-align: center;
+    border-radius: 20px;
+    padding: 32px 28px 28px;
     backdrop-filter: blur(8px);
     overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cob-cidade-btn::before {
+.mvv-card::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(79, 229, 255, 0.05));
-    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00D4FF, #4FE5FF);
+    opacity: 0.5;
     transition: opacity 0.25s ease;
-    border-radius: 16px;
 }
 
-.cob-cidade-btn:hover {
+.mvv-card:hover {
     border-color: rgba(0, 212, 255, 0.7);
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
-.cob-cidade-btn:hover::before {
+.mvv-card:hover::before {
     opacity: 1;
 }
 
-.cob-cidade-icon {
-    font-size: 1.8rem;
-    line-height: 1;
-}
-
-.cob-cidade-nome {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.3;
-}
-
-.cob-cidade-uf {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #00D4FF;
-    letter-spacing: 0.08em;
-}
-
-.cob-cidade-check {
+.mvv-num {
     position: absolute;
-    top: 10px;
-    right: 12px;
+    top: 18px;
+    right: 24px;
+    font-size: 2.6rem;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(0, 212, 255, 0.14);
+    pointer-events: none;
+}
+
+.mvv-card-icon {
+    width: 52px;
+    height: 52px;
+    margin-bottom: 18px;
+    background: rgba(0, 212, 255, 0.15);
+    border: 1.5px solid rgba(0, 212, 255, 0.4);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00D4FF;
+}
+
+.mvv-card-titulo {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.mvv-card-texto {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Card Valores — ocupa a largura toda */
+.mvv-card-valores {
+    grid-column: 1 / -1;
+}
+
+.mvv-valores {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.mvv-valor {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(15, 45, 109, 0.35);
+    border: 1px solid rgba(0, 212, 255, 0.15);
+    border-radius: 14px;
+    transition: all 0.2s ease;
+}
+
+.mvv-valor:hover {
+    background: rgba(0, 212, 255, 0.08);
+    border-color: rgba(0, 212, 255, 0.5);
+}
+
+.mvv-valor-check {
+    flex-shrink: 0;
     width: 22px;
     height: 22px;
+    margin-top: 1px;
     border-radius: 50%;
     background: rgba(0, 212, 255, 0.2);
     border: 1.5px solid rgba(0, 212, 255, 0.5);
@@ -2762,166 +2811,49 @@ button {
     transition: all 0.2s ease;
 }
 
-.cob-cidade-btn:hover .cob-cidade-check {
+.mvv-valor:hover .mvv-valor-check {
     background: #00D4FF;
     color: #0F2D6D;
     border-color: #00D4FF;
-    transform: scale(1.15);
 }
 
-/* Card "minha cidade não está" */
-.cob-cidade-outra {
-    border-style: dashed;
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.cob-cidade-outra .cob-cidade-nome {
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 500;
-    font-size: 0.82rem;
-}
-
-.cob-cidade-outra .cob-cidade-check {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Resultado */
-.cob-resultado {
-    text-align: center;
-    padding: 52px 40px;
-    border-radius: 24px;
-    border: 2px solid;
-    backdrop-filter: blur(16px);
-    animation: cobResultado 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes cobResultado {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.cob-resultado-sim {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(15, 45, 109, 0.6));
-    border-color: rgba(0, 212, 255, 0.5);
-    box-shadow: 0 0 60px rgba(0, 212, 255, 0.15);
-}
-
-.cob-resultado-nao {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(15, 45, 109, 0.5));
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-.cob-res-icon {
-    font-size: 4rem;
-    margin-bottom: 16px;
-    line-height: 1;
-}
-
-.cob-res-titulo {
-    font-size: 1.7rem;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 12px;
-    line-height: 1.2;
-}
-
-.cob-res-titulo span {
-    color: #00D4FF;
-}
-
-.cob-res-desc {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 480px;
-    margin: 0 auto 28px;
-    line-height: 1.6;
-}
-
-.cob-res-btns {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-
-.cob-btn-whatsapp {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 2rem;
-    background: linear-gradient(90deg, #00D4FF, #4FE5FF);
-    color: #0F2D6D;
+.mvv-valor-nome {
+    display: block;
+    font-size: 0.95rem;
     font-weight: 700;
-    font-size: 1rem;
-    border-radius: 12px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 24px rgba(0, 212, 255, 0.4);
-    transition: all 0.25s ease;
-}
-
-.cob-btn-whatsapp:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 32px rgba(0, 212, 255, 0.5);
-    filter: brightness(1.08);
-}
-
-.cob-btn-avise {
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    line-height: 1.3;
     color: #fff;
-    box-shadow: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.cob-btn-avise:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.cob-btn-voltar {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.5);
+.mvv-valor-desc {
+    display: block;
+    margin-top: 2px;
     font-size: 0.85rem;
-    transition: color 0.2s ease;
-    padding: 4px 8px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
 }
 
-.cob-btn-voltar:hover {
-    color: #00D4FF;
-}
-
-/* Responsivo mobile */
-@media (max-width: 640px) {
-    .cob-cidades {
+/* Responsivo */
+@media (max-width: 900px) {
+    .mvv-valores {
         grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    .cob-titulo {
+@media (max-width: 640px) {
+    .missao-titulo {
         font-size: 1.6rem;
     }
 
-    .cob-resultado {
-        padding: 36px 20px;
+    .mvv-grid {
+        grid-template-columns: 1fr;
     }
 
-    .cob-res-titulo {
-        font-size: 1.3rem;
+    .mvv-card {
+        padding: 26px 20px 22px;
     }
-}
 
-@media (max-width: 400px) {
-    .cob-cidades {
+    .mvv-valores {
         grid-template-columns: 1fr;
     }
 }
