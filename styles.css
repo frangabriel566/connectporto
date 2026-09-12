@@ -1185,8 +1185,7 @@ samp,
 @media (max-width: 400px) {
     .hero-new h1 { font-size: 1.55rem; }
     .btn-hero-primary { font-size: .85rem; padding: 12px 20px; }
-    .hc2-wrap { width: 75vw; align-self: center; }
-    .hc2-track { height: 48vw; }
+    .hc2-wrap { width: 100%; max-width: 340px; align-self: center; }
     .hero-benefit-item { width: 100%; border-bottom: 1px solid rgba(255,255,255,.08); }
     .hero-benefit-item:last-child { border-bottom: none; }
 }
