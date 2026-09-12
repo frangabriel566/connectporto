@@ -1075,20 +1075,21 @@ samp,
 /* Dots */
 .hc2-dots {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
-    margin-top: 12px;
+    margin-top: 16px;
     position: relative;
     z-index: 1;
 }
 .hc2-dot {
-    width: 8px; height: 8px;
+    width: 7px; height: 7px;
     border-radius: 50%;
-    background: rgba(255,255,255,.3);
+    background: rgba(255,255,255,.28);
     border: none; cursor: pointer;
     transition: all .3s;
     padding: 0;
 }
+.hc2-dot:hover { background: rgba(255,255,255,.5); }
 .hc2-dot.active {
     width: 24px;
     border-radius: 99px;
