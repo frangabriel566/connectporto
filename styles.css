@@ -912,11 +912,11 @@ samp,
     z-index: 0;
 }
 
-/* Track: altura generosa para imagem completa aparecer */
+/* Track: proporção fixa 4:3 para todos os slides, sem distorção */
 .hc2-track {
     position: relative;
     width: 100%;
-    height: clamp(320px, 52vh, 480px);
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: 20px;
 }
@@ -926,7 +926,7 @@ samp,
     position: absolute;
     inset: 0;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
