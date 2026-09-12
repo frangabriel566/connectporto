@@ -1109,8 +1109,7 @@ samp,
 
 /* ── HERO RESPONSIVO ── */
 @media (max-width: 900px) {
-    .hc2-wrap { width: clamp(240px, 38vw, 360px); }
-    .hc2-track { height: clamp(300px, 46vh, 420px); }
+    .hc2-wrap { width: clamp(280px, 38vw, 380px); }
     .hero-new h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); }
     .hero-subtitle { font-size: .92rem; }
     .hero-benefit-item { padding: 6px 14px; }
