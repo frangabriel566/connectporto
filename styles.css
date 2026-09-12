@@ -754,7 +754,7 @@ samp,
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 32px;
+    gap: clamp(40px, 5vw, 64px);
     padding: 40px 0 20px;
     min-height: calc(100vh - 80px - 60px); /* 80px header + 60px benefits */
 }
