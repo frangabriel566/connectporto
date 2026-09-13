@@ -397,7 +397,7 @@
 
     // Cidade não atendida
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest('#cidade-btn-avise, .cob-btn-avise');
+      var btn = e.target.closest('#cidade-btn-avise');
       if (!btn) return;
       var leads = ls('leads') || [];
       leads.push({ acao: 'Cidade não atendida', cidade: '—', plano: '—', data: new Date().toLocaleString('pt-BR'), ts: Date.now() });
