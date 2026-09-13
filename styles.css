@@ -2679,249 +2679,70 @@ button {
     color: rgba(255, 255, 255, 0.65);
 }
 
-/* Grid de cidades */
-.cob-cidades {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-}
-
-/* Card de cidade */
-.cob-cidade-btn {
+/* Card Missão / Visão / Valores */
+.mvv-card {
     position: relative;
     background: rgba(255, 255, 255, 0.06);
     border: 1.5px solid rgba(0, 212, 255, 0.2);
-    border-radius: 16px;
-    padding: 22px 16px 18px;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
+    border-radius: 20px;
+    padding: 36px 28px;
     text-align: center;
     backdrop-filter: blur(8px);
-    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cob-cidade-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(79, 229, 255, 0.05));
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    border-radius: 16px;
-}
-
-.cob-cidade-btn:hover {
+.mvv-card:hover {
     border-color: rgba(0, 212, 255, 0.7);
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25), 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
-.cob-cidade-btn:hover::before {
-    opacity: 1;
-}
-
-.cob-cidade-icon {
-    font-size: 1.8rem;
+.mvv-card-icon {
+    font-size: 2.4rem;
     line-height: 1;
+    margin-bottom: 14px;
 }
 
-.cob-cidade-nome {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.3;
-}
-
-.cob-cidade-uf {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: #00D4FF;
-    letter-spacing: 0.08em;
-}
-
-.cob-cidade-check {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: rgba(0, 212, 255, 0.2);
-    border: 1.5px solid rgba(0, 212, 255, 0.5);
-    color: #4FE5FF;
-    font-size: 0.65rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.cob-cidade-btn:hover .cob-cidade-check {
-    background: #00D4FF;
-    color: #0F2D6D;
-    border-color: #00D4FF;
-    transform: scale(1.15);
-}
-
-/* Card "minha cidade não está" */
-.cob-cidade-outra {
-    border-style: dashed;
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.cob-cidade-outra .cob-cidade-nome {
-    color: rgba(255, 255, 255, 0.6);
-    font-weight: 500;
-    font-size: 0.82rem;
-}
-
-.cob-cidade-outra .cob-cidade-check {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.5);
-}
-
-/* Resultado */
-.cob-resultado {
-    text-align: center;
-    padding: 52px 40px;
-    border-radius: 24px;
-    border: 2px solid;
-    backdrop-filter: blur(16px);
-    animation: cobResultado 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes cobResultado {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.cob-resultado-sim {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(15, 45, 109, 0.6));
-    border-color: rgba(0, 212, 255, 0.5);
-    box-shadow: 0 0 60px rgba(0, 212, 255, 0.15);
-}
-
-.cob-resultado-nao {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(15, 45, 109, 0.5));
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-.cob-res-icon {
-    font-size: 4rem;
-    margin-bottom: 16px;
-    line-height: 1;
-}
-
-.cob-res-titulo {
-    font-size: 1.7rem;
+.mvv-card-titulo {
+    font-size: 1.4rem;
     font-weight: 800;
     color: #fff;
-    margin-bottom: 12px;
-    line-height: 1.2;
+    margin-bottom: 14px;
 }
 
-.cob-res-titulo span {
-    color: #00D4FF;
-}
-
-.cob-res-desc {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 480px;
-    margin: 0 auto 28px;
+.mvv-card-texto {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
     line-height: 1.6;
 }
 
-.cob-res-btns {
+.mvv-card-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
-.cob-btn-whatsapp {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem 2rem;
-    background: linear-gradient(90deg, #00D4FF, #4FE5FF);
-    color: #0F2D6D;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 12px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 6px 24px rgba(0, 212, 255, 0.4);
-    transition: all 0.25s ease;
-}
-
-.cob-btn-whatsapp:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 32px rgba(0, 212, 255, 0.5);
-    filter: brightness(1.08);
-}
-
-.cob-btn-avise {
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
-    color: #fff;
-    box-shadow: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.cob-btn-avise:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.cob-btn-voltar {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85rem;
-    transition: color 0.2s ease;
-    padding: 4px 8px;
-}
-
-.cob-btn-voltar:hover {
-    color: #00D4FF;
+.mvv-card-lista li {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    border-radius: 10px;
+    padding: 8px 12px;
 }
 
 /* Responsivo mobile */
 @media (max-width: 640px) {
-    .cob-cidades {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .cob-titulo {
         font-size: 1.6rem;
     }
 
-    .cob-resultado {
-        padding: 36px 20px;
-    }
-
-    .cob-res-titulo {
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 400px) {
-    .cob-cidades {
-        grid-template-columns: 1fr;
+    .mvv-card {
+        padding: 28px 20px;
     }
 }
 
