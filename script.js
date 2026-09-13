@@ -163,58 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
         abrirWhatsApp(msg);
     });
 
-    // ── 2. FORMULÁRIO DE COBERTURA (CIDADES) ─
-    var cidadeBtns = document.querySelectorAll('.cob-cidade-btn');
-    var step1 = document.getElementById('cob-step1');
-    var step2 = document.getElementById('cob-step2');
-    var step3 = document.getElementById('cob-step3');
-    var cobCidadeNome = document.getElementById('cob-cidade-nome');
-    var cobBtnCidade  = document.getElementById('cob-btn-cidade');
-    var cobVoltar1    = document.getElementById('cob-voltar1');
-    var cobVoltar2    = document.getElementById('cob-voltar2');
-
-    function cobMostrar(el) {
-        [step1, step2, step3].forEach(function(s) { if (s) s.style.display = 'none'; });
-        if (el) el.style.display = 'block';
-        // scroll suave para o topo da seção
-        var sec = document.getElementById('cobertura');
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    if (cidadeBtns.length) {
-        cidadeBtns.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var cidade  = this.dataset.cidade;
-                var atende  = this.dataset.atende === 'true';
-
-                if (atende) {
-                    if (cobCidadeNome) cobCidadeNome.textContent = cidade;
-                    if (cobBtnCidade) {
-                        var msg = 'Olá! Moro em ' + cidade + ' e quero contratar a internet da Connect!';
-                        cobBtnCidade.onclick = function(e) {
-                            e.preventDefault();
-                            abrirWhatsApp(msg);
-                        };
-                    }
-                    cobMostrar(step2);
-                } else {
-                    // "minha cidade não está aqui"
-                    var aviseBtn = document.querySelector('.cob-btn-avise');
-                    if (aviseBtn) {
-                        aviseBtn.onclick = function(e) {
-                            e.preventDefault();
-                            abrirWhatsApp('Olá! Ainda não tenho Connect na minha cidade. Gostaria de ser avisado quando chegarem!');
-                        };
-                    }
-                    cobMostrar(step3);
-                }
-            });
-        });
-    }
-
-    if (cobVoltar1) cobVoltar1.addEventListener('click', function() { cobMostrar(step1); });
-    if (cobVoltar2) cobVoltar2.addEventListener('click', function() { cobMostrar(step1); });
-
     // ── 3. FORMULÁRIO LEGADO (se ainda existir) ──
     var form = document.getElementById('coverage-form');
     if (form) {
