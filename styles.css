@@ -2595,10 +2595,10 @@ button {
 }
 
 /* ═══════════════════════════════════════════
-   SEÇÃO COBERTURA — Seleção de Cidade
+   SEÇÃO MISSÃO, VISÃO E VALORES
 ════════════════════════════════════════════ */
 
-.cobertura-section {
+.mvv-section {
     position: relative;
     padding: 80px 0 100px;
     overflow: hidden;
