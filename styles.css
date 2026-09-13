@@ -2642,12 +2642,6 @@ button {
     background-size: 50px 50px;
 }
 
-/* Step container */
-.cob-step {
-    max-width: 780px;
-    margin: 0 auto;
-}
-
 /* Header */
 .cob-header {
     text-align: center;
