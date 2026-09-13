@@ -171,7 +171,7 @@
   }
 
   // ══════════════════════════════════════════════════
-  //  4. RENDERIZAR CIDADES (overlay + cobertura)
+  //  4. RENDERIZAR CIDADES (overlay)
   // ══════════════════════════════════════════════════
   function renderizarCidades() {
     var cidades = ls('cidades') || DEFAULT_CIDADES;
@@ -190,26 +190,6 @@
         '<span class="cs-item-uf"></span>' +
         '</button>';
       listaOverlay.innerHTML = botoesOverlay;
-    }
-
-    // — Seção de Cobertura (.cob-cidades) —
-    var cobCidades = document.querySelector('.cob-cidades');
-    if (cobCidades) {
-      var botoesCob = cidades.map(function (c) {
-        return '<button class="cob-cidade-btn" data-cidade="' + escAttr(c.nome) + '" data-atende="true">' +
-          '<div class="cob-cidade-icon">📍</div>' +
-          '<span class="cob-cidade-nome">' + escHtml(c.nome) + '</span>' +
-          '<span class="cob-cidade-uf">' + escHtml(c.uf) + '</span>' +
-          '<div class="cob-cidade-check">✓</div>' +
-          '</button>';
-      }).join('');
-      botoesCob += '<button class="cob-cidade-btn cob-cidade-outra" data-cidade="outra" data-atende="false">' +
-        '<div class="cob-cidade-icon">🔍</div>' +
-        '<span class="cob-cidade-nome">Minha cidade não está aqui</span>' +
-        '<span class="cob-cidade-uf"></span>' +
-        '<div class="cob-cidade-check">?</div>' +
-        '</button>';
-      cobCidades.innerHTML = botoesCob;
     }
   }
 
