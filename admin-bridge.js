@@ -974,9 +974,6 @@
     renderizarEscritorios();
     renderizarCampanhaBanner();
     carregarCarrosselGitHub(); // busca versão mais recente do GitHub
-    carregarDatasGitHub(function() {
-      if (window.lancarConfettiDatas) window.lancarConfettiDatas(true);
-    });
     carregarCampanhasGitHub(function(dados) {
       if (dados) renderizarCampanhaBanner(dados);
     });
